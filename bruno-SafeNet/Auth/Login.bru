@@ -1,0 +1,24 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8081/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "admin@mail.pt",
+    "password": "123"
+  }
+  
+}
+
+tests {
+  var token = res.getBody().token
+  bru.setEnvVar("token",token)
+}

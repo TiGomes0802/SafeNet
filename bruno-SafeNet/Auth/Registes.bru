@@ -1,0 +1,20 @@
+meta {
+  name: Registes
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8081/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Vicky Alyce Champlin Murazik",
+    "email": "vicky.murazik@mail.pt",
+    "nickname": "murazik2",
+    "password": "123"
+  }
+}
