@@ -6,8 +6,6 @@
 <template>
   <main>
     <div id="app">
-      <Sonner />
-      <router-view />
       <HomeView />
     </div>
   </main>

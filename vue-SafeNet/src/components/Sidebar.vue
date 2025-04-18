@@ -14,7 +14,7 @@
                 <a href="#" class="block py-2 px-3 rounded hover:bg-gray-100">Loja</a>
             </nav>
         </div>
-        <div class="border-t pt-4 mt-4">
+        <div class="border-t pt-4">
             <a href="#" class="block text-sm text-gray-500 hover:underline">Moedas</a>
             <a href="#" class="block text-sm text-gray-500 hover:underline">Perfil</a>
             <a href="#" class="block text-sm text-gray-500 hover:underline">Logout</a>
