@@ -18,8 +18,8 @@ return new class extends Migration {
 
         // Alterar tabela Users (idRanke)
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('idRanke')->nullable();
-            $table->foreign('idRanke')->references('id')->on('ranks')->onDelete('cascade');
+            $table->unsignedBigInteger('idRank')->nullable();
+            $table->foreign('idRank')->references('id')->on('ranks')->onDelete('cascade');
         });
 
         // Lista de Amigos (id, status, idUser1, idUser2)
@@ -49,6 +49,16 @@ return new class extends Migration {
             $table->string('status');
             $table->unsignedBigInteger('idCurso');
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
+        });
+
+        // Tabela User_Unidade (id, status, idUser, idUnidade)
+        Schema::create('user_unidades', function (Blueprint $table) {
+            $table->id();
+            $table->string('status');
+            $table->unsignedBigInteger('idUser');
+            $table->unsignedBigInteger('idUnidade');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idUnidade')->references('id')->on('unidades')->onDelete('cascade');
         });
 
         // Tabela Pagina (id, descricao, ordem, idUnidade)
@@ -91,31 +101,31 @@ return new class extends Migration {
             $table->foreign('idJogo')->references('id')->on('jogos')->onDelete('cascade');
         });
 
-        // Tabela Estatistica (id, numVezes, numAcertos, idJogo, idUtilizador)
+        // Tabela Estatistica (id, numVezes, numAcertos, idJogo, idUser)
         Schema::create('estatisticas', function (Blueprint $table) {
             $table->id();
             $table->integer('numVezes');
             $table->integer('numAcertos');
             $table->unsignedBigInteger('idJogo');
-            $table->unsignedBigInteger('idUtilizador');
+            $table->unsignedBigInteger('idUser');
             $table->foreign('idJogo')->references('id')->on('jogos')->onDelete('cascade');
-            $table->foreign('idUtilizador')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
         });
 
-        // Tabela Reports (id, mensagem, status, idUtilizador, idGestor)
+        // Tabela Reports (id, mensagem, status, idUser, idGestor)
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->text('mensagem');
             $table->string('status');
-            $table->unsignedBigInteger('idUtilizador');
+            $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idGestor');
-            $table->foreign('idUtilizador')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idGestor')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
         // Tabela TipoProduto (id, tipo)
-        Schema::create('tipoProduto', function (Blueprint $table) {
+        Schema::create('tipoProdutos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
         });
@@ -126,7 +136,7 @@ return new class extends Migration {
             $table->string('nome');
             $table->integer('preco');
             $table->unsignedBigInteger('idTipoProduto');
-            $table->foreign('idTipoProduto')->references('id')->on('tipoProduto')->onDelete('cascade');
+            $table->foreign('idTipoProduto')->references('id')->on('tipoProdutos')->onDelete('cascade');
         });
 
         // Tabela Compras (id, idUser, idProduto)
@@ -160,15 +170,22 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Tabela LinksExternos (id, nome, url, idCurso)
+        // Tabela LinksExternos (id, nome, url)
         Schema::create('linksExternos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('url');
-            $table->unsignedBigInteger('idCurso');
-            $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
         });
 
+        // Tabela Curso_LinksExternos (id, idCurso, idLink)
+        Schema::create('curso_linksExternos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('idCurso');
+            $table->unsignedBigInteger('idLink');
+            $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
+            $table->foreign('idLink')->references('id')->on('linksExternos')->onDelete('cascade');
+        });
+        
     }
 
     public function down(): void {
