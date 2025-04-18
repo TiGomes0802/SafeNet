@@ -13,17 +13,17 @@ class UserSeeder extends Seeder
     {
         $users = [
             // Clientes
-            ['type' => 'J', 'nome' => 'Cliente1', 'email' => 'cliente1@example.com', 'username' => 'cliente1'],
-            ['type' => 'J', 'nome' => 'Cliente2', 'email' => 'cliente2@example.com', 'username' => 'cliente2'],
-            ['type' => 'J', 'nome' => 'Cliente3', 'email' => 'cliente3@example.com', 'username' => 'cliente3'],
+            ['type' => 'J', 'nome' => 'Cliente1', 'email' => 'cliente1@mail.com', 'username' => 'cliente1'],
+            ['type' => 'J', 'nome' => 'Cliente2', 'email' => 'cliente2@mail.com', 'username' => 'cliente2'],
+            ['type' => 'J', 'nome' => 'Cliente3', 'email' => 'cliente3@mail.com', 'username' => 'cliente3'],
 
             // Gestores
-            ['type' => 'G', 'nome' => 'Gestor1', 'email' => 'gestor1@example.com', 'username' => 'gestor1'],
-            ['type' => 'G', 'nome' => 'Gestor2', 'email' => 'gestor2@example.com', 'username' => 'gestor2'],
+            ['type' => 'G', 'nome' => 'Gestor1', 'email' => 'gestor1@mail.com', 'username' => 'gestor1'],
+            ['type' => 'G', 'nome' => 'Gestor2', 'email' => 'gestor2@mail.com', 'username' => 'gestor2'],
 
             // Admins
-            ['type' => 'A', 'nome' => 'Admin1', 'email' => 'admin1@example.com', 'username' => 'admin1'],
-            ['type' => 'A', 'nome' => 'Admin2', 'email' => 'admin2@example.com', 'username' => 'admin2'],
+            ['type' => 'A', 'nome' => 'Admin1', 'email' => 'admin1@mail.com', 'username' => 'admin1'],
+            ['type' => 'A', 'nome' => 'Admin2', 'email' => 'admin2@mail.com', 'username' => 'admin2'],
         ];
 
         foreach ($users as $user) {
