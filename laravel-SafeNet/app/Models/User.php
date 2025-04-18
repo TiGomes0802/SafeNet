@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +23,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'username',
+        'foto',
+        'xp',
+        'vida',
+        'idRank',
     ];
 
     /**
@@ -44,5 +52,60 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * 
+     */
+    public function rank()
+    {
+        return $this->belongsTo(Rank::class, 'idRank');
+    }
+
+    public function amigo1()
+    {
+        return $this->hasMany(Amigo::class, 'idUser1');
+    }
+
+    public function amigo2()
+    {
+        return $this->hasMany(Amigo::class, 'idUser2');
+    }
+
+    public function todosAmigos()
+    {
+        // Junta os dois lados da amizade
+        return $this->amigos1->merge($this->amigos2);
+    }
+
+    public function Report()
+    {
+        return $this->hasMany(Report::class, 'idUser');
+    }
+
+    public function Estatistica()
+    {
+        return $this->hasMany(Estatistica::class, 'idUser');
+    }
+
+    public function UserMissao()
+    {
+        return $this->hasMany(UserMissao::class, 'idUser');
+    }
+
+    public function Jogo()
+    {
+        return $this->hasMany(Jogo::class, 'idUser');
+    }
+
+    public function JogoGestor()
+    {
+        return $this->hasMany(Jogo::class, 'idGestor');
+    }
+
+    public function Unidade()
+    {
+        return $this->belongsToMany(Unidade::class, 'user_unidades', 'idUser', 'idUnidade')
+            ->withPivot('status');
     }
 }
