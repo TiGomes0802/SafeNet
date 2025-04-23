@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unidade extends Model
 {
-    protected $table = 'Unidades';
+    protected $table = 'unidades';
 
     public $timestamps = false;
 
     protected $fillable = [
         'titulo',
+        'descricao',
         'ordem',
         'status',
         'idCurso',

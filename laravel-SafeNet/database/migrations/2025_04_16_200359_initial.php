@@ -37,7 +37,6 @@ return new class extends Migration {
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->integer('ordem');
             $table->string('status');
         });
 
@@ -45,8 +44,9 @@ return new class extends Migration {
         Schema::create('unidades', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
+            $table->text('descricao');
             $table->integer('ordem');
-            $table->string('status');
+            $table->boolean('status');
             $table->unsignedBigInteger('idCurso');
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
         });
@@ -54,7 +54,7 @@ return new class extends Migration {
         // Tabela User_Unidade (id, status, idUser, idUnidade)
         Schema::create('user_unidades', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->boolean('status');
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idUnidade');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
