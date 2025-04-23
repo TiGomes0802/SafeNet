@@ -1,0 +1,20 @@
+meta {
+  name: Delete account
+  type: http
+  seq: 6
+}
+
+delete {
+  url: http://localhost:8081/api/auth/deleteAccount
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  var token = res.getBody().token
+  bru.setEnvVar("token",token)
+}

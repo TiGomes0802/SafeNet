@@ -1,0 +1,20 @@
+meta {
+  name: Registes
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8081/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Botinhas Brenha",
+    "username": "BerserkerPT",
+    "email": "gaybotas@mail.pt",
+    "password": "123"
+  }
+}
