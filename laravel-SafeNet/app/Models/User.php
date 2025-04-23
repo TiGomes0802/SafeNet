@@ -27,6 +27,7 @@ class User extends Authenticatable
         'type',
         'username',
         'foto',
+        'moedas',
         'xp',
         'vida',
         'idRank',

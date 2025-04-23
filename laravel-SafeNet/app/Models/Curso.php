@@ -11,7 +11,6 @@ class Curso extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'ordem',
         'status',
     ];
 

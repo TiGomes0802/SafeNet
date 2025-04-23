@@ -69,6 +69,7 @@ export const useAuthStore = defineStore('auth', () => {
             localStorage.setItem("token", token.value);
             const responseUser = await axios.get("users/me");
             user.value = responseUser.data.data;
+            console.log(user.value);
             repeatRefreshToken();
             //store coins
             router.push({name: "home"});
