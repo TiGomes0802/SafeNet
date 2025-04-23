@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
-import Missoes from "@/views/Missoes.vue";
-import Estatisticas from "@/views/Estatisticas.vue";
-import Loja from "@/views/Loja.vue";
+import Missoes from "@/components/missoes/Missoes.vue";
+import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
+import Loja from "@/components/loja/Loja.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
