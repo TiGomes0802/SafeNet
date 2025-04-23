@@ -12,10 +12,9 @@ defineProps({
       <p class="text-sm text-gray-600 mt-2">Descrição do módulo</p>
     </div>
 
-    <!-- Níveis -->
+    <!-- Níveis (Ainda não está dinâmica)-->
     <div class="mt-6">
       <div class="text-lg font-semibold text-gray-800 mb-4">Níveis</div>
-      <!-- Contêiner dos retângulos -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
         <div
           v-for="level in 4"
