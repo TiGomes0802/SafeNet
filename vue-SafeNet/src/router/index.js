@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from "@/stores/auth";
 import HomeView from '../components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
@@ -45,6 +46,33 @@ const router = createRouter({
       component: Loja,
     },
   ],
+})
+
+let handlingFirstRoute = true;
+
+router.beforeEach(async (to, from, next) => {
+  const storeAuth = useAuthStore();
+
+  if (handlingFirstRoute) {
+    handlingFirstRoute = false;
+    await storeAuth.restoreToken();
+  }
+
+  // user is not logged in
+  if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
+
+    next({ name: "login" });
+    return;
+  }
+
+  if ((to.name === "login" || to.name === "register") && storeAuth.user) {
+    next({ name: "home" });
+    return;
+  }
+
+  // user is logged in
+
+  next();
 })
 
 export default router

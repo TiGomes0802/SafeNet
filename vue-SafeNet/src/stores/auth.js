@@ -64,13 +64,12 @@ export const useAuthStore = defineStore('auth', () => {
         storeError.resetMessages();
         try{
             console.log(credentials);
-            const response = await axios.post("auth/login", credentials);
-            console.log("response: ");
-            console.log(response);
-            token.value = response.data.token;
+            const responseLogin = await axios.post("auth/login", credentials);
+            token.value = responseLogin.data.token;
             axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
             localStorage.setItem("token", token.value);
-            user.value = response.data.user;
+            const responseUser = await axios.get("users/me");
+            user.value = responseUser.data.data;
             repeatRefreshToken();
             //store coins
             router.push({name: "home"});
@@ -129,11 +128,54 @@ export const useAuthStore = defineStore('auth', () => {
         return false;
       }
     };
+
+    const logout = async () => {
+      storeError.resetMessages();
+      try {
+        await axios.post("auth/logout");
+        router.push({ name: 'login' })
+        clearUser();
+        return true;
+      } catch (e) {
+        clearUser();
+        storeError.setErrorMessages(
+          
+          e.response.data.message,
+          [],
+          e.response.status,
+          "Authentication Error!"
+        );
+        return false;
+      }
+    };
         
+    const restoreToken = async function () {
+      let storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        try {
+          token.value = storedToken;
+          axios.defaults.headers.common.Authorization = "Bearer " + token.value;
+          const responseUser = await axios.get("users/me");
+          storeCoins.getCoins();
+          user.value = responseUser.data.data;
+          socket.emit('login', user.value)
+          repeatRefreshToken();
+          return true;
+        } catch {
+          clearUser();
+          return false;
+        }
+      }
+      return false;
+    };
+
     return {
+      user,
       errorLogin,
       errorResgistar,
       login,
-      register
+      register,
+      logout,
+      restoreToken
     };
 });

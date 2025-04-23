@@ -1,3 +1,21 @@
+<script setup>
+  import { useTemplateRef, provide } from 'vue'
+  import { useAuthStore } from '@/stores/auth'  
+  
+  const storeAuth = useAuthStore()
+  
+  const alertDialog = useTemplateRef('alert-dialog')
+  provide('alertDialog', alertDialog)
+
+  const logoutConfirmed = () => {
+    storeAuth.logout()
+  }
+
+  const logout = () => {
+    storeAuth.logout()
+  }
+</script>
+
 <template>
     <aside class="w-64 bg-white shadow-md p-4 flex flex-col justify-between">
         <div>
@@ -35,7 +53,7 @@
         <div class="border-t pt-7 space-y-6">
             <div class="block text-sm text-gray-700 font-semibold px-3">120 🪙 </div>
             <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3">Perfil</router-link>
-            <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3">Logout</router-link>
+            <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3" @click="logout">Logout</router-link>
         </div>
     </aside>
 </template>
