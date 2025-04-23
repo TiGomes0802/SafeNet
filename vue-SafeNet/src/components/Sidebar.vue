@@ -3,16 +3,20 @@
         <div>
             <h1 class="text-2xl font-bold mb-6">SafeNet</h1>
             <nav class="space-y-2">
-                <router-link to="/unidade/Básico I" class="block py-2 px-3 rounded hover:bg-gray-100">Básico
-                    I</router-link>
-                <router-link to="/unidade/Básico II" class="block py-2 px-3 rounded hover:bg-gray-100">Básico
-                    II</router-link>
-                <router-link to="/unidade/Intermédio I" class="block py-2 px-3 rounded hover:bg-gray-100">Intermédio
-                    I</router-link>
-                <router-link to="/unidade/Intermédio II" class="block py-2 px-3 rounded hover:bg-gray-100">Intermédio
-                    II</router-link>
+                <router-link to="/unidade/Engenharia Social" class="block py-2 px-3 rounded hover:bg-gray-100">Engenharia Social
+                    </router-link>
+                <router-link to="/unidade/Autenticação" class="block py-2 px-3 rounded hover:bg-gray-100">Autenticação
+                    </router-link>
+                <router-link to="/unidade/Malware" class="block py-2 px-3 rounded hover:bg-gray-100">Malware
+                    </router-link>
+                <router-link to="/unidade/Redes Sociais" class="block py-2 px-3 rounded hover:bg-gray-100">Redes Sociais
+                    </router-link>
+                <router-link to="/unidade/Sistemas Operativos" class="block py-2 px-3 rounded hover:bg-gray-100">Sistemas Operativos
+                    </router-link>
+                <router-link to="/unidade/Navegação" class="block py-2 px-3 rounded hover:bg-gray-100">Navegação na Internet
+                    </router-link>
             </nav>
-            <nav class="space-y-2 mt-6">
+            <nav class="space-y-2 mt-12">
                 <router-link to="/missoes" class="block py-2 px-3 rounded hover:bg-gray-100">Missões</router-link>
                 <router-link to="/estatisticas" class="block py-2 px-3 rounded hover:bg-gray-100">Estatísticas</router-link>
                 <router-link to="/loja" class="block py-2 px-3 rounded hover:bg-gray-100">Loja</router-link>
