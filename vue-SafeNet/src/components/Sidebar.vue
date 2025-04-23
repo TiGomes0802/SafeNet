@@ -1,16 +1,8 @@
 <script setup>
-  import { useTemplateRef, provide } from 'vue'
   import { useAuthStore } from '@/stores/auth'  
   
   const storeAuth = useAuthStore()
   
-  const alertDialog = useTemplateRef('alert-dialog')
-  provide('alertDialog', alertDialog)
-
-  const logoutConfirmed = () => {
-    storeAuth.logout()
-  }
-
   const logout = () => {
     storeAuth.logout()
   }

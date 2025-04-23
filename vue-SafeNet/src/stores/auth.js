@@ -1,9 +1,8 @@
-import {ref, computed} from 'vue'
+import {ref } from 'vue'
 import {defineStore} from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
 import { useRouter } from 'vue-router'
-import { Toaster } from 'vue-sonner';
 
 export const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
