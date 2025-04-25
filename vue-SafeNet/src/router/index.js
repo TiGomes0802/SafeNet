@@ -7,6 +7,7 @@ import Missoes from "@/components/missoes/Missoes.vue";
 import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
+import CriarJogo from "@/components/jogos/create.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,13 +48,16 @@ const router = createRouter({
       component: Loja,
     },
     {
-      //passing the id of the unidade in the url for show the games of the unit
       path: '/unidade/:idUnidade/jogos',
       name: 'Jogos',
       component: Jogo,
       props: true,
-      // what props do: the props option allows you to pass the route params as props to the component.
-
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/criar',
+      name: 'CriarJogo',
+      component: CriarJogo,
+      props: true,
     }
   ],
 })
@@ -62,7 +66,6 @@ let handlingFirstRoute = true;
 
 router.beforeEach(async (to, from, next) => {
   const storeAuth = useAuthStore();
-  console.log("teste:" + storeAuth.user)
 
   if (handlingFirstRoute) {
     handlingFirstRoute = false;

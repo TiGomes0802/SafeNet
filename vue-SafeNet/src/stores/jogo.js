@@ -26,8 +26,28 @@ export const useJogoStore = defineStore('jogo', () => {
         }
     }
 
+    const createJogo = async (jogo) => {
+        try {
+            console.log("Creating game with data:", { jogo });
+            const response = await axios.post("unidade/" + jogo.idUnidade + "/jogo", jogo);
+            if (response.status === 201) {
+                router.push({ name: "Jogos", params: { idUnidade: jogo.idUnidade } });
+            }
+            return true;
+        } catch (e) {
+            console.log("Error creating game:", e);
+            storeError.setErrorMessages(
+                e.response.data.message,
+                e.response.data.errors,
+                e.response.status,
+                "Error creating game!"
+            );
+        }
+    }
+
     return{
         jogos,
-        getJogos
+        getJogos,
+        createJogo
     }
 })

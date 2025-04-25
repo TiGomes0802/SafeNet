@@ -15,6 +15,7 @@ class JogosSeeder extends Seeder
         $jogos = [
             [
                 'xp' => 10,
+                'pergunta' => 'Qual é a capital de Portugal?',
                 'estado' => true,
                 'idGestor' => 6,
                 'idTipo' => 1,
@@ -22,6 +23,7 @@ class JogosSeeder extends Seeder
             ],
             [
                 'xp' => 20,
+                'pergunta' => 'Qual é a capital de Espanha?',
                 'estado' => true,
                 'idGestor' => 6,
                 'idTipo' => 2,
@@ -29,6 +31,7 @@ class JogosSeeder extends Seeder
             ],
             [
                 'xp' => 30,
+                'pergunta' => 'Qual é a capital de França?',
                 'estado' => false,
                 'idGestor' => 6,
                 'idTipo' => 3,
@@ -36,6 +39,7 @@ class JogosSeeder extends Seeder
             ],
             [
                 'xp' => 40,
+                'pergunta' => 'Qual é a capital de Itália?',
                 'estado' => true,
                 'idGestor' => 6,
                 'idTipo' => 4,

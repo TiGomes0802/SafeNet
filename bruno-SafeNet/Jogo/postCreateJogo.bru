@@ -1,0 +1,32 @@
+meta {
+  name: postCreateJogo
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8081/api/unidade/2/jogo
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "idUnidade": 1,
+    "xp": 100,
+    "pergunta": "ola",
+    "respostaCerta": "Resposta B",
+    "respostas": [
+      "Resposta A",
+      "Resposta B",
+      "Resposta C",
+      "Resposta D"
+    ],
+    "tipoJogo": 1
+  }
+  
+}
