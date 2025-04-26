@@ -71,7 +71,7 @@
 <template>
     <div class="mb-4">
         <label class="block font-semibold mb-1">Pergunta:</label>
-        <textarea v-model="jogo.pergunta" class="w-full pl-5 py-2 border-1 border-black rounded-md" :class="erros.pergunta ? 'border-red-500' : 'border-black'" rows="3" />
+        <textarea v-model="jogo.pergunta" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros.pergunta ? 'border-red-500' : 'border-black'" rows="3" />
     </div>
 
     <div class="mb-4">
@@ -79,14 +79,14 @@
         <div v-for="(letra, index) in letras" :key="index" class="flex items-center mb-2">
         <span class="w-6 font-bold">{{ letra }})</span>
         <input
-            v-model="jogo.respostas[index]" class="w-full pl-5 py-2 border-1 border-black rounded-md" :class="erros?.respostas?.includes(index) ? 'border-red-500' : 'border-black'"
+            v-model="jogo.respostas[index]" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros?.respostas?.includes(index) ? 'border-red-500' : 'border-black'"
         />
         </div>
     </div>
     
     <div class="mb-4">
         <label class="block font-semibold mb-1">Resposta Certa:</label>
-        <select v-model="indexRespostaCerta" class="w-full pl-5 py-2 border-1 border-black rounded-md" :class="erros.respostaCerta ? 'border-red-500' : 'border-black'">
+        <select v-model="indexRespostaCerta" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros.respostaCerta ? 'border-red-500' : 'border-black'">
             <option value="" disabled>Selecione a resposta certa</option>
         <option v-for="(letra, index) in letras" :key="index" :value="index">{{ letra }})</option>
         </select>
@@ -97,7 +97,7 @@
     </p>
 
     <button @click="criarPergunta" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
-        Criar
+        Criar pergunta
     </button>
 
 </template>
