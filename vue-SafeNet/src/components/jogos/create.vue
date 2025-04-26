@@ -23,7 +23,7 @@
             tiposJogos.value = novosTipos;
             if (novosTipos && novosTipos.length > 0) {
 
-                tipoJogo.value = novosTipos[1].id;
+                tipoJogo.value = novosTipos[0].id;
             }
         },
         { immediate: true }
@@ -39,7 +39,7 @@
     
         <div class="mb-4">
             <label class="block font-semibold mb-1">Tipo de Pergunta:</label>
-            <select v-model="tipoJogo" class="w-full pl-5 py-2 border-1 border-black rounded-md">
+            <select v-model="tipoJogo" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
             <option v-for="tipo in tiposJogos" :key="tipo.id" :value="tipo.id">{{ tipo.tipo }}</option>            
             </select>
         </div>

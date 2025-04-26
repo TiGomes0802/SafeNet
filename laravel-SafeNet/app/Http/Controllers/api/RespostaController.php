@@ -19,4 +19,38 @@ class RespostaController extends Controller
 
         return $resposta;
     }
+
+    public function createRespostaVerdadeiroFalso($respostas)
+    {
+        foreach ($respostas['respostas'] as $index => $resposta) {
+            $this->createResposta($resposta, $respostas['idJogo'], $respostas['respostaCerta'][$index]);
+        }
+
+        return response()->json(['message' => 'Respostas criadas com sucesso'], 201);
+    }
+
+    public function createRespostaMultiplaEscolha($respostas)
+    {
+        foreach ($respostas['respostas'] as $resposta) {
+            if ($resposta == $respostas['respostaCerta']) {
+                $respostaCerta = 1;
+            } else {
+                $respostaCerta = 0;
+            }
+            
+            $this->createResposta($resposta, $respostas['idJogo'], $respostaCerta);
+        }
+
+        return response()->json(['message' => 'Respostas criadas com sucesso'], 201);
+    }
+
+    public function createRespostasOrdernar($respostas)
+    {
+        foreach ($respostas['respostas'] as $index => $resposta) {
+            $this->createResposta($resposta, $respostas['idJogo'], $index);
+        }
+        
+        return response()->json(['message' => 'Respostas criadas com sucesso'], 201);
+    }
+
 }

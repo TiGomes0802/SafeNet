@@ -55,12 +55,11 @@ class JogoController extends Controller
         // Valida os dados da requisição
         $validatedData = $request->validate([
             'xp' => 'required|integer',
-            'pergunta' => 'required|string',
-            'respostaCerta' => 'required|string',
+            'pergunta' => 'required|string',       
             'respostas' => 'required|array',
             'tipoJogo' => 'required|integer|exists:tipoJogos,id',
         ]);
-
+        
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);
         if (!$unidade) {
@@ -77,27 +76,42 @@ class JogoController extends Controller
             'idUnidade' => $idUnidade, 
         ]);
 
-        // Cria as respostas associadas ao jogo tambem preciso do index da resposta certa
-        // Verifica se a resposta certa está dentro do intervalo de respostas
-        foreach ($validatedData['respostas'] as $index => $resposta) {
-            if($validatedData['tipoJogo'] == 4){
-                $respostaCerta = true;
-            } else{
-                if($resposta == $validatedData['respostaCerta']) {
-                    $respostaCerta = true;
-                } else {
-                    $respostaCerta = false;
-                }
-            } 
-            $respostaController = new RespostaController();
-            $respostaController->createResposta($resposta, $jogo->id, $respostaCerta);
-        }
+        if ($validatedData['tipoJogo'] == 1 || $validatedData['tipoJogo'] == 2) {
+            try {
+                $respostaCertaData = $request->validate([
+                    'respostaCerta' => 'required',
+                ]);
 
+                $respostas = [
+                    'respostas' => $validatedData['respostas'],
+                    'respostaCerta' => $respostaCertaData['respostaCerta'],
+                    'idJogo' => $jogo->id,
+                ];
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                $jogo->delete();
+                return response()->json(['error' => 'Resposta correta não fornecida'], 400);
+            }
+        }else{
+            $respostas = [
+                'respostas' => $validatedData['respostas'],
+                'idJogo' => $jogo->id,
+            ];
+        }
+  
+        $respostaController = new RespostaController();
+
+        if($validatedData['tipoJogo'] == 1){
+            $respostaController->createRespostaVerdadeiroFalso($respostas);
+        } elseif($validatedData['tipoJogo'] == 2){
+            $respostaController->createRespostaMultiplaEscolha($respostas);
+        } elseif($validatedData['tipoJogo'] == 4){
+            $respostaController->createRespostasOrdernar($respostas);
+        } else {
+            return response()->json(['error' => 'Tipo de jogo inválido'], 400);
+        }
+   
         // Retorna o jogo criado com as respostas
         $jogo->load('respostas');
         return response()->json($jogo, 201);
-    }
-
-    
-    
+    } 
 }

@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:8081/api/unidade/2/jogo
+  url: http://localhost:8081/api/unidade/3/jogo
   body: json
   auth: inherit
 }
@@ -15,11 +15,12 @@ headers {
 }
 
 body:json {
-  {
+  /*Verdadeiro e Falso*/
+  /*{
     "idUnidade": 1,
     "xp": 100,
     "pergunta": "ola",
-    "respostaCerta": "Resposta B",
+    "respostaCerta": ["1", "0", "0", "1"],
     "respostas": [
       "Resposta A",
       "Resposta B",
@@ -27,6 +28,34 @@ body:json {
       "Resposta D"
     ],
     "tipoJogo": 1
-  }
+  }*/
   
+  /*Escolha multipla*/
+  /*{
+    "idUnidade": 1,
+    "xp": 100,
+    "pergunta": "ola",
+    "respostaCerta": "Resposta A",
+    "respostas": [
+      "Resposta A",
+      "Resposta B",
+      "Resposta C",
+      "Resposta D"
+    ],
+    "tipoJogo": 2
+  }*/
+  
+  /*Ordenar*/
+  {
+    "idUnidade": 1,
+    "xp": 100,
+    "pergunta": "ola",
+    "respostas": [
+      "Resposta A",
+      "Resposta B",
+      "Resposta C",
+      "Resposta D"
+    ],
+    "tipoJogo": 4
+  }
 }
