@@ -67,7 +67,6 @@ class JogoController extends Controller
             return response()->json(['error' => 'Unidade não encontrada'], 404);
         }
 
-
         // Cria o novo jogo
         $jogo = Jogo::create([
             'xp' => $validatedData['xp'],
@@ -81,11 +80,15 @@ class JogoController extends Controller
         // Cria as respostas associadas ao jogo tambem preciso do index da resposta certa
         // Verifica se a resposta certa está dentro do intervalo de respostas
         foreach ($validatedData['respostas'] as $index => $resposta) {
-            if ($resposta == $validatedData['respostaCerta']) {
+            if($validatedData['tipoJogo'] == 4){
                 $respostaCerta = true;
-            } else {
-                $respostaCerta = false;
-            }
+            } else{
+                if($resposta == $validatedData['respostaCerta']) {
+                    $respostaCerta = true;
+                } else {
+                    $respostaCerta = false;
+                }
+            } 
             $respostaController = new RespostaController();
             $respostaController->createResposta($resposta, $jogo->id, $respostaCerta);
         }
