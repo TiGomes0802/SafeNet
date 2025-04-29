@@ -38,7 +38,8 @@ const handleLinkClick = () => {
 </script>
 
 
-<template>
+<template v-if="storeAuth.user?.type === 'J'">
+
     <!-- Mini sidebar para Responsividade-->
     <aside v-if="!isOpen && windowWidth < 768"
         class="fixed inset-y-0 left-0 w-12 bg-white shadow-md z-40 flex flex-col items-center pt-4 md:hidden">
@@ -67,39 +68,108 @@ const handleLinkClick = () => {
             </button>
             <div>
                 <h1 class="text-2xl font-bold mb-6">SafeNet</h1>
+                <div v-if="storeAuth.user?.type === 'J'">
+                    <div class="mb-6">
+                        <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
+                        <nav class="space-y-2">
+                            <router-link to="/unidade/Engenharia Social"
+                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">Engenharia
+                                Social</router-link>
+                            <router-link to="/unidade/Autenticação" class="block py-2 px-6 rounded hover:bg-gray-100"
+                                @click="handleLinkClick">Autenticação</router-link>
+                            <router-link to="/unidade/Malware" class="block py-2 px-6 rounded hover:bg-gray-100"
+                                @click="handleLinkClick">Malware</router-link>
+                            <router-link to="/unidade/Redes Sociais" class="block py-2 px-6 rounded hover:bg-gray-100"
+                                @click="handleLinkClick">Redes
+                                Sociais</router-link>
+                            <router-link to="/unidade/Sistemas Operativos"
+                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">Sistemas
+                                Operativos</router-link>
+                            <router-link to="/unidade/Navegação" class="block py-2 px-6 rounded hover:bg-gray-100"
+                                @click="handleLinkClick">Navegação
+                                na Internet</router-link>
+                        </nav>
+                    </div>
 
-                <div class="mb-6">
-                    <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
-                    <nav class="space-y-2">
-                        <router-link to="/unidade/Engenharia Social" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Engenharia Social</router-link>
-                        <router-link to="/unidade/Autenticação" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Autenticação</router-link>
-                        <router-link to="/unidade/Malware" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Malware</router-link>
-                        <router-link to="/unidade/Redes Sociais" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Redes
-                            Sociais</router-link>
-                        <router-link to="/unidade/Sistemas Operativos" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Sistemas Operativos</router-link>
-                        <router-link to="/unidade/Navegação" class="block py-2 px-6 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Navegação
-                            na Internet</router-link>
+                    <nav class="space-y-1 mt-8">
+                        <router-link to="/missoes" class="block py-2 px-3 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">Missões</router-link>
+                        <router-link to="/estatisticas" class="block py-2 px-3 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">Estatísticas</router-link>
+                        <router-link to="/loja" class="block py-2 px-3 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">Loja</router-link>
                     </nav>
                 </div>
 
-                <nav class="space-y-1 mt-8">
-                    <router-link to="/missoes" class="block py-2 px-3 rounded hover:bg-gray-100"
-                        @click="handleLinkClick">Missões</router-link>
-                    <router-link to="/estatisticas" class="block py-2 px-3 rounded hover:bg-gray-100"
-                        @click="handleLinkClick">Estatísticas</router-link>
-                    <router-link to="/loja" class="block py-2 px-3 rounded hover:bg-gray-100"
-                        @click="handleLinkClick">Loja</router-link>
-                </nav>
+                <!-- Sidebar para Gestores e Admins ---------------------------------------------------------------------->
+                <div v-if="storeAuth.user?.type === 'G' || storeAuth.user?.type === 'A'" class="pt-8">
+                    <h2 class="text-sm font-semibold text-gray-500 mb-4 px-3">Gestão</h2>
+                    <nav class="space-y-2 flex flex-col justify-start">
+                        <router-link to="/gestao/cursos"
+                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3.78552 9.5 12.7855 14l9-4.5-9-4.5-8.99998 4.5Zm0 0V17m3-6v6.2222c0 .3483 2 1.7778 5.99998 1.7778 4 0 6-1.3738 6-1.7778V11" />
+                            </svg>
+
+
+                            <span>Cursos</span>
+                        </router-link>
+
+                        <router-link to="/gestao/estatisticas"
+                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207" />
+                            </svg>
+
+                            <span>Estatísticas</span>
+                        </router-link>
+
+                        <router-link to="/gestao/reports"
+                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z" />
+                            </svg>
+
+                            <span>Reports</span>
+                        </router-link>
+
+                        <router-link to="/gestao/users"
+                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Users</span>
+                        </router-link>
+                    </nav>
+                </div>
             </div>
 
+
+
+
             <div class="border-t pt-7 space-y-6">
-                <div class="block text-sm text-gray-700 font-semibold px-3">{{ storeCoins.gameCoins }} 🪙</div>
+                <div v-if="storeAuth.user?.type === 'J'" class="block text-sm text-gray-700 font-semibold px-3">{{
+                    storeCoins.gameCoins }} 🪙</div>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
                     @click="handleLinkClick">Perfil</router-link>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
