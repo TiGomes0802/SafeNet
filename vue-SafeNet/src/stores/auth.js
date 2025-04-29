@@ -3,10 +3,12 @@ import {defineStore} from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
 import { useRouter } from 'vue-router'
+import { useCoinsStore } from "@/stores/coins";
 
 export const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
     const storeError = useErrorStore();
+    const storeCoins = useCoinsStore();
     
     //const { toast } = Toaster()
     
@@ -71,7 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
             user.value = responseUser.data.data;
             console.log(user.value);
             repeatRefreshToken();
-            //store coins
+            storeCoins.getCoins();
             router.push({name: "home"});
             return user.value;
         } catch (e) {
@@ -156,7 +158,7 @@ export const useAuthStore = defineStore('auth', () => {
           token.value = storedToken;
           axios.defaults.headers.common.Authorization = "Bearer " + token.value;
           const responseUser = await axios.get("users/me");
-          //storeCoins.getCoins();
+          storeCoins.getCoins();
           user.value = responseUser.data.data;
           repeatRefreshToken();
           return true;

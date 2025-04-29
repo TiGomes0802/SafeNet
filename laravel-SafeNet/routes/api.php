@@ -10,9 +10,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/refreshtoken', [AuthController::class, 'refreshToken']);
 
     Route::get('/users/me', [UserController::class, 'showMe']);
+    Route::get('/users/me/coins', [UserController::class, 'getCoins']);
 
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+
+
+
+

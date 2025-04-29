@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useCoinsStore } from '@/stores/coins'
 
 const storeAuth = useAuthStore()
 const isOpen = ref(false)
 const windowWidth = ref(window.innerWidth)
+const storeCoins = useCoinsStore();
 
 const updateWidth = () => {
     windowWidth.value = window.innerWidth
@@ -97,7 +99,7 @@ const handleLinkClick = () => {
             </div>
 
             <div class="border-t pt-7 space-y-6">
-                <div class="block text-sm text-gray-700 font-semibold px-3">120 🪙</div>
+                <div class="block text-sm text-gray-700 font-semibold px-3">{{ storeCoins.gameCoins }} 🪙</div>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
                     @click="handleLinkClick">Perfil</router-link>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"

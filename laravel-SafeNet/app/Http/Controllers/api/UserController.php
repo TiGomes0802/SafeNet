@@ -42,6 +42,19 @@ class UserController extends Controller
         return new UserResource($request->user());
     }
 
+    public function getCoins(Request $request)
+    {
+        try {
+
+            $user = $request->user();
+            return response()->json(['coins' => $user->moedas]);
+
+        } catch (\Exception $e) {
+            \Log::error('Erro ao buscar moedas: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao buscar moedas'], 500);
+        }
+    }
+
     /**
      * Get all users.
      */
