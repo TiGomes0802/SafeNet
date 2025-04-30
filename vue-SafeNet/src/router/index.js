@@ -12,6 +12,12 @@ import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
 import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
+import CriarJogo from "@/components/jogos/create.vue";
+import EditarJogo from "@/components/jogos/editar.vue";
+import Paginas from "@/components/paginas/index.vue";
+import CriarPaginas from "@/components/paginas/create.vue";
+import EditarPaginas from "@/components/paginas/editar.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,7 +58,6 @@ const router = createRouter({
       component: Loja,
     },
     {
-      //passing the id of the unidade in the url for show the games of the unit
       path: '/unidade/:idUnidade/jogos',
       name: 'Jogos',
       component: Jogo,
@@ -84,6 +89,36 @@ const router = createRouter({
       path: '/backoffice/cursos/:idCurso/unidades',
       name: 'UnidadesCurso',
       component: UnidadesIndex,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/criar',
+      name: 'CriarJogo',
+      component: CriarJogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/:idJogo',
+      name: 'EditarJogo',
+      component: EditarJogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/',
+      name: 'Paginas',
+      component: Paginas,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/criar',
+      name: 'CriarPagianas',
+      component: CriarPaginas,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/:idPagina',
+      name: 'EditarPaginas',
+      component: EditarPaginas,
+      props: true,
     }
   ],
 })
@@ -92,7 +127,6 @@ let handlingFirstRoute = true;
 
 router.beforeEach(async (to, from, next) => {
   const storeAuth = useAuthStore();
-  console.log("teste:" + storeAuth.user)
 
   if (handlingFirstRoute) {
     handlingFirstRoute = false;

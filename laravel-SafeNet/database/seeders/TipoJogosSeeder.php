@@ -15,10 +15,10 @@ class TipoJogosSeeder extends Seeder
         $tiposDeJogos = [
             ['tipo' => 'Verdadeiro/Falso'],
             ['tipo' => 'Escolha Múltipla'],
-            ['tipo' => 'Preencher os espaços em branco'],
             ['tipo' => 'Ordenar'],
-            ['tipo' => 'Arrastar e Soltar'],
-            ['tipo' => 'Completar a frase'],
+            //['tipo' => 'Preencher os espaços em branco'],
+            //['tipo' => 'Arrastar e Soltar'],
+            //['tipo' => 'Completar a frase'],
         ];
 
         foreach ($tiposDeJogos as $tipoDeJogo) {

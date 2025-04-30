@@ -81,6 +81,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('xp');
             $table->boolean('estado');
+            $table->string('pergunta');
             $table->unsignedBigInteger('idUser')->nullable();
             $table->unsignedBigInteger('idGestor');
             $table->unsignedBigInteger('idTipo');

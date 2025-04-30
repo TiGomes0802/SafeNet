@@ -1,0 +1,61 @@
+meta {
+  name: UpdateJogos
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8081/api/jogo/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  /*Verdadeiro e Falso*/
+  {
+    "idUnidade": 3,
+    "xp": 100,
+    "pergunta": "NOVAS",
+    "respostaCerta": ["0", "1", "1", "0"],
+    "respostas": [
+      "Resposta A2",
+      "Resposta B3",
+      "Resposta C4",
+      "Resposta D5"
+    ],
+    "tipoJogo": 1
+  }
+  
+  /*Escolha multipla*/
+  /*{
+    "idUnidade": 1,
+    "xp": 100,
+    "pergunta": "ola",
+    "respostaCerta": "Resposta A",
+    "respostas": [
+      "Resposta A",
+      "Resposta B",
+      "Resposta C",
+      "Resposta D"
+    ],
+    "tipoJogo": 2
+  }*/
+  
+  /*Ordenar*/
+  /*{
+    "idUnidade": 1,
+    "xp": 100,
+    "pergunta": "ola",
+    "respostas": [
+      "Resposta A",
+      "Resposta B",
+      "Resposta C",
+      "Resposta D"
+    ],
+    "tipoJogo": 4
+  }*/
+}

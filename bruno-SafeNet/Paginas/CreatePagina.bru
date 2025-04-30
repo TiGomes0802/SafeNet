@@ -1,0 +1,21 @@
+meta {
+  name: CreatePagina
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8081/api/unidade/1/pagina
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "descricao": "Teste"
+  }
+}
