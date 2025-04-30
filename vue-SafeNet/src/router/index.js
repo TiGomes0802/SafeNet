@@ -8,6 +8,7 @@ import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import CriarJogo from "@/components/jogos/create.vue";
+import EditarJogo from "@/components/jogos/editar.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,12 @@ const router = createRouter({
       path: '/unidade/:idUnidade/jogos/criar',
       name: 'CriarJogo',
       component: CriarJogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/:idJogo',
+      name: 'EditarJogo',
+      component: EditarJogo,
       props: true,
     }
   ],

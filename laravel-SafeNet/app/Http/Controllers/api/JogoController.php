@@ -12,6 +12,33 @@ use App\Models\Unidade;
 
 class JogoController extends Controller
 {
+    public function getJogo($idJogo)
+    {
+        // Verifica se o jogo existe
+        $jogo = Jogo::find($idJogo);
+        if (!$jogo) {
+            return response()->json(['error' => 'Jogo não encontrado'], 404);
+        }
+
+        // Carrega as respostas associadas ao jogo
+        $jogo->load('respostas');
+
+        $jogo = [
+                'id' => $jogo->id,
+                'xp' => $jogo->xp,
+                'pergunta' => $jogo->pergunta,
+                'estado' => $jogo->estado,
+                'gestor' => $jogo->gestor->nome,
+                'tipoJogo' => $jogo->tipoJogo->tipo,
+                'idTipoJogo' => $jogo->tipoJogo->id,
+                'idUnidade' => $jogo->unidade->id,
+                'respostas' => $jogo->respostas,
+            ];
+
+        // Retorna o jogo em formato JSON
+        return response()->json($jogo);
+    }
+
     public function getJogos($idUnidade)
     {
         // Verifica se a unidade existe
@@ -40,9 +67,9 @@ class JogoController extends Controller
                 'xp' => $jogo->xp,
                 'pergunta' => $jogo->pergunta,
                 'estado' => $jogo->estado,
-                'respostaCerta' => $jogo->respostaCerta,
                 'gestor' => $jogo->gestor->nome,
-                'tipo' => $jogo->tipoJogo->tipo,
+                'tipoJogo' => $jogo->tipoJogo->tipo,
+                'idTipoJogo' => $jogo->tipoJogo->id,
                 'respostas' => $jogo->respostas
             ];
         }); 
@@ -70,7 +97,7 @@ class JogoController extends Controller
         $jogo = Jogo::create([
             'xp' => $validatedData['xp'],
             'pergunta' => $validatedData['pergunta'], 
-            'estado' => true,
+            'estado' => false,
             'idGestor' => auth()->user()->id,
             'idTipo' => $validatedData['tipoJogo'],
             'idUnidade' => $idUnidade, 
@@ -113,5 +140,89 @@ class JogoController extends Controller
         // Retorna o jogo criado com as respostas
         $jogo->load('respostas');
         return response()->json($jogo, 201);
-    } 
+    }
+
+    public function updateJogo(Request $request, $idJogo)
+    {
+        // Valida os dados da requisição
+        $validatedData = $request->validate([
+            'xp' => 'required|integer',
+            'pergunta' => 'required|string',       
+            'respostas' => 'required|array',
+            'tipoJogo' => 'required|integer|exists:tipoJogos,id',
+        ]);
+
+
+        // Verifica se o jogo existe
+        $jogo = Jogo::find($idJogo);
+        if (!$jogo) {
+            return response()->json(['error' => 'Jogo não encontrado'], 404);
+        }
+
+        // Atualiza os dados do jogo
+        $jogo->update([
+            'xp' => $validatedData['xp'],
+            'pergunta' => $validatedData['pergunta'],
+            'idTipo' => $validatedData['tipoJogo'],
+        ]);
+
+        if ($validatedData['tipoJogo'] == 1 || $validatedData['tipoJogo'] == 2) {
+            try {
+                $respostaCertaData = $request->validate([
+                    'respostaCerta' => 'required',
+                ]);
+
+                $respostas = [
+                    'respostas' => $validatedData['respostas'],
+                    'respostaCerta' => $respostaCertaData['respostaCerta'],
+                    'idJogo' => $jogo->id,
+                ];
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                $jogo->delete();
+                return response()->json(['error' => 'Resposta correta não fornecida'], 400);
+            }
+        }else{
+            $respostas = [
+                'respostas' => $validatedData['respostas'],
+                'idJogo' => $jogo->id,
+            ];
+        }
+  
+        $respostaController = new RespostaController();
+
+        // apagar as respostas anteriores
+        $jogo->respostas()->delete();
+
+        if($validatedData['tipoJogo'] == 1){
+            $respostaController->createRespostaVerdadeiroFalso($respostas);
+        } elseif($validatedData['tipoJogo'] == 2){
+            $respostaController->createRespostaMultiplaEscolha($respostas);
+        } elseif($validatedData['tipoJogo'] == 4){
+            $respostaController->createRespostasOrdernar($respostas);
+        } else {
+            return response()->json(['error' => 'Tipo de jogo inválido'], 400);
+        }
+
+        // Carrega as respostas associadas ao jogo
+        $jogo->load('respostas');
+
+        // Retorna o jogo atualizado
+        return response()->json($jogo);
+    }
+
+    public function mudarEstadoJogo(Request $request, $idJogo)
+    {
+        // Verifica se o jogo existe
+        $jogo = Jogo::find($idJogo);
+        if (!$jogo) {
+            return response()->json(['error' => 'Jogo não encontrado'], 404);
+        }
+
+        // Altera o estado do jogo
+        $jogo->estado = !$jogo->estado;
+        $jogo->save();
+
+        // Retorna o jogo atualizado
+        return response()->json($jogo);
+    }
 }

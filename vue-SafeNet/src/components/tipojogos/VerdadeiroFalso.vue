@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watch } from 'vue'
+    import { ref, onMounted } from 'vue'
     import { useJogoStore } from '@/stores/jogo'
     import { useRoute } from 'vue-router'
 
@@ -8,11 +8,11 @@
 
     const idUnidade = route.params.idUnidade
 
-    const props = defineProps(['tipoJogo'])
+    const props = defineProps(['modo'])
 
     const jogo = ref({
         idUnidade: idUnidade,
-        xp: 20,
+        xp: 25,
         tipoJogo: 1,
         pergunta: '',
         respostas: ['', '', ''],
@@ -23,7 +23,10 @@
         pergunta: false,
         respostas: [],
         respostaCerta: [], 
+        xp: false,
     });
+
+    console.log(erros.pergunta || erros?.respostas?.length || erros.respostaCerta || erros.xp)
 
     const AdicionarResposta = () => {
         if (jogo.value.respostas.length < 10) {
@@ -47,6 +50,7 @@
         erros.value.pergunta = false
         erros.value.respostas = []
         erros.value.respostaCerta = []
+        erros.value.xp = false
 
         // Verifica se há pergunta vazias
         jogo.value.respostas.forEach((pergunta, i) => {
@@ -68,16 +72,38 @@
             erros.value.pergunta = true
         }
 
+        // Verifica se o XP é válido
+        if (jogo.value.xp == null || jogo.value.xp === '' || jogo.value.xp < 0 || jogo.value.xp > 100) {
+            erros.value.xp = true
+        }
+
         // Se houver erros, não prossegue
-        if (erros.value.respostas.length > 0 || erros.value.respostaCerta.length > 0 || erros.value.pergunta) {
+        if (erros.value.pergunta || erros.value.respostas.length > 0 || erros.value.respostaCerta || erros.value.xp) {
             return
         }
 
         jogo.value.pergunta = jogo.value.pergunta.trim()
 
-        console.log('Dados do jogo:', jogo.value)
-        jogoStore.createJogo(jogo.value)
+        if (props.modo === 'editar' && jogoStore.jogo) {
+            jogoStore.updateJogo(jogo.value)
+        } else{
+            jogoStore.createJogo(jogo.value)
+        }
+
     };
+
+
+    onMounted(async () => {
+        if (props.modo === 'editar' && jogoStore.jogo) {
+            jogo.value.idUnidade = jogoStore.jogo.idUnidade;
+            jogo.value.xp = jogoStore.jogo.xp;
+            jogo.value.pergunta = jogoStore.jogo.pergunta;
+            for (let i = 0; i < jogoStore.jogo.respostas.length; i++) {
+                jogo.value.respostas[i] = jogoStore.jogo.respostas[i].resposta;
+                jogo.value.respostaCerta[i] = jogoStore.jogo.respostas[i].certa == 1 ? 1 : 0;
+            }
+        }
+    });
 
 </script>
 <template>
@@ -85,6 +111,15 @@
         <div class="mb-4">
             <label class="block font-semibold mb-1">Pergunta guia:</label>
             <textarea v-model="jogo.pergunta" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros.pergunta ? 'border-red-500' : 'border-black'" rows="3" />
+        </div>
+        <div class="mb-4">
+            <label class="block font-semibold mb-1">XP:</label>
+            <select v-model="jogo.xp" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros.xp ? 'border-red-500' : 'border-black'">
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+            </select>
         </div>
         <label class="block font-semibold mb-1">Pergunta:</label>
         <div v-for="(resposta, index) in jogo.respostas" :key="index" class="flex items-center mb-4 gap-x-2 gap-y-2 flex-wrap lg:flex-nowrap">
@@ -106,13 +141,20 @@
         </div>
     </div>
 
-    <p v-if="erros?.respostas?.length || erros?.respostaCerta?.length || erros.pergunta" class="text-red-600 text-md font-bold mt-4 mb-4">
+    <p v-if="erros.pergunta || erros?.respostas?.length || erros?.respostaCerta?.length  || erros.xp" class="text-red-600 text-md font-bold mt-4 mb-4">
         Por favor preencha todos os campos antes de criar a pergunta.
     </p>
 
-    <button @click="criarPergunta" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
-        Criar pergunta
-    </button>
+    <div v-if="props.modo === 'editar' && jogoStore.jogo" class="mb-4">
+        <button @click="criarPergunta" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
+            Atualizar pergunta
+        </button>
+    </div>
+    <div v-else class="mb-4">
+        <button @click="criarPergunta" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
+            Criar pergunta
+        </button>
+    </div>
 
 
 </template>
