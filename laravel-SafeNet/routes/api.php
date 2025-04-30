@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/me/coins', [UserController::class, 'getCoins']);
     Route::post('/users/perderVida', [UserController::class, 'perderVida']);
     Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
+    Route::get('/users/getVidas', [UserController::class, 'getVidas']);
 
     Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'getTiposJogos']);
     

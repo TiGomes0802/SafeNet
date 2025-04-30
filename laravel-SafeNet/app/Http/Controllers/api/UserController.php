@@ -136,6 +136,13 @@ class UserController extends Controller
         }
     }
 
+    public function getVidas(Request $request)
+    {
+        //O utilizador que esta logado tem vidas
+        $user = $request->user();
+        return response()->json(['vidas' => $user->vida], 200);
+    }
+
     /**
      * Lost 1 life.
      * @param Request $request
@@ -145,22 +152,27 @@ class UserController extends Controller
         //O utilizador perdeu uma vida que esta logado perde uma vida não pode ser menor que 0
         $user = $request->user();
         
-        if ($user->vidas > 0) {
-            $user->vidas -= 1;
+        if ($user->vida > 0) {
+            $user->vida -= 1;
             $user->save();
-            return response()->json(['message' => 'O utilizador perdeu uma vida com sucesso', 'vidas' => $user->vidas], 200);
+            return response()->json(['message' => 'O utilizador perdeu uma vida com sucesso', 'vidas' => $user->vida], 200);
         } else {
-            return response()->json(['message' => 'User has no vidas left'], 400);
+            return response()->json(['message' => 'O utilizador já não tem vidas'], 400);
         }
     }
 
-    public function ganharVidas(Request $request, $numVidas)
+    public function ganharVidas(Request $request)
     {
+        //Validate the request
+        $request->validate([
+            'numVidas' => 'required|integer|min:1',
+        ]);
+
         //O utilizador ganhou uma vida que esta logado ganha uma vida
         $user = $request->user();
-        $user->vidas += $numVidas;
+        $user->vida += $request->numVidas;
         $user->save();
-        return response()->json(['message' => 'User gained a life successfully', 'vidas' => $user->vidas], 200);
+        return response()->json(['message' => 'O utilizador ganhou vidas com sucesso', 'vidas' => $user->vida], 200);
     }
     
 
