@@ -37,11 +37,6 @@ class PaginaController extends Controller
                         ->orderBy('ordem', 'asc')
                         ->get();
         
-        // Verifica se existem páginas associadas à unidade
-        if ($paginas->isEmpty()) {
-            return response()->json(['message' => 'Nenhuma página encontrada para esta unidade'], 404);
-        }
-
         return response()->json($paginas);
     }
 
@@ -94,6 +89,11 @@ class PaginaController extends Controller
             'paginas.*.descricao' => 'required|string|max:255',
             'paginas.*.ordem' => 'required|integer',
         ]);
+        
+        $ordens = array_column($validatedData['paginas'], 'ordem');
+        if (count($ordens) !== count(array_unique($ordens))) {
+            return response()->json(['error' => 'As ordens têm de ser únicas.'], 422);
+        }
         
         // Atualiza cada página com os dados fornecidos
         foreach ($validatedData['paginas'] as $paginaData) {

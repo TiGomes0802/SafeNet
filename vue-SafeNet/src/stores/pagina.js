@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
 import { useRouter } from 'vue-router'
 
-export const usePaginasStore = defineStore('pagina', () => {
+export const usePaginaStore = defineStore('pagina', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     
@@ -62,12 +62,14 @@ export const usePaginasStore = defineStore('pagina', () => {
         }
     }
 
-    const updatePagina = async (pagina) => {
+    const updatePaginas = async (paginas) => {
         try {
-            const response = await axios.put("pagina/" + pagina.id, pagina);
+            console.log(paginas);
+            const response = await axios.put("paginas/updatePaginas", {paginas: paginas});
             if (response.status === 200) {
                 router.push({ name: "Paginas", params: { idUnidade: pagina.idUnidade } });
             }
+            getPaginas(pagina.idUnidade);
             return true;
         } catch (e) {
             console.log("Error updating page:", e);
@@ -87,6 +89,6 @@ export const usePaginasStore = defineStore('pagina', () => {
         getPaginas,
         getPagina,
         createPagina,
-        updatePagina,
+        updatePaginas,
     }
 })
