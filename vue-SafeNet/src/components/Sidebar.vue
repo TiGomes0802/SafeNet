@@ -105,7 +105,7 @@ const handleLinkClick = () => {
                 <div v-if="storeAuth.user?.type === 'G' || storeAuth.user?.type === 'A'" class="pt-8">
                     <h2 class="text-sm font-semibold text-gray-500 mb-4 px-3">Gestão</h2>
                     <nav class="space-y-2 flex flex-col justify-start">
-                        <router-link to="/gestao/cursos"
+                        <router-link to="/backoffice/cursos"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -120,7 +120,7 @@ const handleLinkClick = () => {
                             <span>Cursos</span>
                         </router-link>
 
-                        <router-link to="/gestao/estatisticas"
+                        <router-link to="/backoffice/estatisticas"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -134,7 +134,7 @@ const handleLinkClick = () => {
                             <span>Estatísticas</span>
                         </router-link>
 
-                        <router-link to="/gestao/reports"
+                        <router-link to="/backoffice/reports"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -148,7 +148,7 @@ const handleLinkClick = () => {
                             <span>Reports</span>
                         </router-link>
 
-                        <router-link to="/gestao/users"
+                        <router-link to="/backoffice/users"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
