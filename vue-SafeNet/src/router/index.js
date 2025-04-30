@@ -10,6 +10,8 @@ import Jogo from "@/components/jogos/index.vue";
 import CursosIndex from '@/components/cursos/index.vue'
 import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
+import UnidadeView from '@/components/unidades/UnidadeView.vue';
+import UnidadesIndex from '@/components/unidades/index.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,6 +75,16 @@ const router = createRouter({
       name: 'CursosEdit',
       component: CursosEdit,
     },
+    {
+      path: '/curso/:curso/unidade/:idUnidade',
+      name: 'Unidade',
+      component: UnidadeView,
+    },
+    {
+      path: '/backoffice/cursos/:idCurso/unidades',
+      name: 'UnidadesCurso',
+      component: UnidadesIndex,
+    }
   ],
 })
 

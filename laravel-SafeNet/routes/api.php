@@ -17,7 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
     Route::get('cursos', [CursoController::class, 'index']);
     Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
-    //Route::post('cursos', [CursoController::class, 'createCurso']);
+    Route::post('cursos', [CursoController::class, 'createCurso']);
     Route::put('cursos/{idCurso}', [CursoController::class, 'update']);
 
     Route::get('/unidades/{idCurso}', [UnidadeController::class, 'index']);
@@ -29,8 +29,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 
-
-
-// Route sem autenticação (para testes rápidos)
-Route::post('cursos', [CursoController::class, 'createCurso']);
 
