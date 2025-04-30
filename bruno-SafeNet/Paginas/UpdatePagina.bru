@@ -10,10 +10,16 @@ put {
   auth: inherit
 }
 
+headers {
+  Authorization: Bearer {{token}}
+}
+
 body:json {
-  [
-    { "descricao": "Página 1", "ordem": 1 },
-    { "descricao": "Página 2", "ordem": 2 },
-    { "descricao": "Página 3", "ordem": 3 }
-  ]
+  {
+      "paginas": [
+          { "id": 1, "descricao": "Página 1 Atualizada", "ordem": 3 },
+          { "id": 2, "descricao": "Página 2 Atualizada", "ordem": 2 },
+          { "id": 3, "descricao": "Página 3 Atualizada", "ordem": 1 }
+      ]
+  }
 }

@@ -21,7 +21,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
 
-    // getPaginas getPagina createPagina e updatePagina
     Route::get('/unidade/{idUnidade}/getPaginas', [PaginaController::class, 'getPaginas']);
     Route::get('/pagina/{idPagina}', [PaginaController::class, 'getPagina']);
     Route::post('/unidade/{idUnidade}/pagina', [PaginaController::class, 'createPagina']);
