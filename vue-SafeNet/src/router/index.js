@@ -9,6 +9,10 @@ import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
+import Paginas from "@/components/paginas/index.vue";
+import CriarPaginas from "@/components/paginas/create.vue";
+import EditarPaginas from "@/components/paginas/editar.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +68,24 @@ const router = createRouter({
       path: '/unidade/:idUnidade/jogos/:idJogo',
       name: 'EditarJogo',
       component: EditarJogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/',
+      name: 'Paginas',
+      component: Paginas,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/criar',
+      name: 'CriarPagianas',
+      component: CriarPaginas,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/paginas/:idPagina',
+      name: 'EditarPaginas',
+      component: EditarPaginas,
       props: true,
     }
   ],
