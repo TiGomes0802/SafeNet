@@ -16,7 +16,7 @@ class JogosSeeder extends Seeder
             [
                 'xp' => 10,
                 'pergunta' => 'Qual é a capital de Portugal?',
-                'estado' => true,
+                'estado' => false,
                 'idGestor' => 6,
                 'idTipo' => 1,
                 'idUnidade' => 1,
@@ -24,7 +24,7 @@ class JogosSeeder extends Seeder
             [
                 'xp' => 20,
                 'pergunta' => 'Qual é a capital de Espanha?',
-                'estado' => true,
+                'estado' => false,
                 'idGestor' => 6,
                 'idTipo' => 2,
                 'idUnidade' => 1,
@@ -40,9 +40,9 @@ class JogosSeeder extends Seeder
             [
                 'xp' => 40,
                 'pergunta' => 'Qual é a capital de Itália?',
-                'estado' => true,
+                'estado' => false,
                 'idGestor' => 6,
-                'idTipo' => 4,
+                'idTipo' => 1,
                 'idUnidade' => 2,
             ],
   

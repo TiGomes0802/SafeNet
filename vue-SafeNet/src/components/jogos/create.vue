@@ -35,32 +35,18 @@
     <div class="flex">
         <Sidebar />
         <div class="flex-1 px-4 pt-6 sm:px-6 md:px-9 md:pt-7 lg:px-12 lg:pt-9 xl:px-16 xl:pt-10 bg-gray-200 w-screen h-screen overflow-y-scroll">
-        <h1 class="text-3xl font-bold mb-4">Criar Pergunta</h1>
-    
-        <div class="mb-4">
-            <label class="block font-semibold mb-1">Tipo de Pergunta:</label>
-            <select v-model="tipoJogo" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
-            <option v-for="tipo in tiposJogos" :key="tipo.id" :value="tipo.id">{{ tipo.tipo }}</option>            
-            </select>
-        </div>
-    
-        <VerdadeiroFalso v-if="tipoJogo === 1" />
-
-        <EscolhaMultipla v-if="tipoJogo === 2" />
+            <h1 class="text-3xl font-bold mb-4">Criar Pergunta</h1>
         
-        <div v-else-if="tipoJogo === 3">
-            
-        </div>
-
-        <Ordernar v-if="tipoJogo === 4" />
-
-        <div v-else-if="tipoJogo === 5">
-            
-        </div>
-        <div v-else-if="tipoJogo === 6">
-            
-        </div>
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Tipo de Pergunta:</label>
+                <select v-model="tipoJogo" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
+                <option v-for="tipo in tiposJogos" :key="tipo.id" :value="tipo.id">{{ tipo.tipo }}</option>            
+                </select>
+            </div>
         
+            <VerdadeiroFalso v-if="tipoJogo === 1" />
+            <EscolhaMultipla v-if="tipoJogo === 2" />
+            <Ordernar v-if="tipoJogo === 3" />
         </div>  
     </div>
 </template>

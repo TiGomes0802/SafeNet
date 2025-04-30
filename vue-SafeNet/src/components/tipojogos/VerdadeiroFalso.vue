@@ -26,8 +26,6 @@
         xp: false,
     });
 
-    console.log(erros.pergunta || erros?.respostas?.length || erros.respostaCerta || erros.xp)
-
     const AdicionarResposta = () => {
         if (jogo.value.respostas.length < 10) {
             jogo.value.respostas.push('')
@@ -77,16 +75,21 @@
             erros.value.xp = true
         }
 
+        console.log('jogo', jogo.value)
+
         // Se houver erros, não prossegue
-        if (erros.value.pergunta || erros.value.respostas.length > 0 || erros.value.respostaCerta || erros.value.xp) {
+        if (erros.value.pergunta || erros.value.respostas.length > 0 || erros?.respostaCerta?.length || erros.value.xp) {
             return
         }
 
         jogo.value.pergunta = jogo.value.pergunta.trim()
 
+        
         if (props.modo === 'editar' && jogoStore.jogo) {
+            console.log('atualizando jogo', jogo.value)
             jogoStore.updateJogo(jogo.value)
         } else{
+            console.log('criando jogo', jogo.value)
             jogoStore.createJogo(jogo.value)
         }
 

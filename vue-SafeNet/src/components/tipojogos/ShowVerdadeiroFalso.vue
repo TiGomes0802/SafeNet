@@ -1,14 +1,10 @@
 <script setup>
-    import { ref } from 'vue'
-
     const props = defineProps({
         respostas: {
             type: Array,
             required: true
         }
     })
-
-
 </script>
 <template>
     <div class="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">

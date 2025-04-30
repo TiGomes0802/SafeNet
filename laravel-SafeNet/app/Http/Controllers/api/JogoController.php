@@ -131,7 +131,7 @@ class JogoController extends Controller
             $respostaController->createRespostaVerdadeiroFalso($respostas);
         } elseif($validatedData['tipoJogo'] == 2){
             $respostaController->createRespostaMultiplaEscolha($respostas);
-        } elseif($validatedData['tipoJogo'] == 4){
+        } elseif($validatedData['tipoJogo'] == 3){
             $respostaController->createRespostasOrdernar($respostas);
         } else {
             return response()->json(['error' => 'Tipo de jogo inválido'], 400);
@@ -197,7 +197,7 @@ class JogoController extends Controller
             $respostaController->createRespostaVerdadeiroFalso($respostas);
         } elseif($validatedData['tipoJogo'] == 2){
             $respostaController->createRespostaMultiplaEscolha($respostas);
-        } elseif($validatedData['tipoJogo'] == 4){
+        } elseif($validatedData['tipoJogo'] == 3){
             $respostaController->createRespostasOrdernar($respostas);
         } else {
             return response()->json(['error' => 'Tipo de jogo inválido'], 400);

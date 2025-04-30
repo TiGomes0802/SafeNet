@@ -32,10 +32,7 @@
 
             <VerdadeiroFalso v-if="jogoStore.jogo.idTipoJogo === 1" :modo="'editar'"/>
             <EscolhaMultipla v-if="jogoStore.jogo.idTipoJogo === 2" :modo="'editar'"/>
-            <div v-else-if="jogoStore.jogo.idTipoJogo === 3"></div>
-            <Ordernar v-if="jogoStore.jogo.idTipoJogo === 4" :modo="'editar'"/>
-            <div v-else-if="jogoStore.jogo.idTipoJogo === 5"></div>
-            <div v-else-if="jogoStore.jogo.idTipoJogo === 6"></div>
+            <Ordernar v-if="jogoStore.jogo.idTipoJogo === 3" :modo="'editar'"/>
         </div> 
         <div v-else class="flex items-center justify-center w-full h-screen">
             <p class="text-xl font-medium">A carregar o jogo...</p>

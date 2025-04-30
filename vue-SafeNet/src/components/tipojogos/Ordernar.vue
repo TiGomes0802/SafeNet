@@ -14,7 +14,7 @@
   const jogo = ref({
     idUnidade: idUnidade,
     xp: 25,
-    tipoJogo: 4,
+    tipoJogo: 3,
     pergunta: '',
     respostas: ['', '', ''], 
   })
