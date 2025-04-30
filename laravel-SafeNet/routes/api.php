@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\JogoController;
+use App\Http\Controllers\api\CursoController;
+use App\Http\Controllers\api\UnidadeController;
 use App\Http\Controllers\api\TipoJogoController;
 use App\Http\Controllers\api\PaginaController;
 
@@ -12,6 +14,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/refreshtoken', [AuthController::class, 'refreshToken']);
 
     Route::get('/users/me', [UserController::class, 'showMe']);
+    Route::get('/users/me/coins', [UserController::class, 'getCoins']);
     Route::post('/users/perderVida', [UserController::class, 'perderVida']);
     Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
 
@@ -21,6 +24,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/jogo/{idJogo}/estado', [JogoController::class, 'mudarEstadoJogo']);
     Route::put('/jogo/{idJogo}', [JogoController::class, 'updateJogo']);
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
+  
+    Route::get('cursos', [CursoController::class, 'index']);
+    Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
+    Route::post('cursos', [CursoController::class, 'createCurso']);
+    Route::put('cursos/{idCurso}', [CursoController::class, 'update']);
+
+    Route::get('/unidades/{idCurso}', [UnidadeController::class, 'index']);
+    Route::get('/unidades/{idCurso}/{idUnidade}', [UnidadeController::class, 'show']);
+    Route::post('/unidades/{idCurso}', [UnidadeController::class, 'createUnidade']);
+    Route::put('/unidade/{idCurso}/{idUnidade}', [UnidadeController::class, 'update']);
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
     Route::get('/unidade/{idUnidade}/jogo/start', [JogoController::class, 'comecarJogo']);
 
@@ -32,3 +45,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+

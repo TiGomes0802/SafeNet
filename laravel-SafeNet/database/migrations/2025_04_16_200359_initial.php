@@ -33,20 +33,20 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Tabela Curso (id, ordem, status)
+        // Tabela Curso (id, ordem, estado)
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('status');
+            $table->string('estado');
         });
 
-        // Tabela Unidade (id, titulo, ordem, status, idCurso)
+        // Tabela Unidade (id, titulo, ordem, estado, idCurso)
         Schema::create('unidades', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->text('descricao');
             $table->integer('ordem');
-            $table->boolean('status');
+            $table->boolean('estado');
             $table->unsignedBigInteger('idCurso');
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
         });

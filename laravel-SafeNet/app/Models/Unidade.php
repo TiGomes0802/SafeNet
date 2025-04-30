@@ -14,7 +14,7 @@ class Unidade extends Model
         'titulo',
         'descricao',
         'ordem',
-        'status',
+        'estado',
         'idCurso',
     ];
 
