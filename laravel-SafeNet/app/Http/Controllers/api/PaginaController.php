@@ -76,8 +76,12 @@ class PaginaController extends Controller
             return response()->json(['error' => 'Erro ao criar a página'], 500);
         }
     
-        // Retorna a página criada com status 201 (Criado)
-        return response()->json($pagina, 201);
+        // retorna todas as páginas da unidade
+        $paginas = Pagina::where('idUnidade', $idUnidade)
+                        ->orderBy('ordem', 'asc')
+                        ->get();
+
+        return response()->json($paginas, 201);
     }
     
 

@@ -1,10 +1,9 @@
 <script setup>
     import { ref, onMounted, watch } from 'vue'
-    import { useRouter } from 'vue-router'
     import { usePaginaStore } from '@/stores/pagina'
     import Sidebar from '@/components/Sidebar.vue'
+    import CreatePagina from '@/components/paginas/create.vue'
 
-    const router = useRouter()
     const paginaStore = usePaginaStore()
 
     const paginas = ref([])
@@ -25,11 +24,13 @@
     const cancelarEdicao = () => {
         edicao.value = false
         paginas.value = paginaStore.paginas
+        console.log('cancelarEdicao', paginaStore.paginas)
+        console.log('cancelarEdicao', paginas.value)
     }
 
     const desativarEdicao = () => {
         edicao.value = false
-        paginaStore.updatePaginas(paginas.value)
+        paginaStore.updatePaginas(paginas.value, props.idUnidade)
     }
 
     watch(paginas, (novasPaginas) => {
@@ -37,30 +38,35 @@
             const ordemAntiga = paginasAnteriores.value[i]?.ordem
             const ordemNova = pagina.ordem
 
+            // Verifica se houve mudança na ordem
             if (ordemAntiga !== ordemNova) {
-            const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
+                // Encontrar a página com a ordem nova para trocar
+                const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
 
-            if (paginaEmConflito) {
-                paginaEmConflito.ordem = ordemAntiga
-            }
+                if (paginaEmConflito) {
+                    // Troca as ordens entre páginas
+                    paginaEmConflito.ordem = ordemAntiga
+                }
             }
         })
+
+        // Atualiza a cópia profunda após as mudanças
         paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
     }, { deep: true })
+
 
     watch(
         () => paginaStore.paginas,
         (novasPaginas) => {
             console.log('paginaStore.paginas foi atualizado:', novasPaginas)
             paginas.value = novasPaginas
-        },
-        { deep: true }
+        }
     )
 
     onMounted(async () => {
         await paginaStore.getPaginas(props.idUnidade);
-        paginas.value = paginaStore.paginas
-        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value)) // cópia profunda
+        paginas.value = JSON.parse(JSON.stringify(paginaStore.paginas))
+        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
     });
 
 </script>
@@ -71,19 +77,24 @@
         <div class="flex-1 bg-gray-200 w-screen h-screen overflow-y-scroll">
             <div class="row w-5/6 justify-center mx-auto mt-4 pt-10">
                 <p class="text-3xl mb-3">Páginas</p>
-                <div v-if="edicao" class="flex justify-end mb-3">
-                    <button @click="cancelarEdicao" class="bg-gray-300 hover:bg-red-400 text-black font-semibold py-2 px-4 rounded mr-2">
-                        Cancelar Edição
-                    </button>
-                    <button @click="desativarEdicao" class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
-                        Salvar Edição
-                    </button>
+                <div v-if="paginas.length > 0 ">
+                    <div v-if="edicao" class="flex justify-end mb-3">
+                        <button @click="cancelarEdicao" class="bg-gray-300 hover:bg-red-400 text-black font-semibold py-2 px-4 rounded mr-2">
+                            Cancelar Edição
+                        </button>
+                        <button @click="desativarEdicao" class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
+                            Salvar Edição
+                        </button>
+                    </div>
+                    <div v-else>
+                        <button @click="ativarEdicao" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
+                            Ativar Edição
+                        </button>
+                    </div>
                 </div>
-                <div v-else>
-                    <button @click="ativarEdicao" class="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded">
-                        Ativar Edição
-                    </button>
-                </div>    
+                <div v-else class="flex justify-center mb-3">
+                    <p class="text-lg"> Ainda não foram criadas páginas para esta unidade </p>
+                </div>
                 <div v-if="edicao" class="flex flex-col gap-y-7 px-5 pt-3">
                     <div v-for="(pagina, index) in paginas" :key="pagina.id">
                         <div class="bg-white p-4 rounded-lg shadow-xl flex flex-col gap-y-1">
@@ -95,7 +106,7 @@
                                 </div>
                                 <div class="mb-4 w-1/10 flex justify-center items-center">
                                     <select v-model="pagina.ordem" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
-                                        <option v-for="n in paginas.length" :key="n" :value="n"> {{ n }}º </option>
+                                        <option v-for="n in paginas.length" :key="n" :value="n">{{ n }}º</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,6 +119,9 @@
                             <p class="text-2xl">{{ index + 1 }}º Página</p>
                             <p class="text-lg py-2">{{ pagina.descricao }}</p>
                         </div>
+                    </div>
+                    <div>
+                        <CreatePagina :idUnidade="props.idUnidade" />
                     </div>
                 </div>
             </div>

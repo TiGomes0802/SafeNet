@@ -43,11 +43,11 @@ export const usePaginaStore = defineStore('pagina', () => {
         }
     }
 
-    const createPagina = async (pagina) => {
+    const createPagina = async (idUnidade, descricao) => {
         try {
-            const response = await axios.post("unidade/" + pagina.idUnidade + "/pagina", pagina);
+            const response = await axios.post("unidade/" + idUnidade + "/pagina", {descricao: descricao});
             if (response.status === 201) {
-                router.push({ name: "Paginas", params: { idUnidade: pagina.idUnidade } });
+                paginas.value = (response.data);
             }
             return true;
         } catch (e) {
@@ -62,14 +62,13 @@ export const usePaginaStore = defineStore('pagina', () => {
         }
     }
 
-    const updatePaginas = async (paginas) => {
+    const updatePaginas = async (paginas, idUnidade) => {
         try {
             console.log(paginas);
             const response = await axios.put("paginas/updatePaginas", {paginas: paginas});
             if (response.status === 200) {
-                router.push({ name: "Paginas", params: { idUnidade: pagina.idUnidade } });
+                getPaginas(idUnidade);
             }
-            getPaginas(pagina.idUnidade);
             return true;
         } catch (e) {
             console.log("Error updating page:", e);
