@@ -6,6 +6,9 @@ import Register from "@/components/auth/Register.vue";
 import Missoes from "@/components/missoes/Missoes.vue";
 import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
+import Jogo from "@/components/jogos/index.vue";
+import CriarJogo from "@/components/jogos/create.vue";
+import EditarJogo from "@/components/jogos/editar.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +48,24 @@ const router = createRouter({
       name: 'Loja',
       component: Loja,
     },
+    {
+      path: '/unidade/:idUnidade/jogos',
+      name: 'Jogos',
+      component: Jogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/criar',
+      name: 'CriarJogo',
+      component: CriarJogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/:idJogo',
+      name: 'EditarJogo',
+      component: EditarJogo,
+      props: true,
+    }
   ],
 })
 
@@ -59,7 +80,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // user is not logged in
-  if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
+  /*if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
 
     next({ name: "login" });
     return;
@@ -68,7 +89,7 @@ router.beforeEach(async (to, from, next) => {
   if ((to.name === "login" || to.name === "register") && storeAuth.user) {
     next({ name: "home" });
     return;
-  }
+  }*/
 
   // user is logged in
 

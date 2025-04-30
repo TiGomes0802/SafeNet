@@ -80,8 +80,9 @@ return new class extends Migration {
         Schema::create('jogos', function (Blueprint $table) {
             $table->id();
             $table->integer('xp');
-            $table->string('estado');
-            $table->unsignedBigInteger('idUser');
+            $table->boolean('estado');
+            $table->string('pergunta');
+            $table->unsignedBigInteger('idUser')->nullable();
             $table->unsignedBigInteger('idGestor');
             $table->unsignedBigInteger('idTipo');
             $table->unsignedBigInteger('idUnidade');

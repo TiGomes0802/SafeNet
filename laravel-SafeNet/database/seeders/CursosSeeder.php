@@ -19,10 +19,7 @@ class CursosSeeder extends Seeder
         ];
 
         foreach ($cursos as $curso) {
-            Curso::create([
-                'nome' => $curso['nome'],
-                'status' => $curso['status'],
-            ]);
+            Curso::create($curso);
         }
     }
 }

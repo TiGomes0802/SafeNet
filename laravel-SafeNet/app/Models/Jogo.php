@@ -13,9 +13,10 @@ class Jogo extends Model
     protected $fillable = [
         'xp',
         'estado',
+        'pergunta',
         'idUser',
         'idGestor',
-        'idTipoJogo',
+        'idTipo',
         'idUnidade',
     ];
 
@@ -36,7 +37,7 @@ class Jogo extends Model
 
     public function tipoJogo()
     {
-        return $this->belongsTo(TipoJogo::class, 'idTipoJogo');
+        return $this->belongsTo(TipoJogo::class, 'idTipo');
     }
 
     public function unidade()

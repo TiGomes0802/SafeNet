@@ -20,13 +20,7 @@ class UnidadesSeeder extends Seeder
         ];
 
         foreach ($unidades as $unidade) {
-            Unidade::create([
-                'titulo' => $unidade['titulo'],
-                'descricao' => $unidade['descricao'],
-                'ordem' => $unidade['ordem'],
-                'status' => $unidade['status'],
-                'idCurso' => $unidade['idCurso'],
-            ]);
+            Unidade::create($unidade);
         }
     }
 }
