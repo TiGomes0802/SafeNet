@@ -14,8 +14,8 @@ class CursosSeeder extends Seeder
     public function run(): void
     {
         $cursos = [
-            ['nome' => 'Curso 1', 'status'=> true],
-            ['nome' => 'Curso 2', 'status'=> true],
+            ['nome' => 'Curso 1', 'estado'=> true],
+            ['nome' => 'Curso 2', 'estado'=> true],
         ];
 
         foreach ($cursos as $curso) {

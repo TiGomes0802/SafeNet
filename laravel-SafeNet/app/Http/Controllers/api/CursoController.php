@@ -29,11 +29,12 @@ class CursoController extends Controller
     {
         // Valida os dados recebidos
         $validatedData = $request->validate([
-            'status' => 'required|boolean',
+            'nome' => 'required|string|max:255',
         ]);
         
         $curso = Curso::create([
-            'status' => $validatedData['status'],
+            'nome' => $validatedData['nome'],
+            'estado' => false,
         ]);
 
         return response()->json($curso, 201);
@@ -42,17 +43,20 @@ class CursoController extends Controller
     public function update(Request $request, $idCurso)
     {
         $curso = Curso::find($idCurso);
+
         if (!$curso) {
             return response()->json(['error' => 'Curso não encontrado'], 404);
         }
 
         // Valida os dados recebidos
         $validatedData = $request->validate([
-            'status' => 'required|boolean',
+            'nome' => 'required|string|max:255',
+            'estado' => 'required|boolean',
         ]);
 
         $curso->update([
-            'status' => $validatedData['status'],
+            'nome' => $validatedData['nome'],
+            'estado' => $validatedData['estado'],
         ]);
 
         return response()->json($curso);

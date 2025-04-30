@@ -49,14 +49,14 @@ class UnidadeController extends Controller
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
             'ordem' => 'required|integer',
-            'status' => 'required|boolean',
+            'estado' => 'required|boolean',
         ]);
 
         $unidade = Unidade::create([
             'titulo' => $validatedData['titulo'],
             'descricao' => $validatedData['descricao'],
             'ordem' => $validatedData['ordem'],
-            'status' => $validatedData['status'],
+            'estado' => $validatedData['estado'],
             'idCurso' => $idCurso,
         ]);
 
@@ -80,14 +80,14 @@ class UnidadeController extends Controller
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
             'ordem' => 'required|integer',
-            'status' => 'required|boolean',
+            'estado' => 'required|boolean',
         ]);
 
         $unidade->update([
             'titulo' => $validatedData['titulo'],
             'descricao' => $validatedData['descricao'],
             'ordem' => $validatedData['ordem'],
-            'status' => $validatedData['status'],
+            'estado' => $validatedData['estado'],
         ]);
 
         return response()->json($unidade);

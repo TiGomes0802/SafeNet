@@ -16,15 +16,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
     Route::get('cursos', [CursoController::class, 'index']);
-    Route::get('curso/{idCurso}', [CursoController::class, 'show']);
-    Route::post('curso', [CursoController::class, 'createCurso']); 
-    Route::put('curso/{idCurso}', [CursoController::class, 'update']);
+    Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
+    //Route::post('cursos', [CursoController::class, 'createCurso']);
+    Route::put('cursos/{idCurso}', [CursoController::class, 'update']);
 
-    Route::get('/unidade/{idCurso}', [UnidadeController::class, 'index']);
-    Route::get('/unidade/{idCurso}/{idUnidade}', [UnidadeController::class, 'show']);
-    Route::post('/unidade/{idCurso}', [UnidadeController::class, 'createUnidade']);
+    Route::get('/unidades/{idCurso}', [UnidadeController::class, 'index']);
+    Route::get('/unidades/{idCurso}/{idUnidade}', [UnidadeController::class, 'show']);
+    Route::post('/unidades/{idCurso}', [UnidadeController::class, 'createUnidade']);
     Route::put('/unidade/{idCurso}/{idUnidade}', [UnidadeController::class, 'update']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+
+
+// Route sem autenticação (para testes rápidos)
+Route::post('cursos', [CursoController::class, 'createCurso']);
+

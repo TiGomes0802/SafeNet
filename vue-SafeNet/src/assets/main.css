@@ -153,3 +153,50 @@
     }
   }
 }
+
+@layer components {
+  .page-container {
+      @apply p-6 max-w-4xl mx-auto;
+  }
+
+  .page-title {
+      @apply text-2xl font-semibold mb-6;
+  }
+
+  .btn-primary {
+      @apply bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition;
+  }
+
+  .btn-secondary {
+      @apply bg-gray-200 text-gray-800 py-1 px-3 rounded hover:bg-gray-300 transition;
+  }
+
+  .form {
+      @apply flex flex-col gap-4;
+  }
+
+  .input {
+      @apply border border-gray-300 rounded px-4 py-2;
+  }
+
+  .label {
+      @apply font-medium text-gray-700;
+  }
+
+  .table-container {
+      @apply mt-6;
+  }
+
+  .table {
+      @apply w-full table-auto border-collapse;
+  }
+
+  .table th,
+  .table td {
+      @apply border border-gray-200 px-4 py-2 text-left;
+  }
+
+  .table th {
+      @apply bg-gray-100;
+  }
+}

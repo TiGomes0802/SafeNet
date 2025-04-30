@@ -11,7 +11,8 @@ class Curso extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'status',
+        'nome',
+        'estado',
     ];
 
     public function linksExternos()
