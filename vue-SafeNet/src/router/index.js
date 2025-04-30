@@ -7,6 +7,11 @@ import Missoes from "@/components/missoes/Missoes.vue";
 import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
+import CursosIndex from '@/components/cursos/index.vue'
+import CursosCreate from '@/components/cursos/create.vue'
+import CursosEdit from '@/components/cursos/edit.vue'
+import UnidadeView from '@/components/unidades/UnidadeView.vue';
+import UnidadesIndex from '@/components/unidades/index.vue';
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
@@ -57,6 +62,33 @@ const router = createRouter({
       name: 'Jogos',
       component: Jogo,
       props: true,
+      // what props do: the props option allows you to pass the route params as props to the component.
+
+    },
+    {
+      path: '/backoffice/cursos',
+      name: 'CursosIndex',
+      component: CursosIndex,
+    },
+    {
+      path: '/backoffice/cursos/create',
+      name: 'CursosCreate',
+      component: CursosCreate,
+    },
+    {
+      path: '/backoffice/cursos/:id/edit',
+      name: 'CursosEdit',
+      component: CursosEdit,
+    },
+    {
+      path: '/curso/:curso/unidade/:idUnidade',
+      name: 'Unidade',
+      component: UnidadeView,
+    },
+    {
+      path: '/backoffice/cursos/:idCurso/unidades',
+      name: 'UnidadesCurso',
+      component: UnidadesIndex,
     },
     {
       path: '/unidade/:idUnidade/jogos/criar',
