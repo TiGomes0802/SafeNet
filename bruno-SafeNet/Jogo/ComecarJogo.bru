@@ -1,0 +1,21 @@
+meta {
+  name: ComecarJogo
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8081/api/unidade/1/jogo/start
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "idUnidade": 1
+  }
+}

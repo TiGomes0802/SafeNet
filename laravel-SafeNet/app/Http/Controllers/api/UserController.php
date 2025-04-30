@@ -122,6 +122,33 @@ class UserController extends Controller
             return response()->json(['error' => 'Erro ao desbloquear utilizador'], 500);
         }
     }
+
+    /**
+     * Lost 1 life.
+     * @param Request $request
+    */
+    public function perderVida(Request $request)
+    {
+        //O utilizador perdeu uma vida que esta logado perde uma vida não pode ser menor que 0
+        $user = $request->user();
+        
+        if ($user->vidas > 0) {
+            $user->vidas -= 1;
+            $user->save();
+            return response()->json(['message' => 'O utilizador perdeu uma vida com sucesso', 'vidas' => $user->vidas], 200);
+        } else {
+            return response()->json(['message' => 'User has no vidas left'], 400);
+        }
+    }
+
+    public function ganharVidas(Request $request, $numVidas)
+    {
+        //O utilizador ganhou uma vida que esta logado ganha uma vida
+        $user = $request->user();
+        $user->vidas += $numVidas;
+        $user->save();
+        return response()->json(['message' => 'User gained a life successfully', 'vidas' => $user->vidas], 200);
+    }
     
 
     /**

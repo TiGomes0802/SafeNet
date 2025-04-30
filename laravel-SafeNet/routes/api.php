@@ -12,6 +12,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/refreshtoken', [AuthController::class, 'refreshToken']);
 
     Route::get('/users/me', [UserController::class, 'showMe']);
+    Route::post('/users/perderVida', [UserController::class, 'perderVida']);
+    Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
 
     Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'getTiposJogos']);
     
@@ -20,6 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/jogo/{idJogo}', [JogoController::class, 'updateJogo']);
     Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
+    Route::get('/unidade/{idUnidade}/jogo/start', [JogoController::class, 'comecarJogo']);
 
     Route::get('/unidade/{idUnidade}/getPaginas', [PaginaController::class, 'getPaginas']);
     Route::get('/pagina/{idPagina}', [PaginaController::class, 'getPagina']);

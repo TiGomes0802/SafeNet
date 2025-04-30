@@ -225,4 +225,35 @@ class JogoController extends Controller
         // Retorna o jogo atualizado
         return response()->json($jogo);
     }
+
+    public function comecarJogo(Request $request, $idUnidade)
+    {
+
+        // Verifica se a unidade existe
+        $unidade = Unidade::find($idUnidade);
+        if (!$unidade) {
+            return response()->json(['error' => 'Unidade não encontrada'], 404);
+        }
+
+        $jogosCount = Jogo::where('idUnidade', $idUnidade)
+                        ->where('estado', true)
+                        ->count();
+
+        if ($jogosCount < 5) {
+            return response()->json(['error' => 'Não existem 5 jogos ativos associados a esta unidade'], 400);
+        }
+
+        $jogos = Jogo::where('idUnidade', $idUnidade)
+                    ->where('estado', true)
+                    ->inRandomOrder()
+                    ->take(5)
+                    ->get();
+        
+        // carrega as respostas associadas aos jogos
+        $jogos->load(['respostas' => function ($query) {
+            $query->inRandomOrder();
+        }]);
+
+        return response()->json($jogos);
+    }
 }
