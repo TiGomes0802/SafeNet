@@ -1,0 +1,15 @@
+meta {
+  name: UpdateEstadoReport
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:8081/api/report/1/estado
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

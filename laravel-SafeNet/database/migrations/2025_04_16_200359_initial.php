@@ -117,11 +117,11 @@ return new class extends Migration {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->text('mensagem');
-            $table->string('status');
+            $table->boolean('estado');
             $table->unsignedBigInteger('idUser');
-            $table->unsignedBigInteger('idGestor');
+            $table->unsignedBigInteger('idJogo');
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('idGestor')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idJogo')->references('id')->on('jogos')->onDelete('cascade');
             $table->timestamps();
         });
 

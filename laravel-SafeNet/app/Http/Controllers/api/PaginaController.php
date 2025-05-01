@@ -11,7 +11,7 @@ use App\Models\Pagina;
 
 class PaginaController extends Controller
 {
-    public function getPagina($idPagina)
+    public function show($idPagina)
     {
         // Verifica se a página existe
         $pagina = Pagina::find($idPagina);
@@ -19,12 +19,11 @@ class PaginaController extends Controller
             return response()->json(['error' => 'Página não encontrada'], 404);
         }
 
-
         // Retorna a página em formato JSON
         return response()->json($pagina);
     }
 
-    public function getPaginas($idUnidade)
+    public function index($idUnidade)
     {
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);
@@ -32,7 +31,6 @@ class PaginaController extends Controller
             return response()->json(['error' => 'Unidade não encontrada'], 404);
         }
 
-        // Obtém as páginas associadas à unidade e que estão ativas e todas as respostas(sem qualquer where) de cada página
         $paginas = Pagina::where('idUnidade', $idUnidade)
                         ->orderBy('ordem', 'asc')
                         ->get();

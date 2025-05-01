@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\api\RespostaController;
-use App\Models\User;
 use App\Models\Jogo;
 use App\Models\Unidade;
 
 class JogoController extends Controller
 {
-    public function getJogo($idJogo)
+    public function show($idJogo)
     {
         // Verifica se o jogo existe
         $jogo = Jogo::find($idJogo);
@@ -39,7 +36,7 @@ class JogoController extends Controller
         return response()->json($jogo);
     }
 
-    public function getJogos($idUnidade)
+    public function index($idUnidade)
     {
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);

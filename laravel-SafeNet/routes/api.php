@@ -8,6 +8,7 @@ use App\Http\Controllers\api\CursoController;
 use App\Http\Controllers\api\UnidadeController;
 use App\Http\Controllers\api\TipoJogoController;
 use App\Http\Controllers\api\PaginaController;
+use App\Http\Controllers\api\ReportController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -19,12 +20,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
     Route::get('/users/getVidas', [UserController::class, 'getVidas']);
 
-    Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'getTiposJogos']);
+    Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'index']);
     
-    Route::get('/jogo/{idJogo}', [JogoController::class, 'getJogo']);
+    Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'index']);
+    Route::get('/jogo/{idJogo}', [JogoController::class, 'show']);
     Route::put('/jogo/{idJogo}/estado', [JogoController::class, 'mudarEstadoJogo']);
     Route::put('/jogo/{idJogo}', [JogoController::class, 'updateJogo']);
-    Route::get('/unidade/{idUnidade}/getJogos', [JogoController::class, 'getJogos']);
   
     Route::get('cursos', [CursoController::class, 'index']);
     Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
@@ -38,10 +39,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
     Route::get('/unidade/{idUnidade}/jogo/start', [JogoController::class, 'comecarJogo']);
 
-    Route::get('/unidade/{idUnidade}/getPaginas', [PaginaController::class, 'getPaginas']);
-    Route::get('/pagina/{idPagina}', [PaginaController::class, 'getPagina']);
+    Route::get('/unidade/{idUnidade}/getPaginas', [PaginaController::class, 'index']);
+    Route::get('/pagina/{idPagina}', [PaginaController::class, 'show']);
     Route::post('/unidade/{idUnidade}/pagina', [PaginaController::class, 'createPagina']);
     Route::put('/paginas/updatePaginas', [PaginaController::class, 'updatePaginas']);
+
+    Route::get('/reports', [ReportController::class, 'index']);
+    Route::get('/report/{idUnidade}', [ReportController::class, 'show']);
+    Route::post('/report', [ReportController::class, 'createReport']);
+    Route::put('/report/{id}/estado', [ReportController::class, 'updateEstadoReport']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
