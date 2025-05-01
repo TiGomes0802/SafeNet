@@ -12,6 +12,8 @@ import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
 import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
+import UnidadesCreate from '@/components/unidades/create.vue';
+//import UnidadesEdit from '@/components/unidades/edit.vue';
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
@@ -62,8 +64,6 @@ const router = createRouter({
       name: 'Jogos',
       component: Jogo,
       props: true,
-      // what props do: the props option allows you to pass the route params as props to the component.
-
     },
     {
       path: '/backoffice/cursos',
@@ -89,6 +89,12 @@ const router = createRouter({
       path: '/backoffice/cursos/:idCurso/unidades',
       name: 'UnidadesCurso',
       component: UnidadesIndex,
+    },
+    {
+      path: '/backoffice/cursos/:idCurso/unidades/create',
+      name: 'UnidadesCreate',
+      component: UnidadesCreate,
+      props: true,
     },
     {
       path: '/unidade/:idUnidade/jogos/criar',
