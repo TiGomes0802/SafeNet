@@ -27,11 +27,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeView, // Terá que ser um bem-vindo ou assim, para não mostrar unidades à toa
     },
     {
-      path: '/unidade/:nome',
-      name: 'unidade',
+      path: '/curso/:idCurso',
+      name: 'curso',
       component: HomeView
     },
     {
@@ -81,10 +81,11 @@ const router = createRouter({
       component: CursosEdit,
     },
     {
-      path: '/curso/:curso/unidade/:idUnidade',
+      path: '/curso/:idCurso/unidade/:idUnidade',
       name: 'Unidade',
       component: UnidadeView,
-    },
+      props: true,
+    },    
     {
       path: '/backoffice/cursos/:idCurso/unidades',
       name: 'UnidadesCurso',

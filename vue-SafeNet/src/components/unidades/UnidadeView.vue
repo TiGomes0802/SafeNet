@@ -1,24 +1,32 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
+import axios from 'axios'
 
 const route = useRoute()
 const curso = route.params.curso
 const idUnidade = route.params.idUnidade
 
-// Simulação de páginas (mais tarde vais buscar da API)
-const paginas = [
-  'Bem-vindo à unidade! Esta é a introdução.',
-  'Conteúdo da página 2.',
-  'Explicação mais aprofundada na página 3.',
-  'Resumo e conclusão nesta última página.'
-]
+const paginas = ref([])
+
+const fetchPaginas = async () => {
+  try {
+    const response = await axios.get(`/unidade/${idUnidade}/getPaginas`)
+    paginas.value = response.data || []
+  } catch (error) {
+    console.error("Erro ao buscar páginas da unidade:", error)
+  }
+}
+
+onMounted(() => {
+  fetchPaginas()
+})
 
 const paginaAtual = ref(0)
 
 const proximaPagina = () => {
-  if (paginaAtual.value < paginas.length - 1) {
+  if (paginaAtual.value < paginas.value.length - 1) {
     paginaAtual.value++
   }
 }
@@ -40,7 +48,7 @@ const paginaAnterior = () => {
         </h1>
 
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
-          <p>{{ paginas[paginaAtual] }}</p>
+          <p>{{ paginas[paginaAtual]?.descricao }}</p>
         </div>
       </div>
 
