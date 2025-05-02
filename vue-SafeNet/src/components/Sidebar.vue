@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useCoinsStore } from '@/stores/coins'
 
@@ -8,12 +9,18 @@ const isOpen = ref(false)
 const windowWidth = ref(window.innerWidth)
 const storeCoins = useCoinsStore();
 
+const cursos = ref([])
+
 const updateWidth = () => {
     windowWidth.value = window.innerWidth
 }
 
 onMounted(() => {
     window.addEventListener('resize', updateWidth)
+
+    if (storeAuth.user?.type === 'J') {
+        fetchCursos()
+    }
 })
 
 onUnmounted(() => {
@@ -32,6 +39,15 @@ const toggleSidebar = () => {
 const handleLinkClick = () => {
     if (windowWidth.value < 768) {
         isOpen.value = false
+    }
+}
+
+const fetchCursos = async () => {
+    try {
+        const response = await axios.get('/cursos')
+        cursos.value = response.data
+    } catch (error) {
+        console.error("Erro ao buscar cursos:", error)
     }
 }
 
@@ -72,22 +88,10 @@ const handleLinkClick = () => {
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link to="/unidade/Engenharia Social"
-                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">Engenharia
-                                Social</router-link>
-                            <router-link to="/unidade/Autenticação" class="block py-2 px-6 rounded hover:bg-gray-100"
-                                @click="handleLinkClick">Autenticação</router-link>
-                            <router-link to="/unidade/Malware" class="block py-2 px-6 rounded hover:bg-gray-100"
-                                @click="handleLinkClick">Malware</router-link>
-                            <router-link to="/unidade/Redes Sociais" class="block py-2 px-6 rounded hover:bg-gray-100"
-                                @click="handleLinkClick">Redes
-                                Sociais</router-link>
-                            <router-link to="/unidade/Sistemas Operativos"
-                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">Sistemas
-                                Operativos</router-link>
-                            <router-link to="/unidade/Navegação" class="block py-2 px-6 rounded hover:bg-gray-100"
-                                @click="handleLinkClick">Navegação
-                                na Internet</router-link>
+                            <router-link v-for="curso in cursos" :key="curso.id" :to="`/curso/${curso.id}`"
+                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
+                                {{ curso.nome }}
+                            </router-link>
                         </nav>
                     </div>
 
