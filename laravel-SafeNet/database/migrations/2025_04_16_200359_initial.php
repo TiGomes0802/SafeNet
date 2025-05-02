@@ -131,11 +131,12 @@ return new class extends Migration {
             $table->string('tipo');
         });
 
-        // Tabela Produto (id, nome, preco, idTipoProduto)
+        // Tabela Produto (id, nome, preco, valor, idTipoProduto)
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->integer('preco');
+            $table->integer('valor');
             $table->unsignedBigInteger('idTipoProduto');
             $table->foreign('idTipoProduto')->references('id')->on('tipoProdutos')->onDelete('cascade');
         });
@@ -150,13 +151,21 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Tabela Missoes (id, tipo, estado, descricao, presente, objetivo)
+        // Tabela TipoMisoes (id, tipo)
+        Schema::create('tipoMissoes', function (Blueprint $table) {
+            $table->id();
+            $table->string('tipo');
+        });
+
+        // Tabela Missoes (id, tipo, estado, descricao, objetivo, idTipoMissao)
         Schema::create('missoes', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('estado');
             $table->text('descricao');
             $table->integer('objetivo');
+            $table->unsignedBigInteger('idTipoMissao');
+            $table->foreign('idTipoMissao')->references('id')->on('tipoMissoes')->onDelete('cascade');
         });
 
         // Tabela Users_Missoes (id, idUser, idMissao)

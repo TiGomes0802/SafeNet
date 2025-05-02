@@ -15,10 +15,16 @@ class Missao extends Model
         'estado',
         'descricao',
         'objetivo',
+        'idTipoMissao',
     ];
 
     public function UserMissao()
     {
         return $this->hasMany(UserMissao::class, 'idMissao');
+    }
+
+    public function tipoMissao()
+    {
+        return $this->belongsTo(TipoMissao::class, 'idTipoMissao');
     }
 }
