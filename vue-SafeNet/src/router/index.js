@@ -19,7 +19,7 @@ import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
 import CriarPaginas from "@/components/paginas/create.vue";
 import EditarPaginas from "@/components/paginas/editar.vue";
-
+import Report from "@/components/reports/Report.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,35 +97,40 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/jogos/criar',
+      path: '/backoffice/unidade/:idUnidade/jogos/criar',
       name: 'CriarJogo',
       component: CriarJogo,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/jogos/:idJogo',
+      path: '/backoffice/unidade/:idUnidade/jogos/:idJogo',
       name: 'EditarJogo',
       component: EditarJogo,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/',
+      path: '/backoffice/unidade/:idUnidade/paginas/',
       name: 'Paginas',
       component: Paginas,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/criar',
+      path: '/backoffice/unidade/:idUnidade/paginas/criar',
       name: 'CriarPagianas',
       component: CriarPaginas,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/:idPagina',
+      path: '/backoffice/unidade/:idUnidade/paginas/:idPagina',
       name: 'EditarPaginas',
       component: EditarPaginas,
       props: true,
-    }
+    },
+    {
+      path: '/report',
+      name: 'Report',
+      component: Report,
+    },
   ],
 })
 
