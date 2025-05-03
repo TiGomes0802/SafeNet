@@ -8,7 +8,7 @@ export const usePaginaStore = defineStore('pagina', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     
-    const paginas = ref(null)
+    const paginas = ref([])
     const pagina = ref(null)
 
     const getPaginas = async (idUnidade) => {

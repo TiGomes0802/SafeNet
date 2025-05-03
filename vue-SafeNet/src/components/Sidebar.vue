@@ -3,13 +3,13 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useCoinsStore } from '@/stores/coins'
+import { useCursosStore } from '@/stores/cursos'
 
 const storeAuth = useAuthStore()
 const isOpen = ref(false)
 const windowWidth = ref(window.innerWidth)
 const storeCoins = useCoinsStore();
-
-const cursos = ref([])
+const storeCursos = useCursosStore()
 
 const updateWidth = () => {
     windowWidth.value = window.innerWidth
@@ -17,10 +17,7 @@ const updateWidth = () => {
 
 onMounted(() => {
     window.addEventListener('resize', updateWidth)
-
-    if (storeAuth.user?.type === 'J') {
-        fetchCursos()
-    }
+    storeCursos.getCursos()
 })
 
 onUnmounted(() => {
@@ -39,15 +36,6 @@ const toggleSidebar = () => {
 const handleLinkClick = () => {
     if (windowWidth.value < 768) {
         isOpen.value = false
-    }
-}
-
-const fetchCursos = async () => {
-    try {
-        const response = await axios.get('/cursos')
-        cursos.value = response.data
-    } catch (error) {
-        console.error("Erro ao buscar cursos:", error)
     }
 }
 
@@ -88,7 +76,7 @@ const fetchCursos = async () => {
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link v-for="curso in cursos" :key="curso.id" :to="`/curso/${curso.id}`"
+                            <router-link v-for="curso in storeCursos.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
                                 class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
                                 {{ curso.nome }}
                             </router-link>

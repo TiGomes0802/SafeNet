@@ -2,26 +2,18 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
-import axios from 'axios'
+import { usePaginaStore } from '@/stores/pagina'
 
 const route = useRoute()
 const curso = route.params.curso
 const idUnidade = route.params.idUnidade
+const paginaStore = usePaginaStore()
 
-const paginas = ref([])
 
-const fetchPaginas = async () => {
-  try {
-    const response = await axios.get(`/unidade/${idUnidade}/getPaginas`)
-    paginas.value = response.data || []
-  } catch (error) {
-    console.error("Erro ao buscar páginas da unidade:", error)
-  }
-}
-
-onMounted(() => {
-  fetchPaginas()
+onMounted(async () => {
+  const sucesso = await paginaStore.getPaginas(idUnidade)
 })
+
 
 const paginaAtual = ref(0)
 
@@ -48,34 +40,26 @@ const paginaAnterior = () => {
         </h1>
 
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
-          <p>{{ paginas[paginaAtual]?.descricao }}</p>
+          <p v-if="paginaStore.paginas.length > 0">{{ paginaStore.paginas[paginaAtual]?.descricao }}</p>
+          <p v-else>A carregar páginas...</p>
         </div>
       </div>
 
       <!-- Navegação entre páginas -->
       <div class="mt-8 flex justify-between items-center">
-        <button
-          v-if="paginaAtual > 0"
-          @click="paginaAnterior"
-          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-black rounded"
-        >
+        <button v-if="paginaAtual > 0" @click="paginaAnterior"
+          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-black rounded">
           ← Voltar
         </button>
 
         <div class="flex-1"></div>
 
-        <button
-          v-if="paginaAtual < paginas.length - 1"
-          @click="proximaPagina"
-          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
-        >
+        <button v-if="paginaAtual < paginaStore.paginas.length - 1" @click="proximaPagina"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
           Avançar →
         </button>
 
-        <button
-          v-else
-          class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded"
-        >
+        <button v-else class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
           Avaliar
         </button>
       </div>
