@@ -1,19 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { usePaginaStore } from '@/stores/pagina'
+import { useCursosStore } from '@/stores/cursos'
 
 const route = useRoute()
-const curso = route.params.curso
 const idUnidade = route.params.idUnidade
+const cursoId = parseInt(route.params.idCurso)
+const cursosStore = useCursosStore()
 const paginaStore = usePaginaStore()
 
-
 onMounted(async () => {
-  const sucesso = await paginaStore.getPaginas(idUnidade)
-})
+  await cursosStore.getCursos()
+  await paginaStore.getPaginas(idUnidade)
 
+  console.log('Páginas carregadas:', paginaStore.paginas)
+})
 
 const paginaAtual = ref(0)
 
@@ -36,9 +39,8 @@ const paginaAnterior = () => {
     <main class="flex-1 p-6 bg-gray-100 overflow-auto flex flex-col justify-between">
       <div>
         <h1 class="text-2xl font-bold text-blue-600 mb-4">
-          Curso: {{ curso }} | Unidade: {{ idUnidade }}
+          {{ cursosStore.getCurso(cursoId)?.nome}} | Unidade: {{ idUnidade }}
         </h1>
-
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
           <p v-if="paginaStore.paginas.length > 0">{{ paginaStore.paginas[paginaAtual]?.descricao }}</p>
           <p v-else>A carregar páginas...</p>

@@ -18,9 +18,14 @@ export const useCursosStore = defineStore('cursos', () => {
     }
   }
 
+  const getCurso = (id) => {
+    return cursos.value.find(curso => curso.id === id)
+  }
+
   return {
     cursos,
     cursosCarregados,
-    getCursos
+    getCursos,
+    getCurso
   }
 })

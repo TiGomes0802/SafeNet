@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import { useCoinsStore } from '@/stores/coins'
 import { useCursosStore } from '@/stores/cursos'
