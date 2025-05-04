@@ -33,9 +33,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('cursos/{idCurso}', [CursoController::class, 'update']);
 
     Route::get('/cursos/{idCurso}/unidades', [UnidadeController::class, 'index']);
-    Route::get('/cursos/{idCurso}/unidades/{idUnidade}', [UnidadeController::class, 'show']);
+    Route::get('/unidades/{idUnidade}', [UnidadeController::class, 'show']);
     Route::post('/cursos/{idCurso}/unidades', [UnidadeController::class, 'createUnidade']);
-    Route::put('/cursos/{idCurso}/unidades/{idUnidade}', [UnidadeController::class, 'update']);
+    Route::put('/unidades/{idUnidade}', [UnidadeController::class, 'update']);
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
     Route::get('/unidade/{idUnidade}/jogo/start', [JogoController::class, 'comecarJogo']);
 

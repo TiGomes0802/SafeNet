@@ -35,6 +35,10 @@ class PaginaController extends Controller
                         ->orderBy('ordem', 'asc')
                         ->get();
         
+        if ($paginas->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma página encontrada para esta unidade'], 404);
+        }
+
         return response()->json($paginas);
     }
 
