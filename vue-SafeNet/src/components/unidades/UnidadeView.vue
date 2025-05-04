@@ -10,18 +10,19 @@ const idUnidade = route.params.idUnidade
 const cursoId = parseInt(route.params.idCurso)
 const cursosStore = useCursosStore()
 const paginaStore = usePaginaStore()
+const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
 
 onMounted(async () => {
   await cursosStore.getCursos()
   await paginaStore.getPaginas(idUnidade)
 
-  console.log('Páginas carregadas:', paginaStore.paginas)
+  //console.log('Páginas carregadas:', paginaStore.paginas)
 })
 
 const paginaAtual = ref(0)
 
 const proximaPagina = () => {
-  if (paginaAtual.value < paginas.value.length - 1) {
+  if (paginaAtual.value < paginaStore.paginas.length - 1) {
     paginaAtual.value++
   }
 }
@@ -42,7 +43,7 @@ const paginaAnterior = () => {
           {{ cursosStore.getCurso(cursoId)?.nome}} | Unidade: {{ idUnidade }}
         </h1>
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
-          <p v-if="paginaStore.paginas.length > 0">{{ paginaStore.paginas[paginaAtual]?.descricao }}</p>
+          <p v-if="paginaStore.paginas.length > 0">{{ paginaVisivel.descricao }}</p>
           <p v-else>A carregar páginas...</p>
         </div>
       </div>

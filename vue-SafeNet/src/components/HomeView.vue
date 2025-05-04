@@ -76,7 +76,7 @@ const fetchUnidades = async () => {
       <div class="space-y-12">
         <router-link v-for="unidade in unidades" :key="unidade.id" :to="`/curso/${cursoId}/unidade/${unidade.id}`"
           class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
-          <UnidadeCard :titulo="unidade.titulo" />
+          <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" />
         </router-link>
       </div>
 
