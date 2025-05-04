@@ -36,6 +36,11 @@ class PaginaController extends Controller
         $paginas = Pagina::where('idUnidade', $idUnidade)
                         ->orderBy('ordem', 'asc')
                         ->get();
+
+        // Verifica se a unidade tem páginas
+        if ($paginas->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma página encontrada para esta unidade'], 404);
+        }
         
         return response()->json($paginas);
     }
