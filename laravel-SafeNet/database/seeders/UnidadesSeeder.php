@@ -14,9 +14,9 @@ class UnidadesSeeder extends Seeder
     public function run(): void
     {
         $unidades = [
-            ['titulo' => 'Unidade 1', 'descricao' => 'Descrição da Unidade 1','ordem' => 1 ,'estado' => true ,'idCurso' => 1],
-            ['titulo' => 'Unidade 2', 'descricao' => 'Descrição da Unidade 2','ordem' => 2 ,'estado' => true ,'idCurso' => 1],
-            ['titulo' => 'Unidade 1', 'descricao' => 'Descrição da Unidade 1','ordem' => 1 ,'estado' => true ,'idCurso' => 2],
+            ['titulo' => 'Unidade 1', 'descricao' => 'Introdução à Engenharia Social', 'ordem' => 1, 'estado' => true, 'idCurso' => 1],
+            ['titulo' => 'Unidade 2', 'descricao' => 'Técnicas Comuns de Engenharia Social', 'ordem' => 2, 'estado' => true, 'idCurso' => 1],
+            ['titulo' => 'Unidade 3', 'descricao' => 'Prevenção e Resposta a Ataques', 'ordem' => 3, 'estado' => true, 'idCurso' => 1],
         ];
 
         foreach ($unidades as $unidade) {
