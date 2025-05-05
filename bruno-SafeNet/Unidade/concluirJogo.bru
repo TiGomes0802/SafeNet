@@ -1,0 +1,27 @@
+meta {
+  name: concluirJogo
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8081/api/unidade/concluirUnidade
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "idUnidade": 3,
+    "jogos": [
+      { "idJogo": 1, "acertou": false },
+      { "idJogo": 2, "acertou": true },
+      { "idJogo": 3, "acertou": false }
+    ]
+  }
+  
+}

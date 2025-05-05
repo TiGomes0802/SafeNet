@@ -253,4 +253,6 @@ class JogoController extends Controller
 
         return response()->json($jogos);
     }
+
+
 }
