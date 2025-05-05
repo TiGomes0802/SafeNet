@@ -101,8 +101,7 @@ class UnidadeController extends Controller
      */
     public function concluirUnidade(Request $request) {
         // return das estatisticas do user 7 da unidade 1
-        //return response()->json(auth()->user()->estatistica()->where('idUnidade', 1)->get());
-
+        
         $validatedData = $request->validate([
             'idUnidade' => 'required|integer',
             'jogos' => 'required|array',
