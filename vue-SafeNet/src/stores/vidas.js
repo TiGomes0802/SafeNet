@@ -14,7 +14,7 @@ export const useVidasStore = defineStore('vidas', () => {
     const getVidas = async () => {
         try {
             const response = await axios.get("/users/getVidas");
-            vidas.value = response.data;
+            vidas.value = response.data.vidas;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
@@ -31,7 +31,7 @@ export const useVidasStore = defineStore('vidas', () => {
     const perderVida = async () => {
         try {
             const response = await axios.post("/users/perderVida");
-            vidas.value = response.data;
+            vidas.value = response.data.vidas;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
@@ -47,8 +47,8 @@ export const useVidasStore = defineStore('vidas', () => {
 
     const ganharVidas = async (vidas) => {
         try {
-            const response = await axios.post("/users/ganharVidas", {vidas});
-            vidas.value = response.data;
+            const response = await axios.post("/users/ganharVidas", {numVidas:vidas});
+            vidas.value = response.data.vidas;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
