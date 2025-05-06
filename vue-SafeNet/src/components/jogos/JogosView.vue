@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useJogoStore } from '@/stores/jogo'
 import Sidebar from '@/components/Sidebar.vue'
+import draggable from 'vuedraggable'
 
 const route = useRoute()
 const router = useRouter()
@@ -50,13 +51,10 @@ const sair = () => {
         <!-- Escolha múltipla -->
         <ul v-if="pergunta.idTipo === 1" class="space-y-3">
           <li v-for="(opcao, index) in pergunta.opcoes" :key="index">
-            <button
-              @click="respostaSelecionada = opcao"
-              :class="[
-                'w-full text-left px-4 py-2 border rounded font-medium',
-                respostaSelecionada === opcao ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-              ]"
-            >
+            <button @click="respostaSelecionada = opcao" :class="[
+              'w-full text-left px-4 py-2 border rounded font-medium',
+              respostaSelecionada === opcao ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+            ]">
               <strong>{{ String.fromCharCode(65 + index) }})</strong> {{ opcao }}
             </button>
           </li>
@@ -64,34 +62,29 @@ const sair = () => {
 
         <!-- Verdadeiro / Falso -->
         <div v-else-if="pergunta.idTipo === 2" class="space-y-3">
-          <button
-            @click="respostaSelecionada = true"
-            :class="[
-              'w-full px-4 py-2 border rounded font-medium',
-              respostaSelecionada === true ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-            ]"
-          >
+          <button @click="respostaSelecionada = true" :class="[
+            'w-full px-4 py-2 border rounded font-medium',
+            respostaSelecionada === true ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+          ]">
             Verdadeiro
           </button>
-          <button
-            @click="respostaSelecionada = false"
-            :class="[
-              'w-full px-4 py-2 border rounded font-medium',
-              respostaSelecionada === false ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-            ]"
-          >
+          <button @click="respostaSelecionada = false" :class="[
+            'w-full px-4 py-2 border rounded font-medium',
+            respostaSelecionada === false ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+          ]">
             Falso
           </button>
         </div>
 
-        <!-- Preenchimento -->
+        <!-- Ordenação -->
         <div v-else-if="pergunta.idTipo === 3" class="space-y-3">
-          <input
-            v-model="respostaSelecionada"
-            type="text"
-            placeholder="Escreve a tua resposta aqui"
-            class="w-full p-3 border rounded"
-          />
+          <draggable v-model="respostaSelecionada" item-key="id" class="space-y-2" ghost-class="ghost">
+            <template #item="{ element, index }">
+              <div class="p-3 border rounded bg-white shadow-sm cursor-move">
+                {{ index + 1 }}. {{ element }}
+              </div>
+            </template>
+          </draggable>
         </div>
 
         <!-- Tipo desconhecido -->
@@ -106,18 +99,13 @@ const sair = () => {
           <span class="text-red-600 font-bold text-xl">{{ vidas }}</span>
           <img src="/icons/vida.png" alt="Vida" class="w-20 h-15" />
           <div class="w-40 h-3 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              class="h-full bg-green-600"
-              :style="{ width: ((perguntaAtual + 1) / totalPerguntas) * 100 + '%' }"
-            ></div>
+            <div class="h-full bg-green-600" :style="{ width: ((perguntaAtual + 1) / totalPerguntas) * 100 + '%' }">
+            </div>
           </div>
         </div>
 
-        <button
-          @click="validarResposta"
-          :disabled="respostaSelecionada === null"
-          class="bg-gray-300 px-5 py-2 rounded font-semibold disabled:opacity-50"
-        >
+        <button @click="validarResposta" :disabled="respostaSelecionada === null"
+          class="bg-gray-300 px-5 py-2 rounded font-semibold disabled:opacity-50">
           Validar
         </button>
       </div>
