@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { usePaginaStore } from '@/stores/pagina'
-import { useCursosStore } from '@/stores/cursos'
+import { useCursosStore } from '@/stores/curso'
 
 const route = useRoute()
 const idUnidade = route.params.idUnidade
@@ -43,7 +43,7 @@ const paginaAnterior = () => {
           {{ cursosStore.getCurso(cursoId)?.nome }} | Unidade: {{ idUnidade }}
         </h1>
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
-          <p v-if="paginaStore.paginas.length > 0">{{ paginaVisivel.descricao }}</p>
+          <p v-if="paginaStore.paginas.length > 0" v-html="paginaVisivel.descricao"></p>
           <p v-else>A carregar páginas...</p>
         </div>
       </div>
