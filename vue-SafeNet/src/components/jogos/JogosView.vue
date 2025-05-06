@@ -45,7 +45,7 @@ const validarResposta = async () => {
       }
     })
   }
-  else if(tipo === 3) {
+  else if (tipo === 3) {
 
     let respostaCorreta = true
 
@@ -96,7 +96,7 @@ const sair = () => {
           <li v-for="(opcao, index) in pergunta.respostas" :key="index">
             <button @click="respostaSelecionada = opcao" :class="[
               'w-full text-left px-4 py-2 border rounded font-medium',
-              respostaSelecionada === opcao ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+              respostaSelecionada === opcao ? 'bg-gray-400 text-white' : 'hover:bg-gray-100'
             ]">
               <strong>{{ String.fromCharCode(65 + index) }})</strong> {{ opcao.resposta }}
             </button>
@@ -104,48 +104,27 @@ const sair = () => {
         </ul>
 
         <!-- Verdadeiro / Falso -->
-        <div v-else-if="pergunta.idTipo === 2" class="space-y-3">
-          <button @click="respostaSelecionada = true" :class="[
-            'w-full px-4 py-2 border rounded font-medium',
-            respostaSelecionada === true ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-          ]">
-            Verdadeiro
-          </button>
-          <button @click="respostaSelecionada = false" :class="[
-            'w-full px-4 py-2 border rounded font-medium',
-            respostaSelecionada === false ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-          ]">
-            Falso
-          </button>
-        </div>
-        <!--
-        <div v-else-if="pergunta.idTipo === 2" class="space-y-3">
-          <button v-for="(opcao, index) in pergunta.respostas" :key="index" @click="respostaSelecionada = opcao" :class="[
-            'w-full px-4 py-2 border rounded font-medium',
-            respostaSelecionada === opcao ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-          ]">
-            {{ opcao.resposta }}
-          </button>
-        </div>
+        <ul v-else-if="pergunta.idTipo === 2" class="space-y-3">
+          <li v-for="(resposta, index) in pergunta.respostas" :key="index"
+            class="flex items-center justify-between space-x-4 border rounded-md p-4 bg-gray-50">
+            <span class="text-base font-medium">{{ resposta.resposta }}</span>
+            <div class="flex space-x-2">
+              <button @click="respostaSelecionada[index] = true" :class="[
+                'px-4 py-2 rounded font-semibold',
+                respostaSelecionada[index] === true ? 'bg-green-600 text-white' : 'bg-gray-200'
+              ]">
+                V
+              </button>
+              <button @click="respostaSelecionada[index] = false" :class="[
+                'px-4 py-2 rounded font-semibold',
+                respostaSelecionada[index] === false ? 'bg-red-600 text-white' : 'bg-gray-200'
+              ]">
+                F
+              </button>
+            </div>
+          </li>
+        </ul>
 
-        <div v-else-if="pergunta.idTipo === 2" class="space-y-3">
-          <div v-for="(opcao, index) in pergunta.respostas" :key="index" class="space-y-2">
-            <p>{{ opcao.resposta }}</p>
-
-            <button @click="respostaSelecionada[index] = true" :class="[
-              'w-full px-4 py-2 border rounded font-medium',
-              respostaSelecionada[index] === true ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-            ]">
-              Verdadeiro
-            </button>
-            <button @click="respostaSelecionada[index] = false" :class="[
-              'w-full px-4 py-2 border rounded font-medium',
-              respostaSelecionada[index] === false ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
-            ]">
-              Falso
-            </button>
-          </div>
-        </div>-->
 
         <!-- Ordenação -->
         <div v-else-if="pergunta.idTipo === 3" class="space-y-3">
