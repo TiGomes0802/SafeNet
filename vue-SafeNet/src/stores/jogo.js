@@ -8,7 +8,7 @@ export const useJogoStore = defineStore('jogo', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     
-    const jogos = ref(null)
+    const jogos = ref([])
     const jogo = ref(null)
 
     const getJogos = async (idUnidade) => {
@@ -99,7 +99,7 @@ export const useJogoStore = defineStore('jogo', () => {
 
     const comecarJogo = async (idUnidade) => {
         try {
-            const response = await axios.get("jogo/start", { idUnidade: idUnidade });
+            const response = await axios.get("unidade/" + idUnidade + "/jogo/start");
             if (response.status === 200) {
                 jogos.value = response.data;
             }

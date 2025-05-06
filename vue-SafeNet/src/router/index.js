@@ -7,6 +7,7 @@ import Missoes from "@/components/missoes/Missoes.vue";
 import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
+import JogosView from "@/components/jogos/JogosView.vue";
 import CursosIndex from '@/components/cursos/index.vue'
 import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
@@ -63,6 +64,12 @@ const router = createRouter({
       path: '/unidade/:idUnidade/jogos',
       name: 'Jogos',
       component: Jogo,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/play',
+      name: 'JogosView',
+      component: JogosView,
       props: true,
     },
     {
