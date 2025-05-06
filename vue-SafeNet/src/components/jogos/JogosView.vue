@@ -1,89 +1,113 @@
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useJogoStore } from '@/stores/jogo'
-import draggable from 'vuedraggable'
-import { useVidasStore } from '@/stores/vidas'
-import ReportarPergunta from '@/components/reports/Report.vue'
+  import { ref, onMounted, computed, watch } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useJogoStore } from '@/stores/jogo'
+  import draggable from 'vuedraggable'
+  import { useVidasStore } from '@/stores/vidas'
+  import { useUnidadeStore } from '@/stores/unidade'
+  import ReportarPergunta from '@/components/reports/Report.vue'
 
-const route = useRoute()
-const router = useRouter()
-const idUnidade = route.params.idUnidade
-const jogoStore = useJogoStore()
-const vidasStore = useVidasStore()
+  const route = useRoute()
+  const router = useRouter()
+  const idUnidade = route.params.idUnidade
+  const jogoStore = useJogoStore()
+  const vidasStore = useVidasStore()
+  const unidadeStore = useUnidadeStore()
 
-const perguntaAtual = ref(0)
-const respostaSelecionada = ref(null)
+  const perguntaAtual = ref(0)
+  const respostaSelecionada = ref([])
+  const mostrar = ref(false)
 
-const mostrar = ref(false)
+  const pergunta = computed(() => jogoStore.jogos?.[perguntaAtual.value])
+  const totalPerguntas = computed(() => jogoStore.jogos?.length || 0)
 
-onMounted(async () => {
-  await jogoStore.comecarJogo(idUnidade)
-  await vidasStore.getVidas()
-})
+  const jogos = ref([])
 
-const pergunta = computed(() => jogoStore.jogos?.[perguntaAtual.value])
-const totalPerguntas = computed(() => jogoStore.jogos?.length || 0)
+  const validarResposta = async () => {
+    const tipo = pergunta.value?.idTipo
 
-watch(pergunta, (novaPergunta) => {
-  if (novaPergunta?.idTipo === 3) {
-    respostaSelecionada.value = [...novaPergunta.respostas]
-  }
-}, { immediate: true })
+    // Escolha múltipla, V/F e Ordenação
+    if (tipo === 1) {
+      let respostaCorreta = false;
+      for (let i = 0; i < pergunta.value.respostas.length; i++) {
+        if (respostaSelecionada.value.id == pergunta.value.respostas[i].id) {
+          respostaCorreta = true
+          break
+        }
+      }
 
+      jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
 
-const validarResposta = async () => {
-  const tipo = pergunta.value?.idTipo
-
-  // Escolha múltipla, V/F e Ordenação
-  if (tipo === 1) {
-    if (!respostaSelecionada.value?.correta) {
-      await vidasStore.perderVida()
-    }
-  }
-  else if (tipo === 2) {
-    pergunta.value.respostas.forEach(async (resposta, index) => {
-      if (respostaSelecionada.value[index] !== resposta.correta) {
+      if (!respostaCorreta) {
         await vidasStore.perderVida()
       }
-    })
-  }
-  else if (tipo === 3) {
+    } else if (tipo === 2) {
+      let respostaCorreta = true
 
-    let respostaCorreta = true
-
-    // Compara as respostas na ordem correta
-    pergunta.value.respostas.forEach((resposta, index) => {
-      if (respostaSelecionada.value[index].id !== resposta.id) {
-        respostaCorreta = false
+      for (let i = 0; i < pergunta.value.respostas.length; i++) {
+        if (respostaSelecionada.value[i] != pergunta.value.respostas[i].certa) {
+          respostaCorreta = false
+          break // já sabemos que está errada, não precisamos continuar
+        }
       }
-    })
 
-    if (!respostaCorreta) {
-      await vidasStore.perderVida()
+      jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
+
+      if (!respostaCorreta) {
+        await vidasStore.perderVida() // só perde uma vida, mesmo com vários erros
+      }
+
+    } else if (tipo === 3) {
+
+      let respostaCorreta = true
+
+      for (let i = 0; i < pergunta.value.respostas.length; i++) {
+        if (respostaSelecionada.value[i].certa != i + 1) {
+          respostaCorreta = false
+          break // já sabemos que está errada, não precisamos continuar
+        }
+      }
+
+      if (!respostaCorreta) {
+        await vidasStore.perderVida()
+      }
+
+      jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
+    }
+
+    // Por agora redireciona para a página inicial
+    if (vidasStore.vidas <= 0) {
+      // Alterar para uma página de game over
+      //router.push({ name: 'gameover' })
+      router.push({ name: 'home' })
+      return
+    }
+
+    // Avançar
+    if (perguntaAtual.value < totalPerguntas.value - 1) {
+      perguntaAtual.value++
+      respostaSelecionada.value = []
+    } else {
+      // Alterar para uma página de sucesso
+      //router.push({ name: 'success' })
+      unidadeStore.concluirUnidade(idUnidade, jogos.value)
     }
   }
 
-
-  // Por agora redireciona para a página inicial
-  if (vidasStore.vidas <= 0) {
-    router.push({ name: 'home' })
-    return
-  }
-
-  // Avançar
-  if (perguntaAtual.value < totalPerguntas.value - 1) {
-    perguntaAtual.value++
-    respostaSelecionada.value = []
-  } else {
+  const sair = () => {
     router.push({ name: 'home' })
   }
-}
 
+  watch(pergunta, (novaPergunta) => {
+    if (novaPergunta?.idTipo === 3) {
+      respostaSelecionada.value = [...novaPergunta.respostas]
+    }
+  }, { immediate: true })
 
-const sair = () => {
-  router.push({ name: 'home' })
-}
+  onMounted(async () => {
+    await jogoStore.comecarJogo(idUnidade)
+    await vidasStore.getVidas()
+  })
 
 </script>
 
@@ -112,10 +136,8 @@ const sair = () => {
             class="flex items-center justify-between space-x-4 border rounded-md p-4 bg-gray-50">
             <span class="text-base font-medium">{{ resposta.resposta }}</span>
             <div class="flex space-x-2">
-              <button @click="respostaSelecionada[index] = true" :class="[
-                'px-4 py-2 rounded font-semibold',
-                respostaSelecionada[index] === true ? 'bg-green-600 text-white' : 'bg-gray-200'
-              ]">
+              <button @click="respostaSelecionada[index] = true" class="px-4 py-2 rounded font-semibold" 
+                :class="[respostaSelecionada[index] === true ? 'bg-green-600 text-white' : 'bg-gray-200']">
                 V
               </button>
               <button @click="respostaSelecionada[index] = false" :class="[
@@ -127,7 +149,6 @@ const sair = () => {
             </div>
           </li>
         </ul>
-
 
         <!-- Ordenação -->
         <div v-else-if="pergunta.idTipo === 3" class="space-y-3">

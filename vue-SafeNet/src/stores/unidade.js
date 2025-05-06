@@ -16,11 +16,10 @@ export const useUnidadeStore = defineStore("unidade", () => {
             idUnidade: idUnidade,
             jogos: jogos,
         };
-
         try {
             const response = await axios.post("unidade/concluir", data);
             if (response.status === 200) {
-                //router.push({ name: "Unidades" });
+                router.push({ name: "sucesso" });
             }
             return true;
         } catch (e) {
