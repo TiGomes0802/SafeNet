@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useJogoStore } from '@/stores/jogo'
 import draggable from 'vuedraggable'
 import { useVidasStore } from '@/stores/vidas'
+import ReportarPergunta from '@/components/reports/Report.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,6 +14,8 @@ const vidasStore = useVidasStore()
 
 const perguntaAtual = ref(0)
 const respostaSelecionada = ref(null)
+
+const mostrar = ref(false)
 
 onMounted(async () => {
   await jogoStore.comecarJogo(idUnidade)
@@ -154,6 +157,15 @@ const sair = () => {
           </div>
         </div>
 
+        <button @click="mostrar = true"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" >
+          Reportar pergunta
+        </button>
+
+        <div v-if="mostrar">
+          <ReportarPergunta :idJogo="pergunta.id" @fechar="mostrar = false"/>
+        </div>
+        
         <button @click="validarResposta" :disabled="respostaSelecionada === null"
           class="bg-gray-300 px-5 py-2 rounded font-semibold disabled:opacity-50">
           Validar
