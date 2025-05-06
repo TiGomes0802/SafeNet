@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useCoinsStore } from '@/stores/coins'
-import { useCursosStore } from '@/stores/cursos'
+import { useCursosStore } from '@/stores/curso'
 
 const storeAuth = useAuthStore()
 const isOpen = ref(false)
