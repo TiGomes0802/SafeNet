@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
     
     Route::get('/unidade/{idUnidade}/jogo/start', [JogoController::class, 'comecarJogo']);
-    Route::post('/unidade/concluirUnidade', [UnidadeController::class, 'concluirUnidade']);
+    Route::post('/unidade/concluir', [UnidadeController::class, 'concluirUnidade']);
 
     Route::get('/unidade/{idUnidade}/getPaginas', [PaginaController::class, 'index']);
     Route::get('/pagina/{idPagina}', [PaginaController::class, 'show']);
