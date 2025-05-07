@@ -21,6 +21,7 @@ import Paginas from "@/components/paginas/index.vue";
 import CriarPaginas from "@/components/paginas/create.vue";
 import EditarPaginas from "@/components/paginas/editar.vue";
 import Report from "@/components/reports/Report.vue";
+import GameOver from '@/components/unidades/GameOver.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +72,11 @@ const router = createRouter({
       name: 'JogosView',
       component: JogosView,
       props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/gameover',
+      name: 'gameover',
+      component: GameOver,
     },
     {
       path: '/backoffice/cursos',

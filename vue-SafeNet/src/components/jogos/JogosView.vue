@@ -75,11 +75,8 @@
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
     }
 
-    // Por agora redireciona para a página inicial
     if (vidasStore.vidas <= 0) {
-      // Alterar para uma página de game over
-      //router.push({ name: 'gameover' })
-      router.push({ name: 'home' })
+      router.push({ name: 'gameover', params: { idUnidade } })
       return
     }
 
