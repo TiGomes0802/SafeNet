@@ -19,10 +19,8 @@ export const useUnidadeStore = defineStore("unidade", () => {
         try {
             const response = await axios.post("unidade/concluir", data);
             if (response.status === 200) {
-                console.log(response.data);
-                console.log(response);
                 router.push({ name: "Sucesso", state: { data: response.data } })
-              }
+            }
             return true;
         } catch (e) {
             storeError.setErrorMessages(
