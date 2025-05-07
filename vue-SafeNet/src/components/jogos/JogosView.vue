@@ -6,17 +6,20 @@
   import { useVidasStore } from '@/stores/vidas'
   import { useUnidadeStore } from '@/stores/unidade'
   import ReportarPergunta from '@/components/reports/Report.vue'
+  import DesistirJogo from '@/components/jogos/DesistirJogo.vue'
 
   const route = useRoute()
   const router = useRouter()
   const idUnidade = route.params.idUnidade
+  const idCurso = route.params.idCurso
   const jogoStore = useJogoStore()
   const vidasStore = useVidasStore()
   const unidadeStore = useUnidadeStore()
 
   const perguntaAtual = ref(0)
   const respostaSelecionada = ref([])
-  const mostrar = ref(false)
+  const report = ref(false)
+  const desistir = ref(false)
 
   const pergunta = computed(() => jogoStore.jogos?.[perguntaAtual.value])
   const totalPerguntas = computed(() => jogoStore.jogos?.length || 0)
@@ -91,9 +94,6 @@
     }
   }
 
-  const sair = () => {
-    router.push({ name: 'home' })
-  }
 
   watch(pergunta, (novaPergunta) => {
     if (novaPergunta?.idTipo === 3) {
@@ -164,7 +164,11 @@
 
       <!-- Vidas, Barra e butões -->
       <div class="flex items-center justify-between mb-4">
-        <button @click="sair" class="bg-gray-300 px-5 py-2 rounded font-semibold">Sair</button>
+        <button @click="desistir = true" class="bg-gray-300 px-5 py-2 rounded font-semibold">Sair</button>
+
+        <div v-if="desistir">
+          <DesistirJogo :idUnidade="idUnidade" :idCurso="idCurso" @fecharSairJogo="desistir = false"/>
+        </div>
 
         <div class="flex items-center space-x-1">
           <span class="text-red-600 font-bold text-xl">{{ vidasStore.vidas }}</span>
@@ -175,14 +179,14 @@
           </div>
         </div>
 
-        <button @click="mostrar = true"
+        <button @click="report = true"
           class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" >
           Reportar pergunta
         </button>
 
-        <div v-if="mostrar">
-          <ReportarPergunta :idJogo="pergunta.id" @fechar="mostrar = false"/>
-        </div>
+        <div v-if="report">
+          <ReportarPergunta :idJogo="pergunta.id" @fecharReport="report = false"/>
+        </div>        
         
         <button @click="validarResposta" :disabled="respostaSelecionada === null"
           class="bg-gray-300 px-5 py-2 rounded font-semibold disabled:opacity-50">

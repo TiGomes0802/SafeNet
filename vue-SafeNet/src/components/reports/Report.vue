@@ -4,7 +4,7 @@
 
     const reportStore = useReportStore() 
 
-    const emit = defineEmits(['fechar'])
+    const emit = defineEmits(['fecharReport'])
 
     const props = defineProps({
         idJogo: {
@@ -34,7 +34,7 @@
             setTimeout(() => {
               mensagemSucesso.value = false
               motivoSelecionado.value = ''
-              emit('fechar')
+              emit('fecharReport')
             }, 1000)
           } else {
             mensagemFalha.value = true
@@ -81,7 +81,7 @@
       </p>  
       <!-- Botão Fechar -->
       <button
-        @click="emit('fechar')"
+        @click="emit('fecharReport')"
         class="absolute top-2 right-2 text-gray-500 hover:text-red-500 transition-colors duration-200"
         aria-label="Fechar">
           <svg
