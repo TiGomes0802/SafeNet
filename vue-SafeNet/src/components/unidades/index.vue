@@ -24,9 +24,17 @@ onMounted(async () => {
     <div class="flex min-h-screen">
         <Sidebar class="h-screen" />
         <main class="flex-1 p-6 bg-gray-50 overflow-auto">
-            <h1 class="text-2xl font-bold mb-6" v-if="curso">
-                {{ curso.nome }} - Unidades
-            </h1>
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold mb-6" v-if="curso">
+                    {{ curso.nome }} - Unidades
+                </h1>
+
+                <router-link :to="`/backoffice/cursos/${cursoId}/unidades/create`"
+                    class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
+                    Criar Unidade
+                </router-link>
+            </div>
+
 
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-gray-100 text-left">

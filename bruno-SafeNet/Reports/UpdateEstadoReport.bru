@@ -1,11 +1,11 @@
 meta {
-  name: getJogo
+  name: UpdateEstadoReport
   type: http
-  seq: 3
+  seq: 2
 }
 
-get {
-  url: http://localhost:8081/api/jogo/2
+put {
+  url: http://localhost:8081/api/report/1/estado
   body: none
   auth: inherit
 }

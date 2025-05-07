@@ -80,34 +80,40 @@ class User extends Authenticatable
         return $this->amigos1->merge($this->amigos2);
     }
 
-    public function Report()
+    public function report()
     {
         return $this->hasMany(Report::class, 'idUser');
     }
 
-    public function Estatistica()
+    /*public function estatistica()
     {
         return $this->hasMany(Estatistica::class, 'idUser');
-    }
+    }*/
 
-    public function UserMissao()
+    public function userMissao()
     {
         return $this->hasMany(UserMissao::class, 'idUser');
     }
 
-    public function Jogo()
+    public function jogo()
     {
         return $this->hasMany(Jogo::class, 'idUser');
     }
 
-    public function JogoGestor()
+    public function jogoGestor()
     {
         return $this->hasMany(Jogo::class, 'idGestor');
     }
 
-    public function Unidade()
+    public function unidade()
     {
         return $this->belongsToMany(Unidade::class, 'user_unidades', 'idUser', 'idUnidade')
             ->withPivot('status');
+    }
+
+    public function estatistica()
+    {
+        return $this->belongsToMany(Jogo::class, 'estatisticas', 'idUser', 'idJogo')
+            ->withPivot('numVezes', 'numAcertos');
     }
 }

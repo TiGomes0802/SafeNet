@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Report extends Model
 {
@@ -10,7 +11,7 @@ class Report extends Model
 
     protected $fillable = [
         'mensagem',
-        'status',
+        'estado',
         'idJogo',
         'idUser',
     ];

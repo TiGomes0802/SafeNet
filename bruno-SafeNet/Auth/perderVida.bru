@@ -1,0 +1,15 @@
+meta {
+  name: perderVida
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:8081/api/users/perderVida
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

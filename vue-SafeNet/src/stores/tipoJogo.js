@@ -1,5 +1,5 @@
-import {ref } from 'vue'
-import {defineStore} from 'pinia'
+import { ref } from 'vue'
+import { defineStore} from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
 import { useRouter } from 'vue-router'

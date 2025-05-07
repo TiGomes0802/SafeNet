@@ -9,7 +9,7 @@ use App\Models\TipoJogo;
 
 class TipoJogoController extends Controller
 {
-    public function getTiposJogos()
+    public function index()
     {
         // Obtém todos os tipos de jogo
         $tiposJogo = TipoJogo::all();

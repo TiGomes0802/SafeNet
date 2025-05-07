@@ -25,10 +25,10 @@ class Jogo extends Model
         return $this->hasMany(Resposta::class, 'idJogo');
     }
 
-    public function estatisticas()
+    /*public function estatisticas()
     {
         return $this->hasMany(Estatistica::class, 'idJogo');
-    }
+    }*/
 
     public function reports()
     {
@@ -53,5 +53,11 @@ class Jogo extends Model
     public function gestor()
     {
         return $this->belongsTo(User::class, 'idGestor');
+    }
+
+    public function estatistica()
+    {
+        return $this->belongsToMany(User::class, 'estatisticas', 'idJogo', 'idUser')
+            ->withPivot('numVezes', 'numAcertos');
     }
 }

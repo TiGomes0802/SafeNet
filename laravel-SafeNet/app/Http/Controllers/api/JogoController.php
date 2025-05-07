@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\api\RespostaController;
-use App\Models\User;
 use App\Models\Jogo;
 use App\Models\Unidade;
 
 class JogoController extends Controller
 {
-    public function getJogo($idJogo)
+    public function show($idJogo)
     {
         // Verifica se o jogo existe
         $jogo = Jogo::find($idJogo);
@@ -39,7 +36,7 @@ class JogoController extends Controller
         return response()->json($jogo);
     }
 
-    public function getJogos($idUnidade)
+    public function index($idUnidade)
     {
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);
@@ -225,4 +222,37 @@ class JogoController extends Controller
         // Retorna o jogo atualizado
         return response()->json($jogo);
     }
+
+    public function comecarJogo(Request $request, $idUnidade)
+    {
+
+        // Verifica se a unidade existe
+        $unidade = Unidade::find($idUnidade);
+        if (!$unidade) {
+            return response()->json(['error' => 'Unidade não encontrada'], 404);
+        }
+
+        $jogosCount = Jogo::where('idUnidade', $idUnidade)
+                        ->where('estado', true)
+                        ->count();
+
+        if ($jogosCount < 5) {
+            return response()->json(['error' => 'Não existem 5 jogos ativos associados a esta unidade'], 400);
+        }
+
+        $jogos = Jogo::where('idUnidade', $idUnidade)
+                    ->where('estado', true)
+                    ->inRandomOrder()
+                    ->take(5)
+                    ->get();
+        
+        // carrega as respostas associadas aos jogos
+        $jogos->load(['respostas' => function ($query) {
+            $query->inRandomOrder();
+        }]);
+
+        return response()->json($jogos);
+    }
+
+
 }

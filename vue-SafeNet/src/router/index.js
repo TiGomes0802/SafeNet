@@ -7,17 +7,22 @@ import Missoes from "@/components/missoes/Missoes.vue";
 import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
+import JogosView from "@/components/jogos/JogosView.vue";
 import CursosIndex from '@/components/cursos/index.vue'
 import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
 import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
+import UnidadesCreate from '@/components/unidades/create.vue';
+//import UnidadesEdit from '@/components/unidades/edit.vue';
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
 import CriarPaginas from "@/components/paginas/create.vue";
 import EditarPaginas from "@/components/paginas/editar.vue";
-
+import Report from "@/components/reports/Report.vue";
+import Sucesso from "@/components/unidades/Sucesso.vue";
+import GameOver from '@/components/unidades/GameOver.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,11 +30,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeView, // Terá que ser um bem-vindo ou assim, para não mostrar unidades à toa
     },
     {
-      path: '/unidade/:nome',
-      name: 'unidade',
+      path: '/curso/:idCurso',
+      name: 'curso',
       component: HomeView
     },
     {
@@ -62,8 +67,17 @@ const router = createRouter({
       name: 'Jogos',
       component: Jogo,
       props: true,
-      // what props do: the props option allows you to pass the route params as props to the component.
-
+    },
+    {
+      path: '/unidade/:idUnidade/jogos/play',
+      name: 'JogosView',
+      component: JogosView,
+      props: true,
+    },
+    {
+      path: '/unidade/:idUnidade/gameover',
+      name: 'gameover',
+      component: GameOver,
     },
     {
       path: '/backoffice/cursos',
@@ -81,45 +95,62 @@ const router = createRouter({
       component: CursosEdit,
     },
     {
-      path: '/curso/:curso/unidade/:idUnidade',
+      path: '/curso/:idCurso/unidade/:idUnidade',
       name: 'Unidade',
       component: UnidadeView,
-    },
+      props: true,
+    },    
     {
       path: '/backoffice/cursos/:idCurso/unidades',
       name: 'UnidadesCurso',
       component: UnidadesIndex,
     },
     {
-      path: '/unidade/:idUnidade/jogos/criar',
+      path: '/backoffice/cursos/:idCurso/unidades/create',
+      name: 'UnidadesCreate',
+      component: UnidadesCreate,
+      props: true,
+    },
+    {
+      path: '/backoffice/unidade/:idUnidade/jogos/criar',
       name: 'CriarJogo',
       component: CriarJogo,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/jogos/:idJogo',
+      path: '/backoffice/unidade/:idUnidade/jogos/:idJogo',
       name: 'EditarJogo',
       component: EditarJogo,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/',
+      path: '/backoffice/unidade/:idUnidade/paginas/',
       name: 'Paginas',
       component: Paginas,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/criar',
+      path: '/backoffice/unidade/:idUnidade/paginas/criar',
       name: 'CriarPagianas',
       component: CriarPaginas,
       props: true,
     },
     {
-      path: '/unidade/:idUnidade/paginas/:idPagina',
+      path: '/backoffice/unidade/:idUnidade/paginas/:idPagina',
       name: 'EditarPaginas',
       component: EditarPaginas,
       props: true,
-    }
+    },
+    {
+      path: '/report',
+      name: 'Report',
+      component: Report,
+    },
+    {
+      path: '/sucesso',
+      name: 'Sucesso',
+      component: Sucesso,
+    },
   ],
 })
 
