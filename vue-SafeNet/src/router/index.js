@@ -21,6 +21,7 @@ import Paginas from "@/components/paginas/index.vue";
 import CriarPaginas from "@/components/paginas/create.vue";
 import EditarPaginas from "@/components/paginas/editar.vue";
 import Report from "@/components/reports/Report.vue";
+import Sucesso from "@/components/unidades/Sucesso.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -138,6 +139,11 @@ const router = createRouter({
       path: '/report',
       name: 'Report',
       component: Report,
+    },
+    {
+      path: '/sucesso',
+      name: 'Sucesso',
+      component: Sucesso,
     },
   ],
 })

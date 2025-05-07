@@ -110,11 +110,16 @@ class UnidadeController extends Controller
         ]);
     
         \DB::beginTransaction();
+
+        $unidade = Unidade::find($validatedData['idUnidade']);
+        $idCurso = $unidade->idCurso;
     
         try {
             $user = auth()->user();
             $xpTotal = 0;
             
+            $jogosAcertados = 0;
+
             foreach ($validatedData['jogos'] as $jogoData) {
                 // Garante que a ligação existe (ou cria)
                 $jogo = Jogo::find($jogoData['idJogo']);
@@ -124,6 +129,10 @@ class UnidadeController extends Controller
                     : intval($jogo->xp * 0.5);
     
                 $xpTotal += $xpGanho;
+
+                // calcula a taxa de acerto so dos jogos, do foreach
+                $jogosAcertados += ($jogoData['acertou'] ? 1 : 0);
+
 
                 // Verifica se já existe o registo pivot
                 $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
@@ -157,12 +166,16 @@ class UnidadeController extends Controller
             $user->unidade()->syncWithoutDetaching([
                 $validatedData['idUnidade'] => ['status' => true],
             ]);
-    
+            
+            $taxaAcerto = round($jogosAcertados / count($validatedData['jogos']) * 100, 2);
+
             \DB::commit();
-    
+            
             return response()->json([
                 'message' => 'Unidade terminada com sucesso',
                 'xpGanho' => $xpTotal,
+                'idCurso' => $idCurso,
+                'taxaAcerto' => $taxaAcerto,
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();
