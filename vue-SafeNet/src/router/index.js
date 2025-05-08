@@ -63,7 +63,7 @@ const router = createRouter({
       component: Loja,
     },
     {
-      path: '/unidade/:idUnidade/jogos',
+      path: '/backoffice/unidade/:idUnidade/jogos',
       name: 'Jogos',
       component: Jogo,
       props: true,
