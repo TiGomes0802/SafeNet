@@ -1,68 +1,60 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
+  import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
+  import { useRoute } from 'vue-router'
+  import Sidebar from '@/components/Sidebar.vue'
+  import UnidadeCard from '@/components/UnidadeCard.vue'
+  import { useCursosStore } from '@/stores/curso'
+import { storeToRefs } from 'pinia'
 
-import { useRoute } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
-import UnidadeCard from '@/components/UnidadeCard.vue'
-import axios from 'axios'
+  const route = useRoute()
+  const cursosStore = useCursosStore()
 
-const route = useRoute()
-const cursoId = ref(route.params.idCurso)
-const curso = ref({})
-const unidades = ref([])
+  const cursoId = ref(route.params.idCurso)
+  const curso = ref({})
+  const unidades = ref([])
 
-watch(() => route.params.idCurso, (newVal) => {
-  cursoId.value = newVal
-  fetchCurso()
-  fetchUnidades()
-})
+  watch(() => route.params.idCurso, (newVal) => {
+    cursoId.value = newVal
+    for(const curso of cursosStore.cursos) {
+      if (curso.id == cursoId.value) {
+        cursosStore.curso = curso
+        unidades.value = curso.unidades
+      }
+    }
+  })
 
-const windowWidth = ref(window.innerWidth)
-const isSidebarOpen = ref(false)
+  const windowWidth = ref(window.innerWidth)
+  const isSidebarOpen = ref(false)
 
-const updateWidth = () => {
-  windowWidth.value = window.innerWidth
-}
-
-onMounted(() => {
-  window.addEventListener('resize', updateWidth)
-  fetchCurso()
-  fetchUnidades()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
-
-const dynamicPadding = computed(() => {
-  if (windowWidth.value < 768 && !isSidebarOpen.value) {
-    return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
+  const updateWidth = () => {
+    windowWidth.value = window.innerWidth
   }
-  return 'pl-10'  // Ecrãs maiores
-})
 
-const closeSidebar = () => {
-  isSidebarOpen.value = false
-}
+  onMounted(async() => {
+    await cursosStore.getCursosAtivos()
+    for(const curso of cursosStore.cursos) {
+      if (curso.id == cursoId.value) {
+        cursosStore.curso = curso
+        unidades.value = curso.unidades
+      }
+    }
+    window.addEventListener('resize', updateWidth)
+  })
 
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+  })
 
-const fetchCurso = async () => {
-  try {
-    const response = await axios.get(`/cursos/${cursoId.value}`)
-    curso.value = response.data
-  } catch (error) {
-    console.error('Erro ao buscar curso:', error)
+  const dynamicPadding = computed(() => {
+    if (windowWidth.value < 768 && !isSidebarOpen.value) {
+      return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
+    }
+    return 'pl-10'  // Ecrãs maiores
+  })
+
+  const closeSidebar = () => {
+    isSidebarOpen.value = false
   }
-}
-
-const fetchUnidades = async () => {
-  try {
-    const response = await axios.get(`/cursos/${cursoId.value}/unidades`)
-    unidades.value = response.data
-  } catch (error) {
-    console.error('Erro ao buscar unidades:', error)
-  }
-}
 
 </script>
 
@@ -79,7 +71,6 @@ const fetchUnidades = async () => {
           <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" />
         </router-link>
       </div>
-
     </div>
   </div>
 </template>

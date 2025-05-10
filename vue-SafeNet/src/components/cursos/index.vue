@@ -1,19 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import Sidebar from '@/components/Sidebar.vue'
+  import { onMounted } from 'vue'
+  import { useCursosStore } from '@/stores/curso'
+  import Sidebar from '@/components/Sidebar.vue'
 
-const cursos = ref([])
+  const cursosStore = useCursosStore()
 
-onMounted(async () => {
-  try {
-    const response = await axios.get('cursos')
-    cursos.value = response.data
-
-  } catch (error) {
-    console.error('Erro ao carregar cursos:', error)
-  }
-})
+  onMounted(async () => {
+    cursosStore.getCursos()
+  })
 </script>
 
 <template>
@@ -39,7 +33,7 @@ onMounted(async () => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="curso in cursos" :key="curso.id" class="border-t hover:bg-gray-50">
+          <tr v-for="curso in cursosStore.cursos" :key="curso.id" class="border-t hover:bg-gray-50">
             <td class="px-6 py-4">{{ curso.nome }}</td>
             <td class="px-6 py-4">
               <router-link :to="`/backoffice/cursos/${curso.id}/unidades`" class="rounded- text-sm bg-blue-100 text-blue-600 hover:underline">

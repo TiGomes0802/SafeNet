@@ -1,7 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import axios from 'axios'
 import Sidebar from '@/components/Sidebar.vue'
 
 const route = useRoute()
@@ -9,15 +8,6 @@ const unidades = ref([])
 const cursoId = route.params.idCurso
 const curso = ref(null)
 
-onMounted(async () => {
-    try {
-        const response = await axios.get(`/cursos/${cursoId}`)
-        curso.value = response.data
-        unidades.value = response.data.unidades
-    } catch (error) {
-        console.error('Erro ao carregar unidades:', error)
-    }
-})
 </script>
 
 <template>

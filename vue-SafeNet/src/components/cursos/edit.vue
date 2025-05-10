@@ -1,41 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import { useRoute, useRouter } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
+  import { ref, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useCursosStore } from '@/stores/curso'
+  import Sidebar from '@/components/Sidebar.vue'
 
-const nome = ref('')
-const estado = ref('inativo')
-const router = useRouter()
-const route = useRoute()
+  const cursoStore = useCursosStore()
 
+  const nome = ref('')
+  const estado = ref('inativo')
+  const route = useRoute()
 
-const carregarCurso = async () => {
-  try {
-    const response = await axios.get(`/api/cursos/${route.params.id}`)
-    nome.value = response.data.nome
-    estado.value = response.data.estado
-  } catch (error) {
-    console.error('Erro ao carregar curso:', error)
+  const atualizarCurso = () => {
+    cursoStore.updateCurso(route.params.id, nome.value, estado.value)
   }
-}
 
-
-const atualizarCurso = async () => {
-  try {
-    await axios.put(`/api/cursos/${route.params.id}`, {
-      nome: nome.value,
-      estado: estado.value
-    })
-    router.push('/backoffice/cursos')
-  } catch (error) {
-    console.error('Erro ao atualizar curso:', error)
-  }
-}
-
-onMounted(() => {
-  carregarCurso()
-})
+  onMounted(() => {
+    useCursosStore.getCurso()
+  })
 </script>
 
 <template>

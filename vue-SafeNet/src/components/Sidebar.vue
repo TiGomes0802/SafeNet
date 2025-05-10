@@ -8,7 +8,7 @@ const storeAuth = useAuthStore()
 const isOpen = ref(false)
 const windowWidth = ref(window.innerWidth)
 const storeCoins = useCoinsStore();
-const storeCursos = useCursosStore()
+const cursosStore = useCursosStore()
 
 const updateWidth = () => {
     windowWidth.value = window.innerWidth
@@ -16,7 +16,7 @@ const updateWidth = () => {
 
 onMounted(() => {
     window.addEventListener('resize', updateWidth)
-    storeCursos.getCursos()
+    cursosStore.getCursosAtivos()
 })
 
 onUnmounted(() => {
@@ -75,7 +75,7 @@ const handleLinkClick = () => {
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link v-for="curso in storeCursos.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
+                            <router-link v-for="curso in cursosStore.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
                                 class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
                                 {{ curso.nome }}
                             </router-link>

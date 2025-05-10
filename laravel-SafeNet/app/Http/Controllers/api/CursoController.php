@@ -14,6 +14,20 @@ class CursoController extends Controller
         return response()->json($cursos);
     }
 
+    public function cursosAtivos()
+    {
+        $cursos = Curso::with('unidades')
+            ->where('estado', true)
+            ->get();
+        
+        // carregar as unidades associadas a cada curso
+        foreach ($cursos as $curso) {
+            $curso->unidades = $curso->unidades()->where('estado', true)->get();
+        }
+
+        return response()->json($cursos);
+    }
+
     public function show($idCurso)
     {
         $curso = Curso::with('unidades')->find($idCurso);
@@ -24,6 +38,7 @@ class CursoController extends Controller
 
         return response()->json($curso);
     }
+    
 
     public function createCurso(Request $request)
     {

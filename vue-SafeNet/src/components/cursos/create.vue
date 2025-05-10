@@ -1,22 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
+  import { useCursosStore } from '@/stores/curso'
+  import Sidebar from '@/components/Sidebar.vue'
 
-const nome = ref('')
-const router = useRouter()
+  const cursosStore = useCursosStore()
 
-const criarCurso = async () => {
-  try {
-    await axios.post('cursos', {
-      nome: nome.value,
-    })
-    router.push('/backoffice/cursos')
-  } catch (error) {
-    console.error('Erro ao criar curso:', error)
+  const criarCurso = async () => {
+    cursosStore.createCurso(nome.value)
   }
-}
 </script>
 
 <template>

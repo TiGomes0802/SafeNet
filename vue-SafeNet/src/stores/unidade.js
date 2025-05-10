@@ -11,6 +11,23 @@ export const useUnidadeStore = defineStore("unidade", () => {
     const unidades = ref(null);
     const unidade = ref(null);
 
+    const getUnidades = async (idCurso) => {
+        try{
+            const response = await axios.get(`/cursos/${idCurso}/unidades`);
+            unidades.value = response.data;
+            return true;
+        } catch (e) {
+            storeError.setErrorMessages(
+                e.response.data.message,
+                e.response.data.errors,
+                e.response.status,
+                "Error fetching units!"
+            );
+            return false;
+        }
+    }
+
+
     const concluirUnidade = async (idUnidade, jogos) => {
         const data = {
             idUnidade: idUnidade,
@@ -36,6 +53,7 @@ export const useUnidadeStore = defineStore("unidade", () => {
     return{
         unidades,
         unidade,
+        getUnidades,
         concluirUnidade,
     }
 });
