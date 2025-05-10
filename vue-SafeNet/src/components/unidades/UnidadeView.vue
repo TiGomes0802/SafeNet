@@ -6,10 +6,11 @@ import { usePaginaStore } from '@/stores/pagina'
 import { useCursoStore } from '@/stores/curso'
 
 const route = useRoute()
-const idUnidade = route.params.idUnidade
-const cursoId = parseInt(route.params.idCurso)
 const cursoStore = useCursoStore()
 const paginaStore = usePaginaStore()
+
+const idUnidade = route.params.idUnidade
+const cursoId = parseInt(route.params.idCurso)
 const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
 
 onMounted(async () => {
@@ -39,9 +40,17 @@ const paginaAnterior = () => {
     <Sidebar />
     <main class="flex-1 p-6 bg-gray-100 overflow-auto flex flex-col justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-blue-600 mb-4">
-          {{ cursoStore.getCurso(cursoId)?.nome }} | Unidade: {{ idUnidade }}
-        </h1>
+        <div class="flex flex-col pb-4 sm:pb-0 sm:flex-row">
+          <h1 class="text-2xl font-bold text-blue-600 mb-4">
+            {{ cursoStore.curso.nome }} | Unidade: {{ idUnidade }}
+          </h1>
+          <div class="sm:Justify-end flex-grow text-right">
+            <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"
+              class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
+                Avaliar
+            </RouterLink>
+          </div>
+        </div>
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
           <p v-if="paginaStore.paginas.length > 0" v-html="paginaVisivel.descricao"></p>
           <p v-else>A carregar páginas...</p>
@@ -60,13 +69,6 @@ const paginaAnterior = () => {
         <button v-if="paginaAtual < paginaStore.paginas.length - 1" @click="proximaPagina"
           class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
           Avançar →
-        </button>
-
-        <button v-else>
-          <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"
-            class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
-            Avaliar
-          </RouterLink>
         </button>
       </div>
     </main>

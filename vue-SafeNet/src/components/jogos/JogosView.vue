@@ -1,8 +1,8 @@
 <script setup>
   import { ref, onMounted, computed, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { useJogoStore } from '@/stores/jogo'
   import draggable from 'vuedraggable'
+  import { useJogoStore } from '@/stores/jogo'
   import { useVidasStore } from '@/stores/vidas'
   import { useUnidadeStore } from '@/stores/unidade'
   import ReportarPergunta from '@/components/reports/Report.vue'
@@ -10,19 +10,19 @@
 
   const route = useRoute()
   const router = useRouter()
-  const idUnidade = route.params.idUnidade
-  const idCurso = route.params.idCurso
-  const jogoStore = useJogoStore()
-  const vidasStore = useVidasStore()
-  const unidadeStore = useUnidadeStore()
+  const storeUnidade = useUnidadeStore()
+  const storeJogo = useJogoStore()
+  const storeVidas = useVidasStore()
+
+  const idUnidade = storeUnidade.unidade.id
 
   const perguntaAtual = ref(0)
   const respostaSelecionada = ref([])
   const report = ref(false)
   const desistir = ref(false)
 
-  const pergunta = computed(() => jogoStore.jogos?.[perguntaAtual.value])
-  const totalPerguntas = computed(() => jogoStore.jogos?.length || 0)
+  const pergunta = computed(() => storeJogo.jogos?.[perguntaAtual.value])
+  const totalPerguntas = computed(() => storeJogo.jogos?.length || 0)
 
   const jogos = ref([])
 
@@ -42,7 +42,7 @@
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
 
       if (!respostaCorreta) {
-        await vidasStore.perderVida()
+        await storeVidas.perderVida()
       }
     } else if (tipo === 2) {
       let respostaCorreta = true
@@ -57,7 +57,7 @@
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
 
       if (!respostaCorreta) {
-        await vidasStore.perderVida() // só perde uma vida, mesmo com vários erros
+        await storeVidas.perderVida() // só perde uma vida, mesmo com vários erros
       }
 
     } else if (tipo === 3) {
@@ -72,13 +72,13 @@
       }
 
       if (!respostaCorreta) {
-        await vidasStore.perderVida()
+        await storeVidas.perderVida()
       }
 
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
     }
 
-    if (vidasStore.vidas <= 0) {
+    if (storeVidas.vidas <= 0) {
       router.push({ name: 'gameover', params: { idUnidade } })
       return
     }
@@ -90,7 +90,7 @@
     } else {
       // Alterar para uma página de sucesso
       //router.push({ name: 'success' })
-      unidadeStore.concluirUnidade(idUnidade, jogos.value)
+      storeUnidade.concluirUnidade(idUnidade, jogos.value)
     }
   }
 
@@ -102,8 +102,8 @@
   }, { immediate: true })
 
   onMounted(async () => {
-    await jogoStore.comecarJogo(idUnidade)
-    await vidasStore.getVidas()
+    await storeJogo.comecarJogo(idUnidade)
+    await storeVidas.getVidas()
   })
 
 </script>
@@ -167,11 +167,11 @@
         <button @click="desistir = true" class="bg-gray-300 px-5 py-2 rounded font-semibold">Sair</button>
 
         <div v-if="desistir">
-          <DesistirJogo :idUnidade="idUnidade" :idCurso="idCurso" @fecharSairJogo="desistir = false"/>
+          <DesistirJogo :idCurso="idCurso" :idUnidade="idUnidade"  @fecharSairJogo="desistir = false"/>
         </div>
 
         <div class="flex items-center space-x-1">
-          <span class="text-red-600 font-bold text-xl">{{ vidasStore.vidas }}</span>
+          <span class="text-red-600 font-bold text-xl">{{ storeVidas.vidas }}</span>
           <img src="/icons/vida.png" alt="Vida" class="w-20 h-15" />
           <div class="w-130 h-3 bg-gray-200 rounded-full overflow-hidden">
             <div class="h-full bg-green-600" :style="{ width: ((perguntaAtual + 1) / totalPerguntas) * 100 + '%' }">

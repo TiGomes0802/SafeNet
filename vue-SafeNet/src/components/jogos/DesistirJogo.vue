@@ -5,20 +5,17 @@
 
     const emit = defineEmits(['fecharSairJogo'])
 
-    const props = defineProps({
-      idUnidade: {
-        type: Number,
-        required: true
-      },
-      idCurso: {
-        type: Number,
-        required: true
-      }
+    const { idUnidade, idCurso } = defineProps({
+      idUnidade: Number,
+      idCurso: Number
     })
+
+    console.log('ID Unidade:', idUnidade)
+    console.log('ID Curso:', idCurso)
 
     const desistirJogo = () => {
       // Redireciona para a página de unidades
-      router.push(`/curso/${props.idCurso}/unidade/${props.idUnidade}`)
+      router.push(`/curso/${idCurso}/unidade/${idUnidade}`)
     }
 </script>
 
