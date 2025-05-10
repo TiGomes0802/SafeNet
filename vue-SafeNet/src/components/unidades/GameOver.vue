@@ -1,10 +1,10 @@
 <script setup>
 
 import { useRouter } from 'vue-router'
-import { useCursosStore } from '@/stores/curso'
+import { useCursoStore } from '@/stores/curso'
 
 const router = useRouter()
-const cursoStore = useCursosStore()
+const storeCurso = useCursoStore()
 
 const voltarCurso = () => {
     router.push()

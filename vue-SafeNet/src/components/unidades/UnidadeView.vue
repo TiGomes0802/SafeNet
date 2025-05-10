@@ -3,17 +3,17 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { usePaginaStore } from '@/stores/pagina'
-import { useCursosStore } from '@/stores/curso'
+import { useCursoStore } from '@/stores/curso'
 
 const route = useRoute()
 const idUnidade = route.params.idUnidade
 const cursoId = parseInt(route.params.idCurso)
-const cursosStore = useCursosStore()
+const cursoStore = useCursoStore()
 const paginaStore = usePaginaStore()
 const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
 
 onMounted(async () => {
-  await cursosStore.getCursos()
+  await cursoStore.getCursos()
   await paginaStore.getPaginas(idUnidade)
 
   //console.log('Páginas carregadas:', paginaStore.paginas)
@@ -40,7 +40,7 @@ const paginaAnterior = () => {
     <main class="flex-1 p-6 bg-gray-100 overflow-auto flex flex-col justify-between">
       <div>
         <h1 class="text-2xl font-bold text-blue-600 mb-4">
-          {{ cursosStore.getCurso(cursoId)?.nome }} | Unidade: {{ idUnidade }}
+          {{ cursoStore.getCurso(cursoId)?.nome }} | Unidade: {{ idUnidade }}
         </h1>
         <div class="bg-white p-6 rounded shadow min-h-[200px]">
           <p v-if="paginaStore.paginas.length > 0" v-html="paginaVisivel.descricao"></p>

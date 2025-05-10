@@ -11,6 +11,7 @@ class CursoController extends Controller
     public function index()
     {
         $cursos = Curso::with('unidades')->get();
+
         return response()->json($cursos);
     }
 
@@ -41,7 +42,7 @@ class CursoController extends Controller
     
 
     public function createCurso(Request $request)
-    {
+    {      
         // Valida os dados recebidos
         $validatedData = $request->validate([
             'nome' => 'required|string|max:255',

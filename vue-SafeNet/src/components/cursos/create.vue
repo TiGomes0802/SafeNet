@@ -1,11 +1,11 @@
 <script setup>
-  import { useCursosStore } from '@/stores/curso'
+  import { useCursoStore } from '@/stores/curso'
   import Sidebar from '@/components/Sidebar.vue'
 
-  const cursosStore = useCursosStore()
+  const storeCurso = useCursoStore()
 
   const criarCurso = async () => {
-    cursosStore.createCurso(nome.value)
+    storeCurso.createCurso(nome.value)
   }
 </script>
 

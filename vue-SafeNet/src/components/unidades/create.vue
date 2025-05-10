@@ -3,22 +3,22 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import Sidebar from '@/components/Sidebar.vue'
+import { useUnidadeStore } from '@/stores/unidade'
 
 const route = useRoute()
 const router = useRouter()
+const unidadeStore = useUnidadeStore()
+
 const cursoId = route.params.idCurso
 
 const titulo = ref('')
 const descricao = ref('')
-const ordem = ref(1)
 
 const criarUnidade = async () => {
   try {
-    await axios.post(`/cursos/${cursoId}/unidades`, {
+    const response = await axios.post(`/cursos/${cursoId}/unidades`, {
       titulo: titulo.value,
       descricao: descricao.value,
-      ordem: ordem.value,
-      estado: false,
     })
     router.push(`/backoffice/cursos/${cursoId}/unidades`)
   } catch (error) {
@@ -56,18 +56,6 @@ const criarUnidade = async () => {
               class="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
               required
             ></textarea>
-          </div>
-  
-          <div>
-            <label for="ordem" class="block text-sm font-medium text-gray-700">Ordem</label>
-            <input
-              id="ordem"
-              v-model.number="ordem"
-              type="number"
-              min="1"
-              class="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-              required
-            />
           </div>
   
           <button

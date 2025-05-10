@@ -1,43 +1,44 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useCoinsStore } from '@/stores/coins'
-import { useCursosStore } from '@/stores/curso'
+    import { ref, onMounted, onUnmounted } from 'vue'
+    import { useAuthStore } from '@/stores/auth'
+    import { useCoinsStore } from '@/stores/coins'
+    import { useCursoStore } from '@/stores/curso'
 
-const storeAuth = useAuthStore()
-const isOpen = ref(false)
-const windowWidth = ref(window.innerWidth)
-const storeCoins = useCoinsStore();
-const cursosStore = useCursosStore()
+    const storeAuth = useAuthStore()
+    const storeCoins = useCoinsStore()
+    const storeCurso = useCursoStore()
+    const isOpen = ref(false)
+    const windowWidth = ref(window.innerWidth)
 
-const updateWidth = () => {
-    windowWidth.value = window.innerWidth
-}
-
-onMounted(() => {
-    window.addEventListener('resize', updateWidth)
-    cursosStore.getCursosAtivos()
-})
-
-onUnmounted(() => {
-    window.removeEventListener('resize', updateWidth)
-})
-
-const logout = () => {
-    storeAuth.logout()
-}
-
-const toggleSidebar = () => {
-    isOpen.value = !isOpen.value
-}
-
-// Para fechar sidebar quando o utilizador clica num link
-const handleLinkClick = () => {
-    if (windowWidth.value < 768) {
-        isOpen.value = false
+    const updateWidth = () => {
+        windowWidth.value = window.innerWidth
     }
-}
 
+    onMounted(() => {
+        window.addEventListener('resize', updateWidth)
+        if (storeAuth.user?.type === 'J') {
+            storeCurso.getCursosAtivos()
+        }
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateWidth)
+    })
+
+    const logout = () => {
+        storeAuth.logout()
+    }
+
+    const toggleSidebar = () => {
+        isOpen.value = !isOpen.value
+    }
+
+    // Para fechar sidebar quando o utilizador clica num link
+    const handleLinkClick = () => {
+        if (windowWidth.value < 768) {
+            isOpen.value = false
+        }
+    }
 </script>
 
 
@@ -75,7 +76,7 @@ const handleLinkClick = () => {
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link v-for="curso in cursosStore.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
+                            <router-link v-for="curso in storeCurso.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
                                 class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
                                 {{ curso.nome }}
                             </router-link>

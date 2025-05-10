@@ -3,11 +3,13 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useErrorStore } from '@/stores/error'
+import { useUnidadeStore } from '@/stores/unidade'
 
-export const useCursosStore = defineStore('cursos', () => {
+export const useCursoStore = defineStore('cursos', () => {
  
-  const storeError = useErrorStore()
   const router = useRouter()
+  const storeError = useErrorStore()
+  const storeUnidade = useUnidadeStore()
 
   const curso = ref()
   const cursos = ref([])
@@ -47,6 +49,7 @@ export const useCursosStore = defineStore('cursos', () => {
     try {
       const response = await axios.get(`/cursos/${id}`)
       curso.value = response.data
+      storeUnidade.unidades = response.data.unidades
       return true
     } catch (error) {
       storeError.setErrorMessages(
@@ -61,8 +64,12 @@ export const useCursosStore = defineStore('cursos', () => {
 
   const createCurso = async (nome) => {
     try {
-      const response = await axios.post('/cursos', nome)
+      const response = await axios.post('/cursos', {nome: nome})
       router.push({name: "CursosIndex"});
+      if (response.status === 201) {
+        return true
+      }
+      return false
     } catch (error) {
       storeError.setErrorMessages(
         error.response.data.message,

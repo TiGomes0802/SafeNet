@@ -1,12 +1,12 @@
 <script setup>
   import { onMounted } from 'vue'
-  import { useCursosStore } from '@/stores/curso'
+  import { useCursoStore } from '@/stores/curso'
   import Sidebar from '@/components/Sidebar.vue'
 
-  const cursosStore = useCursosStore()
+  const storeCurso = useCursoStore()
 
   onMounted(async () => {
-    cursosStore.getCursos()
+    storeCurso.getCursos()
   })
 </script>
 
@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="curso in cursosStore.cursos" :key="curso.id" class="border-t hover:bg-gray-50">
+          <tr v-for="curso in storeCurso.cursos" :key="curso.id" class="border-t hover:bg-gray-50">
             <td class="px-6 py-4">{{ curso.nome }}</td>
             <td class="px-6 py-4">
               <router-link :to="`/backoffice/cursos/${curso.id}/unidades`" class="rounded- text-sm bg-blue-100 text-blue-600 hover:underline">

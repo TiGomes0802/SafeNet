@@ -45,15 +45,23 @@ class UnidadeController extends Controller
         $validatedData = $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'ordem' => 'required|integer',
-            'estado' => 'required|boolean',
         ]);
+
+        // Verifica se o curso tem unidades
+        $unidades = Unidade::where('idCurso', $idCurso)->get();
+        if ($unidades->isEmpty()) {
+            $ordem = 1;
+        } else {
+            // Ordena as unidades por ordem e pega a última
+            $ultimaUnidade = $unidades->sortByDesc('ordem')->first();
+            $ordem = $ultimaUnidade->ordem + 1;
+        }
 
         $unidade = Unidade::create([
             'titulo' => $validatedData['titulo'],
             'descricao' => $validatedData['descricao'],
-            'ordem' => $validatedData['ordem'],
-            'estado' => $validatedData['estado'],
+            'ordem' => $ordem,
+            'estado' => false,
             'idCurso' => $idCurso,
         ]);
 

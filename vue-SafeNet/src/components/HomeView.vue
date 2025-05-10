@@ -3,11 +3,10 @@
   import { useRoute } from 'vue-router'
   import Sidebar from '@/components/Sidebar.vue'
   import UnidadeCard from '@/components/UnidadeCard.vue'
-  import { useCursosStore } from '@/stores/curso'
-import { storeToRefs } from 'pinia'
+  import { useCursoStore } from '@/stores/curso'
 
   const route = useRoute()
-  const cursosStore = useCursosStore()
+  const storeCurso = useCursoStore()
 
   const cursoId = ref(route.params.idCurso)
   const curso = ref({})
@@ -15,9 +14,9 @@ import { storeToRefs } from 'pinia'
 
   watch(() => route.params.idCurso, (newVal) => {
     cursoId.value = newVal
-    for(const curso of cursosStore.cursos) {
+    for(const curso of storeCurso.cursos) {
       if (curso.id == cursoId.value) {
-        cursosStore.curso = curso
+        storeCurso.curso = curso
         unidades.value = curso.unidades
       }
     }
@@ -31,10 +30,10 @@ import { storeToRefs } from 'pinia'
   }
 
   onMounted(async() => {
-    await cursosStore.getCursosAtivos()
-    for(const curso of cursosStore.cursos) {
+    await storeCurso.getCursosAtivos()
+    for(const curso of storeCurso.cursos) {
       if (curso.id == cursoId.value) {
-        cursosStore.curso = curso
+        storeCurso.curso = curso
         unidades.value = curso.unidades
       }
     }

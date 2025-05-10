@@ -1,17 +1,17 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
-  import { useCursosStore } from '@/stores/curso'
+  import { useCursoStore } from '@/stores/curso'
   import Sidebar from '@/components/Sidebar.vue'
 
-  const cursoStore = useCursosStore()
+  const storeCurso = useCursoStore()
 
   const nome = ref('')
   const estado = ref('inativo')
   const route = useRoute()
 
   const atualizarCurso = () => {
-    cursoStore.updateCurso(route.params.id, nome.value, estado.value)
+    storeCurso.updateCurso(route.params.id, nome.value, estado.value)
   }
 
   onMounted(() => {
