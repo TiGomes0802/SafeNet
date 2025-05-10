@@ -1,14 +1,16 @@
 import {ref } from 'vue'
 import {defineStore} from 'pinia'
 import axios from 'axios'
-import { useErrorStore } from "@/stores/error";
 import { useRouter } from 'vue-router'
+import { useErrorStore } from "@/stores/error";
 import { useCoinsStore } from "@/stores/coins";
+import { useCursosStore } from '@/stores/curso';
 
 export const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     const storeCoins = useCoinsStore();
+    const storeCursos = useCursosStore();
     
     //const { toast } = Toaster()
     
@@ -64,36 +66,32 @@ export const useAuthStore = defineStore('auth', () => {
     const login = async (credentials) => {
         storeError.resetMessages();
         try{
-            console.log(credentials);
-            const responseLogin = await axios.post("auth/login", credentials);
-            token.value = responseLogin.data.token;
-            axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
-            localStorage.setItem("token", token.value);
-            const responseUser = await axios.get("users/me");
-            user.value = responseUser.data.data;
-            console.log(user.value);
-            repeatRefreshToken();
-            storeCoins.getCoins();
-            router.push({name: "home"});
-            return user.value;
+          console.log(credentials);
+          const responseLogin = await axios.post("auth/login", credentials);
+          token.value = responseLogin.data.token;
+          axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
+          localStorage.setItem("token", token.value);
+          const responseUser = await axios.get("users/me");
+          storeCursos.getCursosAtivos();
+          user.value = responseUser.data.data;
+          console.log(user.value);
+          repeatRefreshToken();
+          storeCoins.getCoins();
+          router.push({name: "home"});
+          return user.value;
         } catch (e) {
             clearUser();
             console.log(e.response.data.message);
             if (e.response.data.message == "Unauthorized") {
                 errorLogin.value = true;
                 console.log("Unauthorized");
-                /*toast({
-                    title: "Unauthorized",
-                    description: "Please, check your email and password.",
-                    variant: 'destructive'
-                });*/
             }else{
-                storeError.setErrorMessages(
-                  e.response.data.message,
-                  e.response.data.errors,
-                  e.response.status,
-                  "Authentication Error!"
-                );
+              storeError.setErrorMessages(
+                e.response.data.message,
+                e.response.data.errors,
+                e.response.status,
+                "Authentication Error!"
+              );
             }
             return false;
         }
@@ -104,12 +102,11 @@ export const useAuthStore = defineStore('auth', () => {
       storeError.resetMessages(); // Reseta mensagens de erro antes de iniciar
       try {
         await axios.post("auth/register", credentials);
-    
         await login({
           email: credentials.email,
           password: credentials.password,
         });
-  
+
       } catch (e) {
         storeError.setErrorMessages(
           e.response.data.message,
@@ -119,12 +116,8 @@ export const useAuthStore = defineStore('auth', () => {
         );
         console.log(e.response.data);
         if (e.response?.data.errors != null) {
-          if (e.response.data.errors.username == "The username has already been taken." && e.response.data.errors.email == "The email has already been taken.") {
-            errorResgistar.value = "Username e email já existem";
-          }else if (e.response.data.errors.username == "The username has already been taken.") {
-            errorResgistar.value = "Username já existe";            
-          }else if (e.response.data.errors.email == "The email has already been taken.") {
-            errorResgistar.value = "Email já existe";            
+          if (e.response.data.errors.username == "Já existe um utilizador com estes dados." || e.response.data.errors.email == "Já existe um utilizador com estes dados.") {
+            errorResgistar.value = "Já existe um utilizador com estes dados.";
           }
         }
         return false;

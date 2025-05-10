@@ -28,4 +28,12 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string|min:3',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'username.unique' => 'Já existe um utilizador com estes dados.',
+            'email.unique' => 'Já existe um utilizador com estes dados.',
+        ];
+    }
 }
