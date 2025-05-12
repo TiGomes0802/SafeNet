@@ -14,7 +14,7 @@ const cursoId = parseInt(route.params.idCurso)
 const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
 
 onMounted(async () => {
-  await cursoStore.getCursos()
+  await cursoStore.getCursosAtivos()
   await paginaStore.getPaginas(idUnidade)
 
   //console.log('Páginas carregadas:', paginaStore.paginas)

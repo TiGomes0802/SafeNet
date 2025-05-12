@@ -14,7 +14,7 @@
   const storeJogo = useJogoStore()
   const storeVidas = useVidasStore()
 
-  const idUnidade = storeUnidade.unidade.id
+  const idUnidade = route.params.idUnidade
 
   const perguntaAtual = ref(0)
   const respostaSelecionada = ref([])
