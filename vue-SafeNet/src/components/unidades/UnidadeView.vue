@@ -47,7 +47,7 @@ const paginaAnterior = () => {
           <div class="sm:Justify-end flex-grow text-right">
             <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"
               class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
-                Avaliar
+              Avaliar
             </RouterLink>
           </div>
         </div>
@@ -58,19 +58,22 @@ const paginaAnterior = () => {
       </div>
 
       <!-- Navegação entre páginas -->
-      <div class="mt-8 flex justify-between items-center">
+      <div class="mt-8 relative flex items-center justify-center">
         <button v-if="paginaAtual > 0" @click="paginaAnterior"
-          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-black rounded">
+          class="absolute left-0 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-black rounded">
           ← Voltar
         </button>
 
-        <div class="flex-1"></div>
+        <div class="text-gray-600 font-semibold">
+          Página {{ paginaAtual + 1 }} de {{ paginaStore.paginas.length }}
+        </div>
 
         <button v-if="paginaAtual < paginaStore.paginas.length - 1" @click="proximaPagina"
-          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
+          class="absolute right-0 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
           Avançar →
         </button>
       </div>
+
     </main>
   </div>
 </template>
