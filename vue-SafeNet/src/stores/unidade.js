@@ -12,7 +12,7 @@ export const useUnidadeStore = defineStore("unidade", () => {
     const unidade = ref(null);
 
     const getUnidades = async (idCurso) => {
-        try{
+        try {
             const response = await axios.get(`/cursos/${idCurso}/unidades`);
             unidades.value = response.data;
             return true;
@@ -50,10 +50,31 @@ export const useUnidadeStore = defineStore("unidade", () => {
         }
     }
 
-    return{
+    const updateUnidadeOrder = async (idCurso, newOrder) => {
+        try {
+            const response = await axios.post(`/cursos/${idCurso}/unidades/order`, {
+                unidades: newOrder,
+            });
+            if (response.status === 200) {
+                unidades.value = response.data.unidades;
+            }
+            return true;
+        } catch (e) {
+            storeError.setErrorMessages(
+                e.response.data.message,
+                e.response.data.errors,
+                e.response.status,
+                "Error updating unit order!"
+            );
+            return false;
+        }
+    }
+
+    return {
         unidades,
         unidade,
         getUnidades,
         concluirUnidade,
+        updateUnidadeOrder,
     }
 });

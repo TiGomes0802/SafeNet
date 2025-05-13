@@ -36,7 +36,7 @@
           <tr v-for="curso in storeCurso.cursos" :key="curso.id" class="border-t hover:bg-gray-50">
             <td class="px-6 py-4">{{ curso.nome }}</td>
             <td class="px-6 py-4">
-              <router-link :to="`/backoffice/cursos/${curso.id}/unidades`" class="rounded- text-sm bg-blue-100 text-blue-600 hover:underline">
+              <router-link :to="`/backoffice/cursos/${curso.id}/unidades`" class="ml-5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 text-sm font-medium hover:bg-blue-200">
                 {{ curso.unidades.length }}
               </router-link>
             </td>
