@@ -25,7 +25,7 @@ class UnidadeController extends Controller
     public function show($idUnidade)
     {
         // Encontra a unidade dentro do curso
-        $unidade = Unidade::where('idCurso', $idCurso)->find($idUnidade);
+        $unidade = Unidade::find($idUnidade);
         if (!$unidade) {
             return response()->json(['error' => 'Unidade não encontrada'], 404);
         }
