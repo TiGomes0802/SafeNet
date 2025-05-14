@@ -125,18 +125,23 @@
 
 @layer utilities {
 
-  .slide-enter-active, .slide-leave-active {
+  .slide-enter-active,
+  .slide-leave-active {
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
-  .slide-enter-from, .slide-leave-to {
+
+  .slide-enter-from,
+  .slide-leave-to {
     transform: translateX(-100%);
     opacity: 0;
   }
-  .slide-enter-to, .slide-leave-from {
+
+  .slide-enter-to,
+  .slide-leave-from {
     transform: translateX(0);
     opacity: 1;
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out;
   }
@@ -155,48 +160,71 @@
 }
 
 @layer components {
+  .btn-soft {
+    @apply inline-flex items-center justify-center px-6 py-2 rounded-xl border border-blue-400 text-blue-600 font-medium bg-white hover:bg-blue-50 hover:text-blue-700 transition duration-300 ease-in-out shadow-sm;
+  }
+
+  .btn-soft:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .spinner {
+    @apply animate-spin w-5 h-5 border-2 border-t-transparent border-blue-600 rounded-full;
+  }
+
   .page-container {
-      @apply p-6 max-w-4xl mx-auto;
+    @apply p-6 max-w-4xl mx-auto;
   }
 
   .page-title {
-      @apply text-2xl font-semibold mb-6;
+    @apply text-2xl font-semibold mb-6;
   }
 
   .btn-primary {
-      @apply bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition;
+    @apply bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition;
   }
 
   .btn-secondary {
-      @apply bg-gray-200 text-gray-800 py-1 px-3 rounded hover:bg-gray-300 transition;
+    @apply bg-gray-200 text-gray-800 py-1 px-3 rounded hover:bg-gray-300 transition;
   }
 
   .form {
-      @apply flex flex-col gap-4;
+    @apply flex flex-col gap-4;
   }
 
   .input {
-      @apply border border-gray-300 rounded px-4 py-2;
+    @apply border border-gray-300 rounded px-4 py-2;
   }
 
   .label {
-      @apply font-medium text-gray-700;
+    @apply font-medium text-gray-700;
   }
 
   .table-container {
-      @apply mt-6;
+    @apply mt-6;
   }
 
   .table {
-      @apply w-full table-auto border-collapse;
+    @apply w-full table-auto border-collapse;
   }
 
   .table th,
   .table td {
-      @apply border border-gray-200 px-4 py-2 text-left;
+    @apply border border-gray-200 px-4 py-2 text-left;
   }
 
   .table th {
-      @apply bg-gray-100;
+    @apply bg-gray-100;
   }
+}
+
+/* Fade transition para mensagens */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

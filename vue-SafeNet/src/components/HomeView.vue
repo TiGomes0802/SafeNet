@@ -4,6 +4,7 @@
   import Sidebar from '@/components/Sidebar.vue'
   import UnidadeCard from '@/components/UnidadeCard.vue'
   import { useCursoStore } from '@/stores/curso'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
   const route = useRoute()
   const storeCurso = useCursoStore()
@@ -11,6 +12,7 @@
   const cursoId = ref(route.params.idCurso)
   const curso = ref({})
   const unidades = ref([])
+  const loading = ref(true);
 
   watch(() => route.params.idCurso, (newVal) => {
     cursoId.value = newVal
@@ -38,6 +40,7 @@
       }
     }
     window.addEventListener('resize', updateWidth)
+    loading.value = false
   })
 
   onUnmounted(() => {
@@ -58,18 +61,29 @@
 </script>
 
 <template>
-  <div class="flex h-screen">
-    <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
-    <div :class="['flex-1 bg-gray-100 p-6 overflow-y-scroll transition-all duration-300', dynamicPadding]">
-      <h1 class="text-3xl font-bold text-blue-600 mb-6">{{ curso.nome }}</h1>
+  <div v-if="loading">
+    <Loading />
+  </div>
+  <transition
+    name="fade"
+    appear
+    enter-active-class="transition-opacity duration-700"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+  >
+    <div class="flex h-screen">
+      <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
+      <div :class="['flex-1 bg-gray-100 p-6 overflow-y-scroll transition-all duration-300', dynamicPadding]">
+        <h1 class="text-3xl font-bold text-blue-600 mb-6">{{ curso.nome }}</h1>
 
-      <!-- Lista de Unidades -->
-      <div class="space-y-12">
-        <router-link v-for="unidade in unidades" :key="unidade.id" :to="`/curso/${cursoId}/unidade/${unidade.id}`"
-          class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
-          <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" />
-        </router-link>
+        <!-- Lista de Unidades -->
+        <div class="space-y-12">
+          <router-link v-for="unidade in unidades" :key="unidade.id" :to="`/curso/${cursoId}/unidade/${unidade.id}`"
+            class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
+            <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" />
+          </router-link>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>

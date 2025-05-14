@@ -19,7 +19,6 @@ import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
 import CriarPaginas from "@/components/paginas/create.vue";
-import EditarPaginas from "@/components/paginas/editar.vue";
 import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
@@ -133,12 +132,6 @@ const router = createRouter({
       path: '/backoffice/unidade/:idUnidade/paginas/criar',
       name: 'CriarPagianas',
       component: CriarPaginas,
-      props: true,
-    },
-    {
-      path: '/backoffice/unidade/:idUnidade/paginas/:idPagina',
-      name: 'EditarPaginas',
-      component: EditarPaginas,
       props: true,
     },
     {

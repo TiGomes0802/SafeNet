@@ -5,6 +5,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import { useCursoStore } from '@/stores/curso'
 import { useUnidadeStore } from '@/stores/unidade'
 import draggable from 'vuedraggable'
+import Loading from '@/components/loading/BackofficeLoading.vue'
 
 const route = useRoute()
 const storeCurso = useCursoStore()
@@ -12,10 +13,12 @@ const storeUnidade = useUnidadeStore()
 
 const cursoId = route.params.idCurso
 const ordemAlterada = ref(false)
+const loading = ref(true);
 
 onMounted(async () => {
     if (storeCurso.cursos.length == 0) {
         await storeCurso.getCurso(cursoId)
+        loading.value = false
     } else {
         for (const curso of storeCurso.cursos) {
             if (curso.id == cursoId) {
@@ -49,35 +52,40 @@ const onOrderChange = () => {
 </script>
 
 <template>
-    <div class="flex min-h-screen">
-        <Sidebar class="h-screen" />
-        <main class="flex-1 p-6 bg-gray-50 overflow-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold mb-6" v-if="storeCurso.curso">
-                    {{ storeCurso.curso.nome }} - Unidades
-                </h1>
+    <div v-if="loading">
+        <Loading />
+    </div>
+    <transition
+        name="fade"
+        appear
+        enter-active-class="transition-opacity duration-700"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+    >
+        <div class="flex min-h-screen">
+            <Sidebar class="h-screen" />
+            <main class="flex-1 p-6 bg-gray-50 overflow-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold mb-6" v-if="storeCurso.curso">
+                        {{ storeCurso.curso.nome }} - Unidades
+                    </h1>
 
-                <div class="flex gap-4">
-                    <button v-if="ordemAlterada" @click="guardarNovaOrdem"
-                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-                        Guardar
-                    </button>
                     <router-link :to="`/backoffice/cursos/${cursoId}/unidades/create`"
                         class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
                         Criar Unidade
                     </router-link>
                 </div>
-            </div>
 
-            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-100 text-left">
-                    <tr>
-                        <th class="px-6 py-3">Título</th>
-                        <th class="px-6 py-3">Descrição</th>
-                        <th class="px-6 py-3"></th>
-                    </tr>
-                </thead>
-                <draggable v-model="storeUnidade.unidades" tag="tbody" item-key="id" handle=".drag-handle"
+
+                <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100 text-left">
+                        <tr>
+                            <th class="px-6 py-3">Título</th>
+                            <th class="px-6 py-3">Descrição</th>
+                            <th class="px-6 py-3"></th>
+                        </tr>
+                    </thead>
+                    <draggable v-model="storeUnidade.unidades" tag="tbody" item-key="id" handle=".drag-handle"
                     @end="onOrderChange">
                     <template #item="{ element }">
                         <tr class="border-t hover:bg-gray-50">
@@ -103,8 +111,9 @@ const onOrderChange = () => {
                         </tr>
                     </template>
                 </draggable>
-
-            </table>
-        </main>
-    </div>
+                </table>
+                
+            </main>
+        </div>
+    </transition>
 </template>
