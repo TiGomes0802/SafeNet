@@ -8,7 +8,7 @@ export const useUnidadeStore = defineStore("unidade", () => {
     const router = useRouter();
     const storeError = useErrorStore();
 
-    const unidades = ref(null);
+    const unidades = ref([]);
     const unidade = ref(null);
 
     const getUnidades = async (idCurso) => {
@@ -53,22 +53,24 @@ export const useUnidadeStore = defineStore("unidade", () => {
     const updateUnidadeOrder = async (idCurso, newOrder) => {
         try {
             const response = await axios.post(`/cursos/${idCurso}/unidades/order`, {
-                unidades: newOrder,
+                ordem: newOrder,
             });
+
             if (response.status === 200) {
                 unidades.value = response.data.unidades;
+                return true;
             }
-            return true;
         } catch (e) {
             storeError.setErrorMessages(
-                e.response.data.message,
-                e.response.data.errors,
-                e.response.status,
+                e.response?.data?.message || 'Unknown error',
+                e.response?.data?.errors || [],
+                e.response?.status || 500,
                 "Error updating unit order!"
             );
             return false;
         }
     }
+
 
     return {
         unidades,

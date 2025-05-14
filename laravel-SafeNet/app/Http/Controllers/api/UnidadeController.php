@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Models\Unidade;
 use App\Models\Jogo;
-use App\Models\User;
 
 class UnidadeController extends Controller
 {
@@ -68,6 +67,24 @@ class UnidadeController extends Controller
         return response()->json($unidade, 201);
     }
 
+    public function atualizarOrdem(Request $request, Curso $curso)
+    {
+        $ordens = $request->input('ordem');
+
+        foreach ($ordens as $item) {
+            Unidade::where('id', $item['id'])
+                ->where('idCurso', $curso->id)
+                ->update(['ordem' => $item['ordem']]);
+        }
+
+        return response()->json([
+            'message' => 'Ordem atualizada com sucesso',
+            'unidades' => Unidade::where('idCurso', $curso->id)->orderBy('ordem')->get()
+        ]);
+    }
+
+
+
     public function update(Request $request, $idCurso, $idUnidade)
     {
         $curso = Curso::find($idCurso);
@@ -107,35 +124,36 @@ class UnidadeController extends Controller
      * @param Request $request
      * 
      */
-    public function concluirUnidade(Request $request) {
+    public function concluirUnidade(Request $request)
+    {
         // return das estatisticas do user 7 da unidade 1
-        
+
         $validatedData = $request->validate([
             'idUnidade' => 'required|integer',
             'jogos' => 'required|array',
             'jogos.*.idJogo' => 'required|integer|exists:jogos,id',
             'jogos.*.acertou' => 'required|boolean',
         ]);
-    
+
         \DB::beginTransaction();
 
         $unidade = Unidade::find($validatedData['idUnidade']);
         $idCurso = $unidade->idCurso;
-    
+
         try {
             $user = auth()->user();
             $xpTotal = 0;
-            
+
             $jogosAcertados = 0;
 
             foreach ($validatedData['jogos'] as $jogoData) {
                 // Garante que a ligação existe (ou cria)
                 $jogo = Jogo::find($jogoData['idJogo']);
-    
+
                 $xpGanho = $jogoData['acertou']
                     ? $jogo->xp
                     : intval($jogo->xp * 0.5);
-    
+
                 $xpTotal += $xpGanho;
 
                 // calcula a taxa de acerto so dos jogos, do foreach
@@ -165,20 +183,20 @@ class UnidadeController extends Controller
                     'numAcertos' => $numAcertos,
                 ]);
             }
-    
+
             // Atualiza XP
             $user->xp += $xpTotal;
             $user->save();
-    
+
             // Marca a unidade como concluída
             $user->unidade()->syncWithoutDetaching([
                 $validatedData['idUnidade'] => ['status' => true],
             ]);
-            
+
             $taxaAcerto = round($jogosAcertados / count($validatedData['jogos']) * 100, 2);
 
             \DB::commit();
-            
+
             return response()->json([
                 'message' => 'Unidade terminada com sucesso',
                 'xpGanho' => $xpTotal,
@@ -189,5 +207,5 @@ class UnidadeController extends Controller
             \DB::rollBack();
             return response()->json(['error' => 'Erro ao terminar o jogo: ' . $e->getMessage()], 500);
         }
-    }    
+    }
 }
