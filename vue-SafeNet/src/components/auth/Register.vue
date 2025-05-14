@@ -41,7 +41,7 @@ const goToLogin = () => {
 <template>
     <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white to-gray-100 px-4">
         <!-- Ícone -->
-        <img src="@/assets/logo.svg" alt="Ícone" class="w-28 h-28 mb-6 animate-fade-in" />
+        <img src="@/assets/SafeNetLogo.png" alt="Ícone" class="w-100 h-auto mb-10 animate-fade-in" />
 
         <!-- Formulário -->
         <form @submit.prevent="register" class="flex flex-col items-center space-y-6 w-full max-w-md">
