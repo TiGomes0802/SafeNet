@@ -18,7 +18,6 @@ const loading = ref(true);
 onMounted(async () => {
     if (storeCurso.cursos.length == 0) {
         await storeCurso.getCurso(cursoId)
-        loading.value = false
     } else {
         for (const curso of storeCurso.cursos) {
             if (curso.id == cursoId) {
@@ -28,6 +27,8 @@ onMounted(async () => {
             }
         }
     }
+    
+    loading.value = false
 })
 
 const guardarNovaOrdem = async () => {
