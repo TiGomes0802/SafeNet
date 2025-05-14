@@ -55,13 +55,8 @@ const onOrderChange = () => {
     <div v-if="loading">
         <Loading />
     </div>
-    <transition
-        name="fade"
-        appear
-        enter-active-class="transition-opacity duration-700"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-    >
+    <transition name="fade" appear enter-active-class="transition-opacity duration-700" enter-from-class="opacity-0"
+        enter-to-class="opacity-100">
         <div class="flex min-h-screen">
             <Sidebar class="h-screen" />
             <main class="flex-1 p-6 bg-gray-50 overflow-auto">
@@ -70,10 +65,16 @@ const onOrderChange = () => {
                         {{ storeCurso.curso.nome }} - Unidades
                     </h1>
 
-                    <router-link :to="`/backoffice/cursos/${cursoId}/unidades/create`"
-                        class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
-                        Criar Unidade
-                    </router-link>
+                    <div class="flex gap-4">
+                        <button v-if="ordemAlterada" @click="guardarNovaOrdem"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                            Guardar
+                        </button>
+                        <router-link :to="`/backoffice/cursos/${cursoId}/unidades/create`"
+                            class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
+                            Criar Unidade
+                        </router-link>
+                    </div>
                 </div>
 
 
@@ -86,33 +87,32 @@ const onOrderChange = () => {
                         </tr>
                     </thead>
                     <draggable v-model="storeUnidade.unidades" tag="tbody" item-key="id" handle=".drag-handle"
-                    @end="onOrderChange">
-                    <template #item="{ element }">
-                        <tr class="border-t hover:bg-gray-50">
-                            <td class="px-6 py-4 flex items-center gap-2">
-                                <span class="drag-handle cursor-move text-gray-400">⠿</span>
-                                {{ element.titulo }}
-                            </td>
-                            <td class="px-6 py-4">{{ element.descricao }}</td>
-                            <td class="px-6 py-4 flex justify-end space-x-2">
-                                <router-link :to="`/backoffice/`"
-                                    class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
-                                    Editar
-                                </router-link>
-                                <router-link :to="`/backoffice/unidade/${element.id}/paginas/`"
-                                    class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
-                                    Páginas
-                                </router-link>
-                                <router-link :to="`/backoffice/unidade/${element.id}/jogos/`"
-                                    class="bg-gray-300 hover:bg-red-400 text-black font-semibold py-2 px-4 rounded">
-                                    Jogos
-                                </router-link>
-                            </td>
-                        </tr>
-                    </template>
-                </draggable>
+                        @end="onOrderChange">
+                        <template #item="{ element }">
+                            <tr class="border-t hover:bg-gray-50">
+                                <td class="px-6 py-4 flex items-center gap-2">
+                                    <span class="drag-handle cursor-move text-gray-400">⠿</span>
+                                    {{ element.titulo }}
+                                </td>
+                                <td class="px-6 py-4">{{ element.descricao }}</td>
+                                <td class="px-6 py-4 flex justify-end space-x-2">
+                                    <router-link :to="`/backoffice/`"
+                                        class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
+                                        Editar
+                                    </router-link>
+                                    <router-link :to="`/backoffice/unidade/${element.id}/paginas/`"
+                                        class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
+                                        Páginas
+                                    </router-link>
+                                    <router-link :to="`/backoffice/unidade/${element.id}/jogos/`"
+                                        class="bg-gray-300 hover:bg-red-400 text-black font-semibold py-2 px-4 rounded">
+                                        Jogos
+                                    </router-link>
+                                </td>
+                            </tr>
+                        </template>
+                    </draggable>
                 </table>
-                
             </main>
         </div>
     </transition>
