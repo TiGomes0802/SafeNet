@@ -157,13 +157,14 @@ return new class extends Migration {
             $table->string('tipo');
         });
 
-        // Tabela Missoes (id, tipo, estado, descricao, objetivo, idTipoMissao)
+        // Tabela Missoes (id, tipo, estado, descricao, objetivo, moedas, idTipoMissao)
         Schema::create('missoes', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('estado');
             $table->text('descricao');
             $table->integer('objetivo');
+            $table->integer('modeas');
             $table->unsignedBigInteger('idTipoMissao');
             $table->foreign('idTipoMissao')->references('id')->on('tipoMissoes')->onDelete('cascade');
         });
@@ -171,7 +172,7 @@ return new class extends Migration {
         // Tabela Users_Missoes (id, idUser, idMissao)
         Schema::create('users_missoes', function (Blueprint $table) {
             $table->id();
-            $table->string('estado');
+            $table->boolean('concluida');
             $table->integer('presente');
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idMissao');

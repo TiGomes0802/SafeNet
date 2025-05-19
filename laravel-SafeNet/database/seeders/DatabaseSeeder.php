@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JogosSeeder::class);
         $this->call(RespostasSeeder::class);
         $this->call(RankSeeder::class);
+        $this->call(TipoMissoesSeeder::class);
+        $this->call(MissoesSeeder::class);
     }
 }
