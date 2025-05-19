@@ -9,6 +9,7 @@ use App\Http\Controllers\api\UnidadeController;
 use App\Http\Controllers\api\TipoJogoController;
 use App\Http\Controllers\api\PaginaController;
 use App\Http\Controllers\api\ReportController;
+use App\Http\Controllers\api\ProdutoController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -52,6 +53,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/report/{idUnidade}', [ReportController::class, 'show']);
     Route::post('/report', [ReportController::class, 'createReport']);
     Route::put('/report/{id}/estado', [ReportController::class, 'updateEstadoReport']);
+
+    Route::get('/loja', [ProdutoController::class, 'index']);
+    Route::post('/comprar/{produto}', [ProdutoController::class, 'comprar']);
+
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);

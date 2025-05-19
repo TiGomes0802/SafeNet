@@ -1,9 +1,12 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
+import { useLojaStore } from '@/stores/loja'
 import Sidebar from '@/components/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
+import { useCoinsStore } from '@/stores/coins'
 
+const coinsStore = useCoinsStore()
+const lojaStore = useLojaStore()
 const loading = ref(true);
 
 const windowWidth = ref(window.innerWidth)
@@ -13,22 +16,17 @@ const updateWidth = () => {
     windowWidth.value = window.innerWidth
 }
 
-const produtos = ref([
-    { id: 1, nome: 'Produto 1', preco: 10, imagem: 'https://via.placeholder.com/150' },
-    { id: 2, nome: 'Produto 2', preco: 20, imagem: 'https://via.placeholder.com/150' },
-    { id: 3, nome: 'Produto 3', preco: 30, imagem: 'https://via.placeholder.com/150' },
-    { id: 4, nome: 'Produto 4', preco: 40, imagem: 'https://via.placeholder.com/150' },
-    { id: 5, nome: 'Produto 5', preco: 50, imagem: 'https://via.placeholder.com/150' },
-])
-
 onMounted(async () => {
     window.addEventListener('resize', updateWidth)
+    await lojaStore.fetchProdutos()
     loading.value = false
 })
 
 onUnmounted(() => {
     window.removeEventListener('resize', updateWidth)
 })
+
+const produtos = computed(() => lojaStore.produtos)
 
 const dynamicPadding = computed(() => {
     if (windowWidth.value < 768 && !isSidebarOpen.value) {
@@ -38,8 +36,6 @@ const dynamicPadding = computed(() => {
 })
 
 </script>
-
-
 
 <template>
     <div v-if="loading">
@@ -62,6 +58,12 @@ const dynamicPadding = computed(() => {
                         <div class="text-yellow-600 font-bold text-sm flex items-center gap-1">
                             {{ produto.preco }} 🪙
                         </div>
+
+                        <button @click="lojaStore.comprarProduto(produto.id)"
+                            class="mt-4 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
+                            Comprar
+                        </button>
+
                     </div>
                 </div>
             </div>
