@@ -113,7 +113,7 @@
 
 <template>
   <div v-if="loading">
-    <Loading mensagem="A prepar as melhores pergunta para ti" />
+    <Loading mensagem="A preparar as melhores perguntas para ti" />
   </div>
   <transition
     name="fade"
