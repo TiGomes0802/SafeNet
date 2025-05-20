@@ -47,7 +47,7 @@ class PaginaController extends Controller
     {
         // Valida os dados da requisição
         $validatedData = $request->validate([
-            'descricao' => 'required|string|max:255',
+            'descricao' => 'required|string',
         ]);
     
         // Verifica se a unidade existe

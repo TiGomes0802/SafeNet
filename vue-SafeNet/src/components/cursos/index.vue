@@ -1,13 +1,18 @@
 <script setup>
-  import { onMounted } from 'vue'
-  import { useCursoStore } from '@/stores/curso'
-  import Sidebar from '@/components/Sidebar.vue'
+import { onMounted } from 'vue'
+import { useCursoStore } from '@/stores/curso'
+import Sidebar from '@/components/Sidebar.vue'
 
-  const storeCurso = useCursoStore()
+const storeCurso = useCursoStore()
 
-  onMounted(async () => {
-    storeCurso.getCursos()
-  })
+onMounted(async () => {
+  storeCurso.getCursos()
+})
+
+function alterarEstado(id) {
+  storeCurso.alterarEstadoCurso(id)
+}
+
 </script>
 
 <template>
@@ -30,13 +35,15 @@
             <th class="px-6 py-3">Nome</th>
             <th class="px-6 py-3">Unidades</th>
             <th class="px-6 py-3">Estado</th>
+            <th class="px-6 py-3">Alterar</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="curso in storeCurso.cursos" :key="curso.id" class="border-t hover:bg-gray-50">
             <td class="px-6 py-4">{{ curso.nome }}</td>
             <td class="px-6 py-4">
-              <router-link :to="`/backoffice/cursos/${curso.id}/unidades`" class="ml-5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 text-sm font-medium hover:bg-blue-200">
+              <router-link :to="`/backoffice/cursos/${curso.id}/unidades`"
+                class="ml-5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 text-sm font-medium hover:bg-blue-200">
                 {{ curso.unidades.length }}
               </router-link>
             </td>
@@ -45,6 +52,17 @@
                 :class="curso.estado == 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
                 {{ curso.estado == 1 ? 'Ativo' : 'Desativo' }}
               </span>
+            </td>
+            <td class="px-6 py-4">
+              <button @click="alterarEstado(curso.id)" class="px-4 py-2 rounded font-semibold
+      transition-colors duration-200
+      focus:outline-none
+      text-white
+      " :class="curso.estado === 1
+        ? 'bg-red-400 hover:bg-red-500'
+        : 'bg-green-400 hover:bg-green-500'">
+                {{ curso.estado === 1 ? 'Desativar' : 'Ativar' }}
+              </button>
             </td>
           </tr>
         </tbody>

@@ -20,7 +20,7 @@ class CursoController extends Controller
         $cursos = Curso::with('unidades')
             ->where('estado', true)
             ->get();
-        
+
         // carregar as unidades associadas a cada curso
         foreach ($cursos as $curso) {
             $curso->unidades = $curso->unidades()->where('estado', true)->get();
@@ -32,22 +32,22 @@ class CursoController extends Controller
     public function show($idCurso)
     {
         $curso = Curso::with('unidades')->find($idCurso);
-        
+
         if (!$curso) {
             return response()->json(['error' => 'Curso não encontrado'], 404);
         }
 
         return response()->json($curso);
     }
-    
+
 
     public function createCurso(Request $request)
-    {      
+    {
         // Valida os dados recebidos
         $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
         ]);
-        
+
         $curso = Curso::create([
             'nome' => $validatedData['nome'],
             'estado' => false,
@@ -76,5 +76,14 @@ class CursoController extends Controller
         ]);
 
         return response()->json($curso);
+    }
+
+    public function alterarEstado($id)
+    {
+        $curso = Curso::findOrFail($id);
+        $curso->estado = $curso->estado === 1 ? 0 : 1;
+        $curso->save();
+
+        return response()->json(['estado' => $curso->estado], 200);
     }
 }

@@ -64,7 +64,7 @@ return new class extends Migration {
         // Tabela Pagina (id, descricao, ordem, idUnidade)
         Schema::create('paginas', function (Blueprint $table) {
             $table->id();
-            $table->text('descricao');
+            $table->longText('descricao');
             $table->integer('ordem');
             $table->unsignedBigInteger('idUnidade');
             $table->foreign('idUnidade')->references('id')->on('unidades')->onDelete('cascade');

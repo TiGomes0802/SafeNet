@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
     Route::post('cursos', [CursoController::class, 'createCurso']);
     Route::put('cursos/{idCurso}', [CursoController::class, 'update']);
+    Route::put('/cursos/{id}/alterarEstado', [CursoController::class, 'alterarEstado']);
+
 
     Route::get('/cursos/{idCurso}/unidades', [UnidadeController::class, 'index']);
     Route::get('/unidades/{idUnidade}', [UnidadeController::class, 'show']);
