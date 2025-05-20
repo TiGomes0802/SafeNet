@@ -14,8 +14,8 @@ class TipoProdutoSeeder extends Seeder
     public function run(): void
     {
         $tiposProdutos = [
-            ['tipo' => 'Boost'],
-            ['tipo' => 'Vidas'],
+            ['tipo' => 'Gelo', 'imagem' => '/icons/gelo.png',],
+            ['tipo' => 'Vidas', 'imagem' => '/icons/vida.png',],
         ];
 
         foreach ($tiposProdutos as $tipoProduto) {

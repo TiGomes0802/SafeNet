@@ -39,7 +39,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="loading">
-    <Loading mensagem="A preparar o conteúdo da Unidade" />
+    <Loading mensagem="A preparar o conteúdo da Unidade..." />
   </div>
   <transition name="fade" appear enter-active-class="transition-opacity duration-700" enter-from-class="opacity-0"
     enter-to-class="opacity-100">

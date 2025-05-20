@@ -129,6 +129,7 @@ return new class extends Migration {
         Schema::create('tipoProdutos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
+            $table->string('imagem')->nullable();
         });
 
         // Tabela Produto (id, nome, preco, valor, idTipoProduto)

@@ -11,18 +11,16 @@ class ProdutoSeeder extends Seeder
     {
         $produtos = [
             [
-                'nome' => 'Congelar streak',
+                'nome' => 'Congelar Streak',
                 'preco' => 20,
                 'valor' => 1,
-                'imagem' => '/icons/boost2x.png',
-                'tipo_produto_id' => 1,
+                'idTipoProduto' => 1,
             ],
             [
                 'nome' => '5 Vidas Extras',
                 'preco' => 50,
                 'valor' => 5,
-                'imagem' => '/icons/vida.png',
-                'tipo_produto_id' => 2,
+                'idTipoProduto' => 2,
             ],
         ];
 

@@ -11,7 +11,8 @@ class TipoProduto extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nome',
+        'tipo',
+        'imagem',
     ];
 
     public function produto()
