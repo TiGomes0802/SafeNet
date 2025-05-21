@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Services\GeradorMissoesUtilizadorService;
 
 class AuthController extends Controller
 {
@@ -88,11 +89,12 @@ class AuthController extends Controller
                     'idUser' => $user->id,
                     'idMissao' => $conquista->id,
                     'concluida' => false,
-                    'data' => now()->toDateString(),
+                    'data' => null,
                 ]);
             }
+            $gerador = new GeradorMissoesUtilizadorService();
+            $gerador->gerarPara($user);
         }
-
 
         return new UserResource($user);
     }

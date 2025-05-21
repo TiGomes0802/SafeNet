@@ -38,7 +38,7 @@ class MissaoController extends Controller
     {
         $missoes = UserMissao::with('missao')
             ->where('idUser', auth()->user()->id)
-            ->where('data' , '>=', now())
+            ->where('data', '>=', now()->toDateString())
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');
             })

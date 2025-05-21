@@ -9,5 +9,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('app:gerar-missoes-diarias')
-    ->dailyAt('00:00')
+    //->dailyAt('00:00')
+    ->everyHour()
     ->timezone('Europe/Lisbon');

@@ -17,7 +17,7 @@ class GeradorMissoesUtilizadorService
 
         // Verifica se já tem missões de hoje
         $jaTemHoje = UserMissao::where('idUser', $user->id)
-            ->whereDate('created_at', $hoje)
+            ->whereDate('data', $hoje)
             ->exists();
 
         if ($jaTemHoje) {

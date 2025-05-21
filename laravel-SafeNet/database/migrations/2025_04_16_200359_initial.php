@@ -176,7 +176,7 @@ return new class extends Migration {
             $table->integer('progresso')->default(0);
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idMissao');
-            $table->date('data');
+            $table->date('data')->nullable();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idMissao')->references('id')->on('missoes')->onDelete('cascade');
             $table->timestamps();

@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
                         'idUser' => $user->id,
                         'idMissao' => $conquista->id,
                         'concluida' => false,
-                        'data' => now()->toDateString(),
+                        'data' => null,
                     ]);
                 }
             }
