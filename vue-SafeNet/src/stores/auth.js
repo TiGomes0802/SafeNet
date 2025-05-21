@@ -68,7 +68,6 @@ export const useAuthStore = defineStore('auth', () => {
     const login = async (credentials) => {
         storeError.resetMessages();
         try{
-          console.log(credentials);
           const responseLogin = await axios.post("auth/login", credentials);
           token.value = responseLogin.data.token;
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
@@ -77,7 +76,6 @@ export const useAuthStore = defineStore('auth', () => {
           storeCurso.getCursosAtivos();
           storeMissao.getMinhasmissoes();
           user.value = responseUser.data.data;
-          console.log(user.value);
           repeatRefreshToken();
           storeCoins.getCoins();
           router.push({name: "home"});

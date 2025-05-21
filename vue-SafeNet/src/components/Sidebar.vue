@@ -1,44 +1,44 @@
 <script setup>
-    import { ref, onMounted, onUnmounted } from 'vue'
-    import { useAuthStore } from '@/stores/auth'
-    import { useCoinsStore } from '@/stores/coins'
-    import { useCursoStore } from '@/stores/curso'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useCoinsStore } from '@/stores/coins'
+import { useCursoStore } from '@/stores/curso'
 
-    const storeAuth = useAuthStore()
-    const storeCoins = useCoinsStore()
-    const storeCurso = useCursoStore()
-    const isOpen = ref(false)
-    const windowWidth = ref(window.innerWidth)
+const storeAuth = useAuthStore()
+const storeCoins = useCoinsStore()
+const storeCurso = useCursoStore()
+const isOpen = ref(false)
+const windowWidth = ref(window.innerWidth)
 
-    const updateWidth = () => {
-        windowWidth.value = window.innerWidth
+const updateWidth = () => {
+    windowWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+    window.addEventListener('resize', updateWidth)
+    if (storeAuth.user?.type === 'J') {
+        storeCurso.getCursosAtivos()
     }
+})
 
-    onMounted(() => {
-        window.addEventListener('resize', updateWidth)
-        if (storeAuth.user?.type === 'J') {
-            storeCurso.getCursosAtivos()
-        }
-    })
+onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+})
 
-    onUnmounted(() => {
-        window.removeEventListener('resize', updateWidth)
-    })
+const logout = () => {
+    storeAuth.logout()
+}
 
-    const logout = () => {
-        storeAuth.logout()
+const toggleSidebar = () => {
+    isOpen.value = !isOpen.value
+}
+
+// Para fechar sidebar quando o utilizador clica num link
+const handleLinkClick = () => {
+    if (windowWidth.value < 768) {
+        isOpen.value = false
     }
-
-    const toggleSidebar = () => {
-        isOpen.value = !isOpen.value
-    }
-
-    // Para fechar sidebar quando o utilizador clica num link
-    const handleLinkClick = () => {
-        if (windowWidth.value < 768) {
-            isOpen.value = false
-        }
-    }
+}
 </script>
 
 
@@ -71,7 +71,8 @@
                 </svg>
             </button>
             <div>
-                <h1 class="text-2xl font-bold mb-6">SafeNet</h1>
+                <!-- Ícone -->
+                <img src="@/assets/SafeNetLogo.png" alt="Ícone" class="w-45 h-auto ml-1 mb-6 animate-fade-in" />
                 <div v-if="storeAuth.user?.type === 'J'">
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
@@ -155,9 +156,6 @@
                     </nav>
                 </div>
             </div>
-
-
-
 
             <div class="border-t pt-7 space-y-6">
                 <div v-if="storeAuth.user?.type === 'J'" class="block text-sm text-gray-700 font-semibold px-3">{{

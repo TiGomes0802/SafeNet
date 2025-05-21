@@ -6,7 +6,7 @@ import { useErrorStore } from '@/stores/error'
 import { useUnidadeStore } from '@/stores/unidade'
 
 export const useCursoStore = defineStore('cursos', () => {
- 
+
   const router = useRouter()
   const storeError = useErrorStore()
   const storeUnidade = useUnidadeStore()
@@ -64,8 +64,8 @@ export const useCursoStore = defineStore('cursos', () => {
 
   const createCurso = async (nome) => {
     try {
-      const response = await axios.post('/cursos', {nome: nome})
-      router.push({name: "CursosIndex"});
+      const response = await axios.post('/cursos', { nome: nome })
+      router.push({ name: "CursosIndex" });
       if (response.status === 201) {
         return true
       }
@@ -84,7 +84,7 @@ export const useCursoStore = defineStore('cursos', () => {
   const updateCurso = async (id, nome, estado) => {
     try {
       const response = await axios.put(`/cursos/${id}`, { nome, estado })
-      router.push({name: "CursosIndex"});
+      router.push({ name: "CursosIndex" });
     } catch (error) {
       storeError.setErrorMessages(
         error.response.data.message,
@@ -96,6 +96,29 @@ export const useCursoStore = defineStore('cursos', () => {
     }
   }
 
+  const alterarEstadoCurso = async (id) => {
+    try {
+      const response = await axios.put(`/cursos/${id}/alterarEstado`)
+      if (response.status === 200) {
+        const cursoSelecionado = cursos.value.find(c => c.id === id)
+        if (cursoSelecionado) {
+          cursoSelecionado.estado = cursoSelecionado.estado === 1 ? 0 : 1
+        }
+        return true
+      }
+      return false
+    } catch (error) {
+      storeError.setErrorMessages(
+        error.response?.data?.message,
+        error.response?.data?.errors,
+        error.response?.status,
+        "Erro ao alterar o estado do curso!"
+      );
+      return false
+    }
+  }
+
+
   return {
     curso,
     cursos,
@@ -104,5 +127,6 @@ export const useCursoStore = defineStore('cursos', () => {
     getCursosAtivos,
     createCurso,
     updateCurso,
+    alterarEstadoCurso
   }
 })

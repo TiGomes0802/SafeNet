@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\TipoProduto;
 
@@ -14,13 +13,14 @@ class TipoProdutoSeeder extends Seeder
     public function run(): void
     {
         $tiposProdutos = [
-            ['tipo' => 'Boost'],
-            ['tipo' => 'Vidas'],
+            ['tipo' => 'Gelo', 'imagem' => '/icons/gelo.png',],
+            ['tipo' => 'Vidas', 'imagem' => '/icons/vida.png',],
         ];
 
         foreach ($tiposProdutos as $tipoProduto) {
             TipoProduto::create([
                 'tipo' => $tipoProduto['tipo'],
+                'imagem' => $tipoProduto['imagem'],
             ]);
         }
     }

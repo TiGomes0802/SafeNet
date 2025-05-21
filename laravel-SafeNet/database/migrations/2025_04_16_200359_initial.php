@@ -5,8 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up(): void {
-        
+    public function up(): void
+    {
+
         // Tabela Ranks (id, nome, imagem, maximo, minimo)
         Schema::create('ranks', function (Blueprint $table) {
             $table->id();
@@ -64,7 +65,7 @@ return new class extends Migration {
         // Tabela Pagina (id, descricao, ordem, idUnidade)
         Schema::create('paginas', function (Blueprint $table) {
             $table->id();
-            $table->text('descricao');
+            $table->longText('descricao');
             $table->integer('ordem');
             $table->unsignedBigInteger('idUnidade');
             $table->foreign('idUnidade')->references('id')->on('unidades')->onDelete('cascade');
@@ -125,10 +126,11 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Tabela TipoProduto (id, tipo)
+        // Tabela TipoProduto (id, tipo, imagem)
         Schema::create('tipoProdutos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
+            $table->string('imagem')->nullable();
         });
 
         // Tabela Produto (id, nome, preco, valor, idTipoProduto)
@@ -197,10 +199,10 @@ return new class extends Migration {
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
             $table->foreign('idLink')->references('id')->on('linksExternos')->onDelete('cascade');
         });
-        
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         // Schema::dropIfExists('ranks');
         // Schema::dropIfExists('amigos');
         // Schema::dropIfExists('cursos');
