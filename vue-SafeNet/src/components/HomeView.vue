@@ -39,7 +39,7 @@ const isSidebarOpen = ref(false)
     }
     window.addEventListener('resize', updateWidth)
     loading.value = false
-    storeMissao.getMissoes()
+    storeMissao.getMinhasmissoes()
   })
 
 const updateWidth = () => {
@@ -88,10 +88,25 @@ const closeSidebar = () => {
 
         <!-- Lista de Unidades -->
         <div class="space-y-12">
-          <router-link v-for="unidade in unidades" :key="unidade.id" :to="`/curso/${cursoId}/unidade/${unidade.id}`"
-            class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
-            <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" />
-          </router-link>
+          <template v-for="unidade in unidades" :key="unidade.id">
+            <!-- Link apenas se for clicável -->
+            <router-link
+              v-if="unidade.status !== -1"
+              :to="`/curso/${cursoId}/unidade/${unidade.id}`"
+              class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
+              <UnidadeCard
+                :titulo="unidade.titulo"
+                :descricao="unidade.descricao"
+                :status="unidade.status"/>
+            </router-link>
+            <!-- Apenas o card, sem link, se estiver bloqueado -->
+            <div v-else >
+              <UnidadeCard
+                :titulo="unidade.titulo"
+                :descricao="unidade.descricao"
+                :status="unidade.status"/>
+            </div>
+          </template>
         </div>
       </div>
     </div>
