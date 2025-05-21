@@ -73,10 +73,10 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "O treinamento de funcionários pode ajudar a prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 11],
                         ["resposta" => "Mesmo usuários bem treinados podem ser vítimas de engenharia social, caso não estejam atentos.", "certa" => 1, "idJogo" => 11],
                     //Pergunta 12
-                        ["resposta" => "A. Smishing", "certa" => 1, "idJogo" => 12],
-                        ["resposta" => "B. Spear Phishing", "certa" => 3, "idJogo" => 12],
-                        ["resposta" => "C. Phishing", "certa" => 0, "idJogo" => 12],
-                        ["resposta" => "D. Vishing", "certa" => 2, "idJogo" => 12],
+                        ["resposta" => "Smishing", "certa" => 1, "idJogo" => 12],
+                        ["resposta" => "Spear Phishing", "certa" => 3, "idJogo" => 12],
+                        ["resposta" => "Phishing", "certa" => 0, "idJogo" => 12],
+                        ["resposta" => "Vishing", "certa" => 2, "idJogo" => 12],
             # endregion
 
             # Region Unidade 2
@@ -198,9 +198,9 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Todas as técnicas de engenharia social exigem o uso de malware para funcionarem.", "certa" => 0, "idJogo" => 34],
                         ["resposta" => "Engenheiros sociais costumam explorar a curiosidade, medo ou senso de urgência da vítima.", "certa" => 1, "idJogo" => 34],
                     //Pergunta 12
-                        ["resposta" => "a) A vítima clica num link ou fornece dados sensíveis.", "certa" => 1, "idJogo" => 35],
-                        ["resposta" => "b) O atacante redireciona a vítima para um site falso.", "certa" => 2, "idJogo" => 35],
-                        ["resposta" => "c) O atacante cria uma mensagem falsa que parece legítima.", "certa" => 0, "idJogo" => 35],
+                        ["resposta" => "A vítima clica num link ou fornece dados sensíveis.", "certa" => 1, "idJogo" => 35],
+                        ["resposta" => "O atacante redireciona a vítima para um site falso.", "certa" => 2, "idJogo" => 35],
+                        ["resposta" => "O atacante cria uma mensagem falsa que parece legítima.", "certa" => 0, "idJogo" => 35],
             # endregion
 
             # Region Unidade 4
