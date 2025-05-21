@@ -30,7 +30,7 @@ const windowWidth = ref(window.innerWidth)
 const isSidebarOpen = ref(false)
 
   onMounted(async() => {
-    await storeCurso.getCursosAtivos()
+    await storeCurso.getCursos()
     for(const curso of storeCurso.cursos) {
       if (curso.id == cursoId.value) {
         storeCurso.curso = curso
@@ -47,7 +47,7 @@ const updateWidth = () => {
 }
 
 onMounted(async () => {
-  await storeCurso.getCursosAtivos()
+  await storeCurso.getCursos()
   for (const curso of storeCurso.cursos) {
     if (curso.id == cursoId.value) {
       storeCurso.curso = curso

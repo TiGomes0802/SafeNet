@@ -73,7 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
           localStorage.setItem("token", token.value);
           const responseUser = await axios.get("users/me");
-          storeCurso.getCursosAtivos();
+          storeCurso.getCursos();
           storeMissao.getMinhasmissoes();
           user.value = responseUser.data.data;
           repeatRefreshToken();

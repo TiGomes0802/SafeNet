@@ -17,7 +17,7 @@ const updateWidth = () => {
 onMounted(() => {
     window.addEventListener('resize', updateWidth)
     if (storeAuth.user?.type === 'J') {
-        storeCurso.getCursosAtivos()
+        storeCurso.getCursos()
     }
 })
 

@@ -30,7 +30,7 @@ const paginaAnterior = () => {
 }
 
 onMounted(async () => {
-  await cursoStore.getCursosAtivos()
+  await cursoStore.getCursos()
   await paginaStore.getPaginas(idUnidade)
   loading.value = false
 })
