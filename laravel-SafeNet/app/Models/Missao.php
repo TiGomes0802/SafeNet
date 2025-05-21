@@ -15,6 +15,7 @@ class Missao extends Model
         'estado',
         'descricao',
         'objetivo',
+        'moedas',
         'idTipoMissao',
     ];
 

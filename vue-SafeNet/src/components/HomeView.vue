@@ -8,6 +8,7 @@ import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
 const route = useRoute()
 const storeCurso = useCursoStore()
+const storeMissao = useMissaoStore()
 
 const cursoId = ref(route.params.idCurso)
 const curso = ref({})
@@ -26,6 +27,19 @@ watch(() => route.params.idCurso, (newVal) => {
 
 const windowWidth = ref(window.innerWidth)
 const isSidebarOpen = ref(false)
+
+  onMounted(async() => {
+    await storeCurso.getCursosAtivos()
+    for(const curso of storeCurso.cursos) {
+      if (curso.id == cursoId.value) {
+        storeCurso.curso = curso
+        unidades.value = curso.unidades
+      }
+    }
+    window.addEventListener('resize', updateWidth)
+    loading.value = false
+    storeMissao.getMissoes()
+  })
 
 const updateWidth = () => {
   windowWidth.value = window.innerWidth

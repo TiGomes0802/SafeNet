@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Services\GeradorMissoesUtilizadorService;
 
 class AuthController extends Controller
 {
@@ -79,6 +80,21 @@ class AuthController extends Controller
         $user = new User();
         $user->fill($request->validated());
         $user->save();
+
+        if ($user->type == 'P') {
+            $conquistas = Missao::where('tipo', 'conquista')->get();
+
+            foreach ($conquistas as $conquista) {
+                UserMissao::create([
+                    'idUser' => $user->id,
+                    'idMissao' => $conquista->id,
+                    'concluida' => false,
+                    'data' => null,
+                ]);
+            }
+            $gerador = new GeradorMissoesUtilizadorService();
+            $gerador->gerarPara($user);
+        }
 
         return new UserResource($user);
     }

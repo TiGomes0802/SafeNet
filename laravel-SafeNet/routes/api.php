@@ -10,6 +10,8 @@ use App\Http\Controllers\api\TipoJogoController;
 use App\Http\Controllers\api\PaginaController;
 use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\api\ProdutoController;
+use App\Http\Controllers\api\MissaoController;
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -58,7 +60,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/loja', [ProdutoController::class, 'index']);
     //Route::post('/comprar/{produto}', [ProdutoController::class, 'comprar']);
-
+  
+    Route::get('/missoes', [MissaoController::class, 'index']);
+    Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
+    Route::get('/missoes/minhasConquistas', [MissaoController::class, 'minhasConquistas']);
+    Route::post('/missoes/progresso', [MissaoController::class, 'progressoMissao']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
