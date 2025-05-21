@@ -163,7 +163,7 @@ class RespostasSeeder extends Seeder
                     //Pergunta 5
                         ["resposta" => "Chamadas telefônicas fraudulentas", "certa" => 1, "idJogo" => 28],
                         ["resposta" => "E-mails falsificados", "certa" => 0, "idJogo" => 28],
-                        ["resposta" => "Sites de phishing", "certa" => o, "idJogo" => 28],
+                        ["resposta" => "Sites de phishing", "certa" => 0, "idJogo" => 28],
                         ["resposta" => "Mensagens em redes sociais", "certa" => 0, "idJogo" => 28],
                     //Pergunta 6
                         ["resposta" => "Smishing utiliza telefones fixos, enquanto phishing utiliza apenas e-mails", "certa" => 0, "idJogo" => 29],
