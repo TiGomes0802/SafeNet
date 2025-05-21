@@ -5,12 +5,14 @@ import { useRouter } from 'vue-router'
 import { useErrorStore } from "@/stores/error";
 import { useCoinsStore } from "@/stores/coins";
 import { useCursoStore } from '@/stores/curso';
+import { useMissaoStore } from '@/stores/missao';
 
 export const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     const storeCoins = useCoinsStore();
     const storeCurso = useCursoStore();
+    const storeMissao = useCursoStore();
     
     //const { toast } = Toaster()
     
@@ -73,6 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
           localStorage.setItem("token", token.value);
           const responseUser = await axios.get("users/me");
           storeCurso.getCursosAtivos();
+          storeMissao.getMinhasmissoes();
           user.value = responseUser.data.data;
           console.log(user.value);
           repeatRefreshToken();

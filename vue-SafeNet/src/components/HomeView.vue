@@ -4,10 +4,12 @@
   import Sidebar from '@/components/Sidebar.vue'
   import UnidadeCard from '@/components/UnidadeCard.vue'
   import { useCursoStore } from '@/stores/curso'
+  import { useMissaoStore } from '@/stores/missao'
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
   const route = useRoute()
   const storeCurso = useCursoStore()
+  const storeMissao = useMissaoStore()
 
   const cursoId = ref(route.params.idCurso)
   const curso = ref({})
@@ -41,6 +43,7 @@
     }
     window.addEventListener('resize', updateWidth)
     loading.value = false
+    storeMissao.getMissoes()
   })
 
   onUnmounted(() => {

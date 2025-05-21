@@ -10,5 +10,5 @@ Artisan::command('inspire', function () {
 
 Schedule::command('app:gerar-missoes-diarias')
     //->dailyAt('00:00')
-    ->everyHour()
+    ->hourly()
     ->timezone('Europe/Lisbon');
