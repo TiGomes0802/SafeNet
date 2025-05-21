@@ -38,7 +38,7 @@ return new class extends Migration {
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('estado');
+            $table->boolean('estado');
         });
 
         // Tabela Unidade (id, titulo, ordem, estado, idCurso)

@@ -55,12 +55,12 @@ function alterarEstado(id) {
             </td>
             <td class="px-6 py-4">
               <button @click="alterarEstado(curso.id)" class="px-4 py-2 rounded font-semibold
-      transition-colors duration-200
-      focus:outline-none
-      text-white
-      " :class="curso.estado === 1
-        ? 'bg-red-400 hover:bg-red-500'
-        : 'bg-green-400 hover:bg-green-500'">
+                transition-colors duration-200
+                focus:outline-none
+                text-white
+                " :class="curso.estado === 1
+                  ? 'bg-red-400 hover:bg-red-500'
+                  : 'bg-green-400 hover:bg-green-500'">
                 {{ curso.estado === 1 ? 'Desativar' : 'Ativar' }}
               </button>
             </td>
