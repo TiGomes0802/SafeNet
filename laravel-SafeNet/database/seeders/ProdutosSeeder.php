@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Produto;
 
-class ProdutoSeeder extends Seeder
+class ProdutosSeeder extends Seeder
 {
     public function run(): void
     {
@@ -17,9 +17,21 @@ class ProdutoSeeder extends Seeder
                 'idTipoProduto' => 1,
             ],
             [
+                'nome' => '1 Vida Extra',
+                'preco' => 10,
+                'valor' => 1,
+                'idTipoProduto' => 2,
+            ],
+            [
                 'nome' => '5 Vidas Extras',
-                'preco' => 50,
+                'preco' => 45,
                 'valor' => 5,
+                'idTipoProduto' => 2,
+            ],
+            [
+                'nome' => '10 Vidas Extras',
+                'preco' => 90,
+                'valor' => 10,
                 'idTipoProduto' => 2,
             ],
         ];

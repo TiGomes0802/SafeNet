@@ -57,7 +57,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/report/{id}/estado', [ReportController::class, 'updateEstadoReport']);
 
     Route::get('/loja', [ProdutoController::class, 'index']);
-    Route::post('/comprar/{produto}', [ProdutoController::class, 'comprar']);
+    //Route::post('/comprar/{produto}', [ProdutoController::class, 'comprar']);
 
 });
 

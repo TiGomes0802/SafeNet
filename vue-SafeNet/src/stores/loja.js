@@ -9,7 +9,6 @@ export const useLojaStore = defineStore('loja', () => {
         try {
             const response = await axios.get('/loja')
             produtos.value = response.data
-            console.log('Produtos carregados:', produtos.value) 
         } catch (e) {
             console.error('Erro ao buscar produtos:', e)
         }

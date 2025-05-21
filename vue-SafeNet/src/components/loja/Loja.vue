@@ -51,18 +51,18 @@ const dynamicPadding = computed(() => {
                     <div v-for="produto in produtos" :key="produto.id"
                         class="backdrop-blur-md bg-white/30 shadow-xl rounded-2xl p-4 flex flex-col items-center text-center transition hover:scale-105 duration-300">
 
-                        <img :src="produto.imagem" alt="produto" class="w-24 h-24 object-contain mb-10" />
+                        <img :src="produto.tipo_produto.imagem" alt="produto" class="w-30 h-30 object-contain mt-5 mb-7" />
 
                         <p class="text-gray-800 font-semibold text-lg mb-2">{{ produto.nome }}</p>
 
-                        <div class="text-yellow-600 font-bold text-sm flex items-center gap-1">
+                        <div class="text-yellow-600 font-bold text-lg flex items-center gap-1">
                             {{ produto.preco }} 🪙
                         </div>
-<!--
+
                         <button @click="lojaStore.comprarProduto(produto.id)"
-                            class="mt-4 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
+                            class="mt-8 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
                             Comprar
-                        </button>-->
+                        </button>
 
                     </div>
                 </div>
