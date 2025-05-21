@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
     const storeError = useErrorStore();
     const storeCoins = useCoinsStore();
     const storeCurso = useCursoStore();
-    const storeMissao = useCursoStore();
+    const storeMissao = useMissaoStore();
     
     //const { toast } = Toaster()
     

@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import UnidadeCard from '@/components/UnidadeCard.vue'
 import { useCursoStore } from '@/stores/curso'
+import { useMissaoStore } from '@/stores/missao'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
 const route = useRoute()
