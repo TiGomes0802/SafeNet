@@ -21,6 +21,7 @@ class TipoProdutoSeeder extends Seeder
         foreach ($tiposProdutos as $tipoProduto) {
             TipoProduto::create([
                 'tipo' => $tipoProduto['tipo'],
+                'imagem' => $tipoProduto['imagem'],
             ]);
         }
     }

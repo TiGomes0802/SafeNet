@@ -9,23 +9,14 @@ export const useLojaStore = defineStore('loja', () => {
         try {
             const response = await axios.get('/loja')
             produtos.value = response.data
+            console.log('Produtos carregados:', produtos.value) 
         } catch (e) {
             console.error('Erro ao buscar produtos:', e)
         }
     }
 
-    const comprarProduto = async (produtoId) => {
-        try {
-            const response = await axios.post(`/comprar/${produtoId}`);
-            alert(response.data.message);
-        } catch (error) {
-            alert(error.response?.data?.message || 'Erro na compra');
-        }
-    };
-
     return {
         produtos,
-        fetchProdutos,
-        comprarProduto
+        fetchProdutos
     }
 })

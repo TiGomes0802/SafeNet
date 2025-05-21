@@ -31,30 +31,4 @@ class ProdutoController extends Controller
 
         return response()->json($produto);
     }
-
-    public function comprar($id)
-    {
-        $user = Auth::user();
-
-        $produto = Produto::find($id);
-
-        if (!$produto) {
-            return response()->json(['message' => 'Produto não encontrado'], 404);
-        }
-
-        if ($user->moedas < $produto->preco) {
-            return response()->json(['message' => 'Moedas insuficientes'], 400);
-        }
-
-        $user->moedas -= $produto->preco;
-
-        // Se for produto de vidas, adiciona 5
-        if ($produto->tipo_produto_id == 2) {
-            $user->vidas += 5;
-        }
-
-        $user->save();
-
-        return response()->json(['message' => 'Compra efetuada com sucesso']);
-    }
 }

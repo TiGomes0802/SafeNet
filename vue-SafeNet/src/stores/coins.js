@@ -15,6 +15,7 @@ export const useCoinsStore = defineStore('coins', () => {
     }
   };
 
+  /*
   const comprarProduto = async (produtoId) => {
     try {
       const response = await axios.post(`/comprar/${produtoId}`);
@@ -31,6 +32,16 @@ export const useCoinsStore = defineStore('coins', () => {
       alert(error.response?.data?.message || 'Erro na compra');
     }
   };
+
+  const comprarProduto = async (produtoId) => {
+        try {
+            const response = await axios.post(`/comprar/${produtoId}`);
+            alert(response.data.message);
+        } catch (error) {
+            alert(error.response?.data?.message || 'Erro na compra');
+        }
+    };
+    */
 
   return {
     gameCoins,

@@ -58,11 +58,11 @@ const dynamicPadding = computed(() => {
                         <div class="text-yellow-600 font-bold text-sm flex items-center gap-1">
                             {{ produto.preco }} 🪙
                         </div>
-
+<!--
                         <button @click="lojaStore.comprarProduto(produto.id)"
                             class="mt-4 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
                             Comprar
-                        </button>
+                        </button>-->
 
                     </div>
                 </div>
