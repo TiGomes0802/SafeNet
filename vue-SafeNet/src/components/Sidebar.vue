@@ -77,9 +77,15 @@ const handleLinkClick = () => {
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link v-for="curso in storeCurso.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
-                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
-                                {{ curso.nome }}
+                            <router-link
+                                v-for="curso in storeCurso.cursos"
+                                :key="curso.id"
+                                :to="curso.estado !== 0 ? `/curso/${curso.id}` : ''"
+                                class="block py-2 px-6 rounded"
+                                :class="curso.estado === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100 text-black'"
+                                @click="curso.estado === 0 ? $event.preventDefault() : handleLinkClick"
+                                >
+                                    {{ curso.nome }}
                             </router-link>
                         </nav>
                     </div>
