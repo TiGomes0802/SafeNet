@@ -26,6 +26,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email|unique:App\Models\User,email',
             'username' => 'required|string|min:3|unique:App\Models\User,username',
             'password' => 'required|string|min:3',
+            'type' => 'required|string|in:J,G,A',
         ];
     }
 

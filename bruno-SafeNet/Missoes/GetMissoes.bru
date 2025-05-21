@@ -1,0 +1,15 @@
+meta {
+  name: GetMissoes
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8081/api/missoes
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

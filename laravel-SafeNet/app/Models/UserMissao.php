@@ -9,8 +9,11 @@ class UserMissao extends Model
     protected $table = 'users_missoes';
 
     protected $fillable = [
-        'presente',
+        'progresso',
         'concluida',
+        'data',
+        'idUser',
+        'idMissao',
     ];
 
     public function user()

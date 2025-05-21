@@ -9,6 +9,7 @@ use App\Http\Controllers\api\UnidadeController;
 use App\Http\Controllers\api\TipoJogoController;
 use App\Http\Controllers\api\PaginaController;
 use App\Http\Controllers\api\ReportController;
+use App\Http\Controllers\api\MissaoController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -52,6 +53,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/report/{idUnidade}', [ReportController::class, 'show']);
     Route::post('/report', [ReportController::class, 'createReport']);
     Route::put('/report/{id}/estado', [ReportController::class, 'updateEstadoReport']);
+
+    Route::get('/missoes', [MissaoController::class, 'index']);
+    Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
+    Route::get('/missoes/minhasConquistas', [MissaoController::class, 'minhasConquistas']);
+    Route::post('/missoes/progresso', [MissaoController::class, 'progressoMissao']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);

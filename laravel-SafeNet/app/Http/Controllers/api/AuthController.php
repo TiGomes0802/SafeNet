@@ -80,6 +80,20 @@ class AuthController extends Controller
         $user->fill($request->validated());
         $user->save();
 
+        if ($user->type == 'P') {
+            $conquistas = Missao::where('tipo', 'conquista')->get();
+
+            foreach ($conquistas as $conquista) {
+                UserMissao::create([
+                    'idUser' => $user->id,
+                    'idMissao' => $conquista->id,
+                    'concluida' => false,
+                    'data' => now()->toDateString(),
+                ]);
+            }
+        }
+
+
         return new UserResource($user);
     }
 

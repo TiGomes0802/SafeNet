@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Missao;
+use App\Models\UserMissao;
 
 class UserSeeder extends Seeder
 {
@@ -26,14 +28,26 @@ class UserSeeder extends Seeder
             ['type' => 'A', 'nome' => 'Admin2', 'email' => 'admin2@mail.com', 'username' => 'admin2'],
         ];
 
-        foreach ($users as $user) {
-            User::create([
-                'type' => $user['type'],
-                'nome' => $user['nome'],
-                'email' => $user['email'],
-                'username' => $user['username'],
+        foreach ($users as $newUser) {
+            $user = User::create([
+                'nome' => $newUser['nome'],
+                'email' => $newUser['email'],
+                'username' => $newUser['username'],
                 'password' => Hash::make('123'),
+                'type' => $newUser['type'],
             ]);
+
+            if ($user->type === 'J') {
+                $conquistas = Missao::where('tipo', 'conquista')->get();
+                foreach ($conquistas as $conquista) {
+                    UserMissao::create([
+                        'idUser' => $user->id,
+                        'idMissao' => $conquista->id,
+                        'concluida' => false,
+                        'data' => now()->toDateString(),
+                    ]);
+                }
+            }
         }
     }
 }

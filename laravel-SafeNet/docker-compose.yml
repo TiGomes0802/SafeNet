@@ -22,6 +22,25 @@ services:
             - sail
         depends_on:
             - mysql
+    scheduler:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.3
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.3/app'
+        container_name: laravel-scheduler
+        volumes:
+            - '.:/var/www/html'
+        depends_on:
+            - laravel.test
+        entrypoint: >
+            sh -c "while true; do
+                php /var/www/html/artisan schedule:run --no-interaction
+                sleep 60
+            done"
+        networks:
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
