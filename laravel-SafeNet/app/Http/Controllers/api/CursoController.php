@@ -10,22 +10,34 @@ class CursoController extends Controller
 {
     public function index()
     {
-        $cursos = Curso::with('unidades')->get();
+        if(auth()->user()->type == 'J') {
+            $cursos = Curso::with('unidades')->get();
 
-        return response()->json($cursos);
-    }
+            foreach ($cursos as $curso) {
+                $primeiraPorFazerMarcada = false;
 
-    public function cursosAtivos()
-    {
-        $cursos = Curso::with('unidades')
-            ->where('estado', true)
-            ->get();
+                foreach ($curso->unidades as $unidade) {
+                    // Verifica na pivot se a unidade foi feita
+                    $pivot = auth()->user()->unidade()->where('idUnidade', $unidade->id)->first();
 
-        // carregar as unidades associadas a cada curso
-        foreach ($cursos as $curso) {
-            $curso->unidades = $curso->unidades()->where('estado', true)->get();
+                    if ($pivot && $pivot->pivot->status) {
+                        $unidade->status = 1;
+                    } else {
+                        if (!$primeiraPorFazerMarcada) {
+                            $unidade->status = 0; // primeira não feita
+                            $primeiraPorFazerMarcada = true;
+                        } else {
+                            $unidade->status = -1;
+                        }
+                    }
+                }
+            }
+
+            return response()->json($cursos);
         }
 
+        $cursos = Curso::with('unidades')->get();
+        
         return response()->json($cursos);
     }
 

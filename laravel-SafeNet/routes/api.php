@@ -32,7 +32,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/jogo/{idJogo}', [JogoController::class, 'updateJogo']);
   
     Route::get('cursos', [CursoController::class, 'index']);
-    Route::get('cursos/ativos', [CursoController::class, 'cursosAtivos']);
     Route::get('cursos/{idCurso}', [CursoController::class, 'show']);
     Route::post('cursos', [CursoController::class, 'createCurso']);
     Route::put('cursos/{idCurso}', [CursoController::class, 'update']);

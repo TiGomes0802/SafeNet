@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
     const storeError = useErrorStore();
     const storeCoins = useCoinsStore();
     const storeCurso = useCursoStore();
-    const storeMissao = useCursoStore();
+    const storeMissao = useMissaoStore();
     
     //const { toast } = Toaster()
     
@@ -73,7 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
           localStorage.setItem("token", token.value);
           const responseUser = await axios.get("users/me");
-          storeCurso.getCursosAtivos();
+          storeCurso.getCursos();
           storeMissao.getMinhasmissoes();
           user.value = responseUser.data.data;
           repeatRefreshToken();

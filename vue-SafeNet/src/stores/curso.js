@@ -30,21 +30,6 @@ export const useCursoStore = defineStore('cursos', () => {
     }
   }
 
-  const getCursosAtivos = async () => {
-    try {
-      const response = await axios.get('/cursos/ativos')
-      cursos.value = response.data
-      return true
-    } catch (error) {
-      storeError.setErrorMessages(
-        error.response.data.message,
-        error.response.data.errors,
-        error.response.status,
-        "Error fetching active courses!"
-      );
-    }
-  }
-
   const getCurso = async (id) => {
     try {
       const response = await axios.get(`/cursos/${id}`)
@@ -124,7 +109,6 @@ export const useCursoStore = defineStore('cursos', () => {
     cursos,
     getCurso,
     getCursos,
-    getCursosAtivos,
     createCurso,
     updateCurso,
     alterarEstadoCurso
