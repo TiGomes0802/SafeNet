@@ -8,11 +8,11 @@ export const useRankStore = defineStore('Rank', () => {
   const storeError = useErrorStore()
 
   const rank = ref([])
-
+  
   const getRank = async () => {
     try {
       const response = await axios.get('/rank')
-      rank.value = response.data
+      rank.value = response.data;
       return true
     } catch (error) {
       storeError.setErrorMessages(

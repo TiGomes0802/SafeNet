@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: http://localhost:8081/api/rank
+  url: http://localhost:8081/api/rank?pagina=3
   body: none
   auth: inherit
+}
+
+params:query {
+  pagina: 3
 }
 
 headers {
