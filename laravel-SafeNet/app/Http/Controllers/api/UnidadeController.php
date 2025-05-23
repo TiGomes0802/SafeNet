@@ -133,6 +133,7 @@ class UnidadeController extends Controller
             'jogos' => 'required|array',
             'jogos.*.idJogo' => 'required|integer|exists:jogos,id',
             'jogos.*.acertou' => 'required|boolean',
+            'tempo' => 'required|integer',
         ]);
 
         \DB::beginTransaction();
@@ -144,7 +145,9 @@ class UnidadeController extends Controller
             $user = auth()->user();
             $xpTotal = 0;
 
-            $jogosAcertados = 0;
+            $numJogosAcertados = 0;
+
+            $jogosAcertados = [];
 
             foreach ($validatedData['jogos'] as $jogoData) {
                 // Garante que a ligação existe (ou cria)
@@ -157,8 +160,9 @@ class UnidadeController extends Controller
                 $xpTotal += $xpGanho;
 
                 // calcula a taxa de acerto so dos jogos, do foreach
-                $jogosAcertados += ($jogoData['acertou'] ? 1 : 0);
+                $numJogosAcertados += ($jogoData['acertou'] ? 1 : 0);
 
+                $jogosAcertados[] = $jogoData['acertou'] ? 1 : 0;
 
                 // Verifica se já existe o registo pivot
                 $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
@@ -186,14 +190,27 @@ class UnidadeController extends Controller
 
             // Atualiza XP
             $user->xp += $xpTotal;
-            $user->save();
+
+            // Verificação da streak aqui
+
+            $user->save();            
 
             // Marca a unidade como concluída
             $user->unidade()->syncWithoutDetaching([
                 $validatedData['idUnidade'] => ['status' => true],
             ]);
 
-            $taxaAcerto = round($jogosAcertados / count($validatedData['jogos']) * 100, 2);
+            $taxaAcerto = round($numJogosAcertados / count($validatedData['jogos']) * 100, 2);
+
+            $missoes = [
+                'unidade' => $unidade,
+                'tempo' => $validatedData['tempo'],
+                'jogo' => $jogosAcertados,
+                'xp' => $xpTotal,
+                'taxaAcerto' => $taxaAcerto,
+            ];
+            $missaoController = new MissaoController();
+            $missaoController->progressoMissao($missoes);
 
             \DB::commit();
 

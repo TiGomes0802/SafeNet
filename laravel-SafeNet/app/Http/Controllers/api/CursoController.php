@@ -24,7 +24,7 @@ class CursoController extends Controller
                         $unidade->status = 1;
                     } else {
                         if (!$primeiraPorFazerMarcada) {
-                            $unidade->status = 0; // primeira não feita
+                            $unidade->status = 0;
                             $primeiraPorFazerMarcada = true;
                         } else {
                             $unidade->status = -1;

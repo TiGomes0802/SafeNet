@@ -158,7 +158,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // user is not logged in
-  /*if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
+  if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
 
     next({ name: "login" });
     return;
@@ -167,7 +167,7 @@ router.beforeEach(async (to, from, next) => {
   if ((to.name === "login" || to.name === "register") && storeAuth.user) {
     next({ name: "home" });
     return;
-  }*/
+  }
 
   // user is logged in
 
