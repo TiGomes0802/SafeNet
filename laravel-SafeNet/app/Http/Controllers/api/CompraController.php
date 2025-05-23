@@ -32,7 +32,7 @@ class CompraController extends Controller
             $user->moedas -= $produto->preco;
 
             // Se for vidas
-            if ($produto->tipoProduto->nome === 'vida') {
+            if ($produto->idTipoProduto == 2) {
                 $user->vida += $produto->valor;
             }
 

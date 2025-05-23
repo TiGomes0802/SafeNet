@@ -18,6 +18,8 @@ export const useCoinsStore = defineStore('coins', () => {
   const comprarProduto = async (produtoId) => {
     try {
       const response = await axios.post(`/comprar/${produtoId}`);
+
+      // Colocar pop up mais bonito
       alert(response.data.message);
 
       gameCoins.value = response.data.moedas;
@@ -32,8 +34,12 @@ export const useCoinsStore = defineStore('coins', () => {
       const response = await axios.post('/users/me/ganhar-moedas', {
         quantidade: quantidade
       });
+
       gameCoins.value = response.data.moedas;
+
+      // Colocar pop up mais bonito
       alert(`Ganhaste ${quantidade} moedas!`);
+
     } catch (error) {
       alert(error.response?.data?.message || 'Erro ao ganhar moedas');
     }

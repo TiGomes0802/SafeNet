@@ -4,7 +4,7 @@ import HomeView from '../components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 import Missoes from "@/components/missoes/Missoes.vue";
-import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
+import Estatisticas from "@/components/estatisticas/Rankings.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import JogosView from "@/components/jogos/JogosView.vue";
