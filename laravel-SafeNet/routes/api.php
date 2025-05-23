@@ -11,7 +11,7 @@ use App\Http\Controllers\api\PaginaController;
 use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\api\ProdutoController;
 use App\Http\Controllers\api\MissaoController;
-
+use App\Http\Controllers\api\RankController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -64,6 +64,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
     Route::get('/missoes/minhasConquistas', [MissaoController::class, 'minhasConquistas']);
     Route::post('/missoes/progresso', [MissaoController::class, 'progressoMissao']);
+
+    Route::get('/rank', [RankController::class, 'index']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
