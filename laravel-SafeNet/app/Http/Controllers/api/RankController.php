@@ -31,7 +31,7 @@ class RankController extends Controller
         };
         
         // 🌍 Ranking Mundial
-        $mundiais = $utilizadores->map(function ($u) use ($posicoes, $getRank) {
+        $mundial = $utilizadores->map(function ($u) use ($posicoes, $getRank) {
             return [
                 'posicao' => $posicoes[$u->id],
                 'username' => $u->username,
@@ -58,7 +58,7 @@ class RankController extends Controller
 
         return response()->json([
             'rank' => [
-                'mundiais' => $mundiais,
+                'mundial' => $mundial,
                 'amigos' => $rankingAmigos,
             ]
         ]);

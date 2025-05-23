@@ -4,7 +4,7 @@ import HomeView from '../components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 import Missoes from "@/components/missoes/Missoes.vue";
-import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
+import Rank from "@/components/rank/Rank.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import JogosView from "@/components/jogos/JogosView.vue";
@@ -52,9 +52,9 @@ const router = createRouter({
       component: Missoes,
     },
     {
-      path: '/estatisticas',
-      name: 'Estatisticas',
-      component: Estatisticas,
+      path: '/rank',
+      name: 'Rank',
+      component: Rank,
     },
     {
       path: '/loja',
