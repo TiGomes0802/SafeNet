@@ -45,6 +45,7 @@ class RankController extends Controller
 
         $rankingAmigos = collect($amigos)
             ->filter(fn($amigo) => $amigo->type === 'J' && isset($posicoes[$amigo->id]))
+            ->push($user)
             ->map(function ($amigo) use ($posicoes, $getRank) {
                 return [
                     'posicao' => $posicoes[$amigo->id],
