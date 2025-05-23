@@ -28,10 +28,11 @@ export const useUnidadeStore = defineStore("unidade", () => {
     }
 
 
-    const concluirUnidade = async (idUnidade, jogos) => {
+    const concluirUnidade = async (idUnidade, jogos, tempo) => {
         const data = {
             idUnidade: idUnidade,
             jogos: jogos,
+            tempo: tempo,
         };
         try {
             const response = await axios.post("unidade/concluir", data);
