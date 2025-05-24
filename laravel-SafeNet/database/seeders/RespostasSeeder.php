@@ -73,10 +73,10 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "O treinamento de funcionários pode ajudar a prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 11],
                         ["resposta" => "Mesmo usuários bem treinados podem ser vítimas de engenharia social, caso não estejam atentos.", "certa" => 1, "idJogo" => 11],
                     //Pergunta 12
-                        ["resposta" => "Smishing", "certa" => 1, "idJogo" => 12],
-                        ["resposta" => "Spear Phishing", "certa" => 3, "idJogo" => 12],
                         ["resposta" => "Phishing", "certa" => 0, "idJogo" => 12],
+                        ["resposta" => "Smishing", "certa" => 1, "idJogo" => 12],
                         ["resposta" => "Vishing", "certa" => 2, "idJogo" => 12],
+                        ["resposta" => "Spear Phishing", "certa" => 3, "idJogo" => 12],
             # endregion
 
             # Region Unidade 2
@@ -198,9 +198,9 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Todas as técnicas de engenharia social exigem o uso de malware para funcionarem.", "certa" => 0, "idJogo" => 34],
                         ["resposta" => "Engenheiros sociais costumam explorar a curiosidade, medo ou senso de urgência da vítima.", "certa" => 1, "idJogo" => 34],
                     //Pergunta 12
+                    ["resposta" => "O atacante cria uma mensagem falsa que parece legítima.", "certa" => 0, "idJogo" => 35],
                         ["resposta" => "A vítima clica num link ou fornece dados sensíveis.", "certa" => 1, "idJogo" => 35],
                         ["resposta" => "O atacante redireciona a vítima para um site falso.", "certa" => 2, "idJogo" => 35],
-                        ["resposta" => "O atacante cria uma mensagem falsa que parece legítima.", "certa" => 0, "idJogo" => 35],
             # endregion
 
             # Region Unidade 4
@@ -327,11 +327,11 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Treinamentos sobre segurança devem ser oferecidos apenas uma vez, durante a integração dos novos funcionários.", "certa" => 0, "idJogo" => 58],
                         ["resposta" => "Uma resposta rápida a incidentes pode minimizar os danos causados por um ataque de engenharia social.", "certa" => 1, "idJogo" => 58],
                     //Pergunta 12
-                        ["resposta" => "Utilização de ferramentas de segurança como filtros de e-mail e antivírus", "certa" => 3, "idJogo" => 59],
-                        ["resposta" => "Promoção de uma cultura organizacional de segurança", "certa" => 4, "idJogo" => 59],
                         ["resposta" => "Treinamento contínuo dos funcionários", "certa" => 0, "idJogo" => 59],
                         ["resposta" => "Implementação de políticas e procedimentos de segurança", "certa" => 1, "idJogo" => 59],
                         ["resposta" => "Validação rigorosa de solicitações de informações sensíveis", "certa" => 2, "idJogo" => 59],
+                        ["resposta" => "Utilização de ferramentas de segurança como filtros de e-mail e antivírus", "certa" => 3, "idJogo" => 59],
+                        ["resposta" => "Promoção de uma cultura organizacional de segurança", "certa" => 4, "idJogo" => 59],
             # endregion            
         ];
 

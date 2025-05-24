@@ -60,12 +60,16 @@
                             <div v-for="missao in storeMissao.missoes" :key="missao.id" class="flex flex-col items-center w-full my-4">
                                 <p class="text-xl font-semibold text-center w-5/7 mb-5">{{ missao.missao.descricao }}</p>
                                 <div class="relative flex flex-row w-[93%] bg-gray-200 rounded-full h-6 mb-2">
-                                    <div class="bg-green-500 h-6 rounded-full transition-all duration-300"
+                                    <div class="h-6 rounded-full"
+                                        :class="missao.concluida ? 'bg-yellow-400' : 'bg-green-500'"
                                         :style="{ width: ((missao.progresso / missao.missao.objetivo) * 100) + '%' }">
                                     </div>
                                     <p class="absolute inset-0 flex items-center justify-center text-sm text-gray-600 font-medium select-none">
                                         {{ missao.progresso }} / {{ missao.missao.objetivo }}
                                     </p>
+                                </div>
+                                <div v-if="missao.concluida" class="text-sm text-center text-yellow-600 font-semibold">
+                                    +{{ missao.missao.moedas }} moedas
                                 </div>
                             </div>
                         </div>
@@ -82,12 +86,16 @@
                                         {{ conquista.missao.descricao }}
                                     </h3>
                                     <div class="relative flex flex-row w-[93%] bg-gray-200 rounded-full h-6">
-                                        <div class="bg-green-500 h-6 rounded-full transition-all duration-300"
-                                          :style="{ width: ((conquista.progresso / conquista.missao.objetivo) * 100) + '%' }">
+                                        <div class="h-6 rounded-full"
+                                            :class="conquista.concluida ? 'bg-yellow-400' : 'bg-green-500'"
+                                            :style="{ width: ((conquista.progresso / conquista.missao.objetivo) * 100) + '%' }">
                                         </div>
                                         <p class="absolute inset-0 flex items-center justify-center text-sm text-gray-600 font-medium select-none">
                                             {{ conquista.progresso }} / {{ conquista.missao.objetivo }}
                                         </p>
+                                    </div>
+                                    <div v-if="conquista.concluida" class="text-sm text-center text-yellow-600 font-semibold">
+                                        +{{ conquista.missao.moedas }} moedas
                                     </div>
                                 </div>
                             </div>

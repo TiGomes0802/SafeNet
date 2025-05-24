@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Missao;
 use App\Models\User;
 use App\Models\UserMissao;
+use App\Models\Unidade;
+use Carbon\Carbon;
 
 class MissaoController extends Controller
 {
@@ -69,48 +71,52 @@ class MissaoController extends Controller
     }
 
 
-    public function progressoMissao(array $missoes)
+    public function progressoMissao($missoes)
     {
-        $user = $auth->user();
+        $user = auth()->user();
 
-        $Missoes = $user->userMissao()
-            ->where('idMissao', $request->idMissao)
-            ->where('date', now()->toDateString())
+        $minhasMissoes = $user->userMissao()
+            ->whereDate('data', Carbon::today())
             ->where('concluida', 0)
-            ->where('tipo', 'missao')
-            ->first();
-
-        $Conquistas = $user->userMissao()
-            ->where('idMissao', $request->idMissao)
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'missao');
+            })->get();
+        
+        $minhasConquistas = $user->userMissao()
             ->where('concluida', 0)
-            ->where('tipo', 'conquista')
-            ->first();
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'conquista');
+            })->get();
 
-        $userMissoes = array_merge($Missoes, $Conquistas);
+        $userMissoes = array_merge($minhasMissoes->all(), $minhasConquistas->all());
 
         foreach($userMissoes as $missao){
-            if($missao->idTipoMissao == 1){
+            if($missao->missao->idTipoMissao == 1){
                 // Streak
                 $missao->progresso += $user->streak;
                 if ($missao->progresso >= $missao->missao->objetivo) {
                     $missao->concluida = 1;
                     $missao->progresso = $missao->missao->objetivo;
+                    $user->moedas += $missao->missao->moedas;
                 }   
-            } elseif($missao->idTipoMissao == 2){
+            } elseif($missao->missao->idTipoMissao == 2){
                 // Tempo 
                 $tempoEmMinutos = $missoes->tempo / 60;
+                $missao->progresso += $tempoEmMinutos;
                 if ($missao->progresso >= $missao->missao->objetivo) {
                     $missao->concluida = 1;
                     $missao->progresso = $missao->missao->objetivo;
+                    $user->moedas += $missao->missao->moedas;
                 }
-            } elseif($missao->idTipoMissao == 3){
+            } elseif($missao->missao->idTipoMissao == 3){
                 // XP
                 $missao->progresso += $missoes->xp;
                 if ($missao->progresso >= $missao->missao->objetivo) {
                     $missao->concluida = 1;
                     $missao->progresso = $missao->missao->objetivo;
+                    $user->moedas += $missao->missao->moedas;
                 }
-            } elseif($missao->idTipoMissao == 4){
+            } elseif($missao->missao->idTipoMissao == 4){
                 // JogoStreak
                 foreach($missoes->jogo as $jogo){
                     if ($jogo == 1) {
@@ -118,13 +124,14 @@ class MissaoController extends Controller
                         if ($missao->progresso >= $missao->missao->objetivo) {
                             $missao->concluida = 1;
                             $missao->progresso = $missao->missao->objetivo;
-                            break 2;
+                            $user->moedas += $missao->missao->moedas;
+                            break;
                         }
                     } else {
                         $missao->progresso = 0;
                     }
                 }
-            } elseif($missao->idTipoMissao == 5){
+            } elseif($missao->missao->idTipoMissao == 5){
                 // Jogo
                 foreach($missoes->jogo as $jogo){
                     if ($jogo == 1) {
@@ -132,25 +139,27 @@ class MissaoController extends Controller
                         if ($missao->progresso >= $missao->missao->objetivo) {
                             $missao->concluida = 1;
                             $missao->progresso = $missao->missao->objetivo;
-                            break 2;
+                            $user->moedas += $missao->missao->moedas;
+                            break;
                         }
                     }
                 }
-            } elseif($missao->idTipoMissao == 6){
+            } elseif($missao->missao->idTipoMissao == 6){
                 // Unidade
                 if($missoes->taxaAcerto == 100){
                     $missao->progresso += 1;
                     if ($missao->progresso >= $missao->missao->objetivo) {
                         $missao->concluida = 1;
                         $missao->progresso = $missao->missao->objetivo;
+                        $user->moedas += $missao->missao->moedas;
                     }
                 } else {
                     $missao->progresso = 0;
                 }
 
-            } elseif($missao->idTipoMissao == 7){
+            } elseif($missao->missao->idTipoMissao == 7){
                 // Curso
-                $unidades = Unidade::where('idCurso', $missoes->unidade->idCurso)->where('ativo', 1)->get();
+                $unidades = Unidade::where('idCurso', $missoes->unidade->idCurso)->where('estado', 1)->get();
 
                 foreach ($unidades as $unidade) {
                     $pivot = auth()->user()->unidade()->where('idUnidade', $unidade->id)->first();
@@ -165,14 +174,21 @@ class MissaoController extends Controller
                     if ($missao->progresso >= $missao->missao->objetivo) {
                         $missao->concluida = 1;
                         $missao->progresso = $missao->missao->objetivo;
+                        $user->moedas += $missao->missao->moedas;
                     }
                 }                
+            } elseif($missao->missao->idTipoMissao == 8){
+                $missao->progresso = $user->xp;
+                if ($missao->progresso >= $missao->missao->objetivo) {
+                    $missao->concluida = 1;
+                    $missao->progresso = $missao->missao->objetivo;
+                    $user->moedas += $missao->missao->moedas;
+                }
             }
-
             $missao->save();
-            $user->coins += $missao->moedas;
-            $user->save();
+
         }
+        $user->save();
     }
 
     // progressaoMissaoDeAmigos
@@ -182,64 +198,70 @@ class MissaoController extends Controller
             'idAmigo' => 'required|integer',
         ]);
 
-        $user = $auth->user();
+        $user = auth()->user();
 
-        $Missoes = $user->userMissao()
-            ->where('idMissao', $request->idMissao)
-            ->where('date', now()->toDateString())
+        $missoes = $user->userMissao()
+            ->whereDate('data', Carbon::today())
             ->where('concluida', 0)
-            ->where('tipo', 'missao')
-            ->first();
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'missao');
+            })
+            ->get();
+        
 
-        $Conquistas = $user->userMissao()
-            ->where('idMissao', $request->idMissao)
+        $conquistas = $user->userMissao()
             ->where('concluida', 0)
-            ->where('tipo', 'conquista')
-            ->first();
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'conquista');
+            })
+            ->get();
 
-        $minhasMissoes = array_merge($Missoes, $Conquistas);
+        $minhasMissoes = array_merge($missoes->all(), $conquistas->all());
 
         $amigo = User::find($request->idAmigo);
         if (!$amigo) {
             return response()->json(['error' => 'Usuário não encontrado'], 404);
         }
 
-        $Missoes = $amigo->userMissao()
-            ->where('idMissao', $request->idMissao)
-            ->where('date', now()->toDateString())
+        $missoes = $amigo->userMissao()
+            ->whereDate('data', Carbon::today())
             ->where('concluida', 0)
-            ->where('tipo', 'missao')
-            ->first();
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'missao');
+            })
+            ->get();
+        
 
-        $Conquistas = $amigo->userMissao()
-            ->where('idMissao', $request->idMissao)
+        $conquistas = $amigo->userMissao()
             ->where('concluida', 0)
-            ->where('tipo', 'conquista')
-            ->first();
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'conquista');
+            })
+            ->get();
 
         
-        $amigoMissoes = array_merge($Missoes, $Conquistas);
+        $amigoMissoes = array_merge($missoes->all(), $conquistas->all());
 
         foreach($minhasMissoes as $missao){
             $missao->progresso += 1;
             if ($missao->progresso >= $missao->missao->objetivo) {
                 $missao->concluida = 1;
                 $missao->progresso = $missao->missao->objetivo;
+                $user->moedas += $missao->missao->moedas;
             }
             $missao->save();
-            $user->coins += $missao->moedas;
-            $user->save();
         }
+        $user->save();
 
         foreach($amigoMissoes as $missao){
             $missao->progresso += 1;
             if ($missao->progresso >= $missao->missao->objetivo) {
                 $missao->concluida = 1;
                 $missao->progresso = $missao->missao->objetivo;
+                $amigo->moedas += $missao->missao->moedas;
             }
             $missao->save();
-            $amigo->coins += $missao->moedas;
-            $amigo->save();
         }
+        $amigo->save();
     }
 }

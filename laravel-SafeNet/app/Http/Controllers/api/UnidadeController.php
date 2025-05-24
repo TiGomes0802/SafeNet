@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Models\Unidade;
 use App\Models\Jogo;
+use Carbon\Carbon;
 
 class UnidadeController extends Controller
 {
@@ -201,16 +202,42 @@ class UnidadeController extends Controller
             ]);
 
             $taxaAcerto = round($numJogosAcertados / count($validatedData['jogos']) * 100, 2);
+            
+            $minhaMissoesAntesAtualizar = $user->userMissao()
+                ->whereDate('data', Carbon::today())
+                ->whereHas('missao', function ($query) {
+                    $query->where('tipo', 'missao');
+                })->get();
 
-            $missoes = [
+            $missoes = (object) [
                 'unidade' => $unidade,
                 'tempo' => $validatedData['tempo'],
                 'jogo' => $jogosAcertados,
                 'xp' => $xpTotal,
                 'taxaAcerto' => $taxaAcerto,
             ];
+                
             $missaoController = new MissaoController();
             $missaoController->progressoMissao($missoes);
+
+            $minhaMissoesDepoisAtualizar = $user->userMissao()
+                ->whereDate('data', Carbon::today())
+                ->whereHas('missao', function ($query) {
+                    $query->where('tipo', 'missao');
+                })->get();
+                
+            $missoes = $minhaMissoesAntesAtualizar->map(function ($antes, $index) use ($minhaMissoesDepoisAtualizar) {
+                $depois = $minhaMissoesDepoisAtualizar[$index];
+
+                return [
+                    'descricao' => $depois->missao->descricao,
+                    'objetivo' => $depois->missao->objetivo ?? null,
+                    'moedas' => $depois->missao->moedas,
+                    'concluida' => $depois->concluida,
+                    'progresso_antes' => $antes->progresso,
+                    'progresso_depois' => $depois->progresso,
+                ];
+            });
 
             \DB::commit();
 
@@ -219,6 +246,7 @@ class UnidadeController extends Controller
                 'xpGanho' => $xpTotal,
                 'idCurso' => $idCurso,
                 'taxaAcerto' => $taxaAcerto,
+                'missoes' => $missoes,
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();

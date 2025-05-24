@@ -36,6 +36,9 @@ class TipoMissoesSeeder extends Seeder
                 "tipo" => "Curso",
             ],
             [
+                "tipo" => "Rank",
+            ],
+            [
                 "tipo" => "Social",
             ],
         ];

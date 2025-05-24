@@ -20,7 +20,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Topo da montanha - Chegar à divisão de mestre",
                 "objetivo" => "2751",
                 "moedas" => "50",
-                "idTipoMissao" => "3",
+                "idTipoMissao" => "8",
             ],
             [
                 "tipo" => "conquista",
@@ -28,7 +28,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Diamante - Chegar à divisão de diamante",
                 "objetivo" => "2201",
                 "moedas" => "40",
-                "idTipoMissao" => "3",
+                "idTipoMissao" => "8",
             ],
             [
                 "tipo" => "conquista",
@@ -36,7 +36,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Desbravador - Chegar à divisão de platina",
                 "objetivo" => "1651",
                 "moedas" => "30",
-                "idTipoMissao" => "3",
+                "idTipoMissao" => "8",
             ],
             [
                 "tipo" => "conquista",
@@ -44,7 +44,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Aventureiro - Chegar à divisão de ouro",
                 "objetivo" => "1101",
                 "moedas" => "20",
-                "idTipoMissao" => "3",
+                "idTipoMissao" => "8",
             ],
             [
                 "tipo" => "conquista",
@@ -52,7 +52,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Explorador - Chegar à divisão de prata",
                 "objetivo" => "551",
                 "moedas" => "10",
-                "idTipoMissao" => "3",
+                "idTipoMissao" => "8",
             ],
             [
                 "tipo" => "conquista",
@@ -84,7 +84,7 @@ class MissoesSeeder extends Seeder
                 "descricao" => "Amigos para sempre - Fazer 3 amigos",
                 "objetivo" => "3",
                 "moedas" => "20",
-                "idTipoMissao" => "8",
+                "idTipoMissao" => "9",
             ],
             [
                 "tipo" => "conquista",

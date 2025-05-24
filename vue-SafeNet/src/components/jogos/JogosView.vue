@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted, computed, watch } from 'vue'
+  import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import draggable from 'vuedraggable'
   import { useJogoStore } from '@/stores/jogo'
@@ -70,12 +70,12 @@
       let respostaCorreta = true
 
       for (let i = 0; i < pergunta.value.respostas.length; i++) {
-        if (respostaSelecionada.value[i].certa != i + 1) {
+        if (respostaSelecionada.value[i].certa != i) {
           respostaCorreta = false
           break // já sabemos que está errada, não precisamos continuar
         }
       }
-
+      
       if (!respostaCorreta) {
         await storeVidas.perderVida()
       }
