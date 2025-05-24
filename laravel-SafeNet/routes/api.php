@@ -12,6 +12,8 @@ use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\api\ProdutoController;
 use App\Http\Controllers\api\MissaoController;
 use App\Http\Controllers\api\RankController;
+use App\Http\Controllers\api\AmigoController;
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -67,6 +69,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/missoes/alterarEstado/{id}', [MissaoController::class, 'alterarEstadoMissao']);
 
     Route::get('/rank', [RankController::class, 'index']);
+    
+    Route::get('/amigos', [AmigoController::class, 'getAmigos']);
+    Route::get('/amigos/pedidos', [AmigoController::class, 'getPedidosAmizade']);
+    Route::post('/amigos/pedido', [AmigoController::class, 'enviarPedidoAmizade']);
+    Route::post('/amigos/responderPedido', [AmigoController::class, 'responderPedidoAmizade']);
+    Route::delete('/amigos/removerAmigo', [AmigoController::class, 'removerAmigo']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);

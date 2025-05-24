@@ -80,19 +80,32 @@ class User extends Authenticatable
         // Vai buscar os amigos a quem este utilizador enviou pedidos
         $amigos1 = $this->amigo1()
             ->where('status', 1)
-            ->with('user2')
+            ->with('amigo2')
             ->get()
-            ->pluck('user2'); // Devolve os amigos (user2)
+            ->pluck('amigo2'); // Devolve os amigos (user2)
 
         // Vai buscar os amigos que enviaram pedido a este utilizador
         $amigos2 = $this->amigo2()
             ->where('status', 1)
-            ->with('user1')
+            ->with('amigo1')
             ->get()
-            ->pluck('user1'); // Devolve os amigos (user1)
+            ->pluck('amigo1'); // Devolve os amigos (user1)
 
         // Junta os dois lados
-        return $amigos1->merge($amigos2);
+        return $amigos1->merge($amigos2)->sortBy('id')->values();
+    }
+
+    public function enviarPedidoAmizade(User $amigo)
+    {
+
+        // Cria o pedido de amizade
+        Amigo::create([
+            'idUser1' => $this->id,
+            'idUser2' => $amigo->id,
+            'status' => 0, // 0 = Pendente
+        ]);
+
+        return true; // Pedido enviado com sucesso
     }
 
     public function report()
