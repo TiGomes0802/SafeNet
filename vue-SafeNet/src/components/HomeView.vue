@@ -3,11 +3,13 @@
   import { useRoute } from 'vue-router'
   import Sidebar from '@/components/Sidebar.vue'
   import UnidadeCard from '@/components/UnidadeCard.vue'
+  import { useAuthStore } from '@/stores/auth'
   import { useCursoStore } from '@/stores/curso'
   import { useMissaoStore } from '@/stores/missao'
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
   const route = useRoute()
+  const user = useAuthStore().user
   const storeCurso = useCursoStore()
   const storeMissao = useMissaoStore()
 
@@ -39,7 +41,9 @@
     }
     window.addEventListener('resize', updateWidth)
     loading.value = false
-    storeMissao.getMinhasmissoes()
+    if (user.type === 'J') {
+      storeMissao.getMinhasmissoes()
+    }
   })
 
   const updateWidth = () => {

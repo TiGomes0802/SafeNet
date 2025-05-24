@@ -48,15 +48,40 @@ export const useMissaoStore = defineStore('missao', () => {
         }
     }
 
-    function progresso(infos) {
-        
-    }
+    const alterarEstadoMissao = async (missaoId) => {
+        try {
+            const response = await axios.post(`missoes/alterarEstado/${missaoId}`);
+            if (response.status === 200) {
+                // Update the local state if needed
+                if (response.data.tipo === 'missao') {
+                    const index = missoes.value.findIndex(m => m.id === missaoId);
+                    if (index !== -1) {
+                        missoes.value[index] = response.data;
+                    }
+                }else if (response.data.tipo === 'conquista') {
+                    const index = conquistas.value.findIndex(m => m.id === missaoId);
+                    if (index !== -1) {
+                        conquistas.value[index] = response.data;
+                    }
+                }
+                return true;
+            }
+        }catch (e) {
+            storeError.setErrorMessages(
+                e.response.data.message,
+                e.response.data.errors,
+                e.response.status,
+                "Error updating mission state!"
+            );
+            return false;
+        }
+    }   
 
     return{
         missoes,
         conquistas,
         getMissoes,
         getMinhasmissoes,
-        progresso
+        alterarEstadoMissao
     }
 })

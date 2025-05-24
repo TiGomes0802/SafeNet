@@ -71,7 +71,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Engenharia social só ocorre em ambientes digitais, como e-mails ou redes sociais.", "certa" => 0, "idJogo" => 10],
                     //Pergunta 11
                         ["resposta" => "O treinamento de funcionários pode ajudar a prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 11],
-                        ["resposta" => "Mesmo usuários bem treinados podem ser vítimas de engenharia social, caso não estejam atentos.", "certa" => 1, "idJogo" => 11],
+                        ["resposta" => "Mesmo utilizadores bem treinados podem ser vítimas de engenharia social, caso não estejam atentos.", "certa" => 1, "idJogo" => 11],
                     //Pergunta 12
                         ["resposta" => "Phishing", "certa" => 0, "idJogo" => 12],
                         ["resposta" => "Smishing", "certa" => 1, "idJogo" => 12],
@@ -296,7 +296,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Enviar e-mails criptografados para todos os fornecedores", "certa" => 0, "idJogo" => 52],
                     //Pergunta 6
                         ["resposta" => "Criar senhas complexas e guardá-las em um cofre de dados", "certa" => 0, "idJogo" => 53],
-                        ["resposta" => "Usar uma senha junto com um código enviado para o celular do usuário", "certa" => 1, "idJogo" => 53],
+                        ["resposta" => "Usar uma senha junto com um código enviado para o celular do utilizador", "certa" => 1, "idJogo" => 53],
                         ["resposta" => "Pedir a confirmação de um endereço de e-mail para login", "certa" => 0, "idJogo" => 53],
                         ["resposta" => "Redefinir a senha a cada 24 horas para evitar ataques", "certa" => 0, "idJogo" => 53],
                     //Pergunta 7

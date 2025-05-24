@@ -74,10 +74,12 @@ export const useAuthStore = defineStore('auth', () => {
           localStorage.setItem("token", token.value);
           const responseUser = await axios.get("users/me");
           storeCurso.getCursos();
-          storeMissao.getMinhasmissoes();
           user.value = responseUser.data.data;
+          if (user.value.type == "J") {
+            storeMissao.getMinhasmissoes();
+            storeCoins.getCoins();
+          }
           repeatRefreshToken();
-          storeCoins.getCoins();
           router.push({name: "home"});
           return user.value;
         } catch (e) {

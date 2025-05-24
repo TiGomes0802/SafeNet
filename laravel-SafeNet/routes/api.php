@@ -64,6 +64,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
     Route::get('/missoes/minhasConquistas', [MissaoController::class, 'minhasConquistas']);
     Route::post('/missoes/progresso', [MissaoController::class, 'progressoMissao']);
+    Route::post('/missoes/alterarEstado/{id}', [MissaoController::class, 'alterarEstadoMissao']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);

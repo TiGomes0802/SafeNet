@@ -71,6 +71,19 @@ class MissaoController extends Controller
     }
 
 
+    public function alterarEstadoMissao(Request $request, $id)
+    {
+        $missao = Missao::find($id);
+        if (!$missao) {
+            return response()->json(['error' => 'Missão não encontrada'], 404);
+        }
+
+        $missao->estado = !$missao->estado; // Inverte o estado da missão
+        $missao->save();
+
+        return response()->json($missao, 200);
+    }
+
     public function progressoMissao($missoes)
     {
         $user = auth()->user();
@@ -188,6 +201,7 @@ class MissaoController extends Controller
             $missao->save();
 
         }
+
         $user->save();
     }
 

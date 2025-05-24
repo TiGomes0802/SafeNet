@@ -1,0 +1,15 @@
+meta {
+  name: alterarEstadoMissao
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8081/api/missoes/alterarEstado/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

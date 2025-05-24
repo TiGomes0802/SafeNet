@@ -22,6 +22,7 @@ import CriarPaginas from "@/components/paginas/create.vue";
 import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
+import indexMissoes from '@/components/missoes/index.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -133,6 +134,11 @@ const router = createRouter({
       name: 'CriarPagianas',
       component: CriarPaginas,
       props: true,
+    },
+    {
+      path: '/backoffice/missoes',
+      name: 'indexMissoes',
+      component: indexMissoes,
     },
     {
       path: '/report',
