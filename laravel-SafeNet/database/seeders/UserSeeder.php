@@ -15,36 +15,37 @@ class UserSeeder extends Seeder
     {
         $users = [
             #Region Clientes
-                ['type' => 'J', 'nome' => 'Cliente1', 'email' => 'cliente1@mail.com', 'username' => 'cliente1', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente2', 'email' => 'cliente2@mail.com', 'username' => 'cliente2', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente3', 'email' => 'cliente3@mail.com', 'username' => 'cliente3', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente4', 'email' => 'cliente4@mail.com', 'username' => 'cliente4', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente5', 'email' => 'cliente5@mail.com', 'username' => 'cliente5', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente6', 'email' => 'cliente6@mail.com', 'username' => 'cliente6', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente7', 'email' => 'cliente7@mail.com', 'username' => 'cliente7', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente8', 'email' => 'cliente8@mail.com', 'username' => 'cliente8', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente9', 'email' => 'cliente9@mail.com', 'username' => 'cliente9', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente10', 'email' => 'cliente10@mail.com', 'username' => 'cliente10', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente11', 'email' => 'cliente11@mail.com', 'username' => 'cliente11', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente12', 'email' => 'cliente12@mail.com', 'username' => 'cliente12', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente13', 'email' => 'cliente13@mail.com', 'username' => 'cliente13', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente14', 'email' => 'cliente14@mail.com', 'username' => 'cliente14', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente15', 'email' => 'cliente15@mail.com', 'username' => 'cliente15', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente16', 'email' => 'cliente16@mail.com', 'username' => 'cliente16', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente17', 'email' => 'cliente17@mail.com', 'username' => 'cliente17', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente18', 'email' => 'cliente18@mail.com', 'username' => 'cliente18', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente19', 'email' => 'cliente19@mail.com', 'username' => 'cliente19', 'xp' => rand(1, 2751)],
-                ['type' => 'J', 'nome' => 'Cliente20', 'email' => 'cliente20@mail.com', 'username' => 'cliente20', 'xp' => rand(1, 2751)],
+            ['type' => 'J', 'nome' => 'João Silva', 'email' => 'cliente1@mail.com', 'username' => 'joao_silva', 'xp' => rand(1, 2751), 'foto' => '169_675422da5e01e.jpg'],
+            ['type' => 'J', 'nome' => 'Ana Silva', 'email' => 'ana.silva@mail.com', 'username' => 'ana_silva', 'xp' => rand(1, 2751), 'foto' => '4_675422d974d6e.jpg'],
+            ['type' => 'J', 'nome' => 'Bruno Costa', 'email' => 'bruno.costa@mail.com', 'username' => 'bruno_c', 'xp' => rand(1, 2751), 'foto' => '2_675422d96fa8e.jpg'],
+            ['type' => 'J', 'nome' => 'Carla Mendes', 'email' => 'carla.mendes@mail.com', 'username' => 'carlam', 'xp' => rand(1, 2751), 'foto' => '6_675422d97b79a.jpg'],
+            ['type' => 'J', 'nome' => 'David Rocha', 'email' => 'david.rocha@mail.com', 'username' => 'david_r', 'xp' => rand(1, 2751), 'foto' => '3_675422d972104.jpg'],
+            ['type' => 'J', 'nome' => 'Eva Lopes', 'email' => 'eva.lopes@mail.com', 'username' => 'evalopes', 'xp' => rand(1, 2751), 'foto' => '23_675422d9e9e9c.jpg'],
+            ['type' => 'J', 'nome' => 'Filipe Moura', 'email' => 'filipe.moura@mail.com', 'username' => 'filipe_m', 'xp' => rand(1, 2751), 'foto' => '15_675422d990620.jpg'],
+            ['type' => 'J', 'nome' => 'Gabriela Nunes', 'email' => 'gabriela.nunes@mail.com', 'username' => 'gabinunes', 'xp' => rand(1, 2751), 'foto' => '14_675422d98e87f.jpg'],
+            ['type' => 'J', 'nome' => 'Henrique Dias', 'email' => 'henrique.dias@mail.com', 'username' => 'henrique_d', 'xp' => rand(1, 2751), 'foto' => '30_675422dab406f.jpg'],
+            ['type' => 'J', 'nome' => 'Inês Pinto', 'email' => 'ines.pinto@mail.com', 'username' => 'ines_p', 'xp' => rand(1, 2751), 'foto' => '16_675422d991db7.jpg'],
+            ['type' => 'J', 'nome' => 'João Almeida', 'email' => 'joao.almeida@mail.com', 'username' => 'joaoa', 'xp' => rand(1, 2751), 'foto' => '38_675422da76f01.jpg'],
+            ['type' => 'J', 'nome' => 'Karina Ramos', 'email' => 'karina.ramos@mail.com', 'username' => 'karinar', 'xp' => rand(1, 2751), 'foto' => '7_675422d97dfd2.jpg'],
+            ['type' => 'J', 'nome' => 'Luís Fonseca', 'email' => 'luis.fonseca@mail.com', 'username' => 'lfonseca', 'xp' => rand(1, 2751), 'foto' => '5_675422d977e4e.jpg'],
+            ['type' => 'J', 'nome' => 'Marta Carvalho', 'email' => 'marta.carvalho@mail.com', 'username' => 'martac', 'xp' => rand(1, 2751), 'foto' => '25_675422d9e7c4a.jpg'],
+            ['type' => 'J', 'nome' => 'Nuno Reis', 'email' => 'nuno.reis@mail.com', 'username' => 'nreis', 'xp' => rand(1, 2751), 'foto' => '13_675422d98cbce.jpg'],
+            ['type' => 'J', 'nome' => 'Olívia Teixeira', 'email' => 'olivia.teixeira@mail.com', 'username' => 'olivia_t', 'xp' => rand(1, 2751), 'foto' => '8_675422d980ad7.jpg'],
+            ['type' => 'J', 'nome' => 'Paulo Matos', 'email' => 'paulo.matos@mail.com', 'username' => 'paulom', 'xp' => rand(1, 2751), 'foto' => '12_675422d98a36b.jpg'],
+            ['type' => 'J', 'nome' => 'Quélia Tavares', 'email' => 'quelia.tavares@mail.com', 'username' => 'queliat', 'xp' => rand(1, 2751), 'foto' => '1_675422d96d11b.jpg'],
+            ['type' => 'J', 'nome' => 'Ricardo Vieira', 'email' => 'ricardo.vieira@mail.com', 'username' => 'ricardov', 'xp' => rand(1, 2751), 'foto' => '11_675422d98863c.jpg'],
+            ['type' => 'J', 'nome' => 'Sara Monteiro', 'email' => 'sara.monteiro@mail.com', 'username' => 'saram', 'xp' => rand(1, 2751), 'foto' => '9_675422d982f13.jpg'],
+            ['type' => 'J', 'nome' => 'Tiago Cruz', 'email' => 'tiago.cruz@mail.com', 'username' => 'tiagoc', 'xp' => rand(1, 2751), 'foto' => '10_675422d9859ad.jpg'],
             #EndRegion
-            
+
             #Region Gestores
-                ['type' => 'G', 'nome' => 'Gestor1', 'email' => 'gestor1@mail.com', 'username' => 'gestor1'],
-                ['type' => 'G', 'nome' => 'Gestor2', 'email' => 'gestor2@mail.com', 'username' => 'gestor2'],
+            ['type' => 'G', 'nome' => 'Gestor1', 'email' => 'gestor1@mail.com', 'username' => 'gestor1'],
+            ['type' => 'G', 'nome' => 'Gestor2', 'email' => 'gestor2@mail.com', 'username' => 'gestor2'],
             #EndRegion
-            
+
             #Region Admins
-                ['type' => 'A', 'nome' => 'Admin1', 'email' => 'admin1@mail.com', 'username' => 'admin1'],
-                ['type' => 'A', 'nome' => 'Admin2', 'email' => 'admin2@mail.com', 'username' => 'admin2'],
+            ['type' => 'A', 'nome' => 'Admin1', 'email' => 'admin1@mail.com', 'username' => 'admin1'],
+            ['type' => 'A', 'nome' => 'Admin2', 'email' => 'admin2@mail.com', 'username' => 'admin2'],
             #EndRegion
         ];
 
@@ -55,6 +56,7 @@ class UserSeeder extends Seeder
                 'nome' => $newUser['nome'],
                 'email' => $newUser['email'],
                 'username' => $newUser['username'],
+                'foto' => $newUser['foto'] ?? null,
                 'password' => Hash::make('123'),
                 'type' => $newUser['type'],
                 'xp' => $newUser['xp'] ?? 0,

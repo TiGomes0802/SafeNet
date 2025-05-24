@@ -35,6 +35,7 @@ class RankController extends Controller
             return [
                 'posicao' => $posicoes[$u->id],
                 'username' => $u->username,
+                'foto' => $u->foto,
                 'rank' => $getRank($u->xp),
                 'xp' => $u->xp,
             ];
@@ -50,6 +51,7 @@ class RankController extends Controller
                 return [
                     'posicao' => $posicoes[$amigo->id],
                     'username' => $amigo->username,
+                    'foto' => $amigo->foto,
                     'rank' => $getRank($amigo->xp),
                     'xp' => $amigo->xp,
                 ];
