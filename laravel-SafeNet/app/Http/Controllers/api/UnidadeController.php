@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Models\Unidade;
 use App\Models\Jogo;
+use Carbon\Carbon;
 
 class UnidadeController extends Controller
 {
@@ -133,6 +134,7 @@ class UnidadeController extends Controller
             'jogos' => 'required|array',
             'jogos.*.idJogo' => 'required|integer|exists:jogos,id',
             'jogos.*.acertou' => 'required|boolean',
+            'tempo' => 'required|integer',
         ]);
 
         \DB::beginTransaction();
@@ -144,7 +146,9 @@ class UnidadeController extends Controller
             $user = auth()->user();
             $xpTotal = 0;
 
-            $jogosAcertados = 0;
+            $numJogosAcertados = 0;
+
+            $jogosAcertados = [];
 
             foreach ($validatedData['jogos'] as $jogoData) {
                 // Garante que a ligação existe (ou cria)
@@ -157,8 +161,9 @@ class UnidadeController extends Controller
                 $xpTotal += $xpGanho;
 
                 // calcula a taxa de acerto so dos jogos, do foreach
-                $jogosAcertados += ($jogoData['acertou'] ? 1 : 0);
+                $numJogosAcertados += ($jogoData['acertou'] ? 1 : 0);
 
+                $jogosAcertados[] = $jogoData['acertou'] ? 1 : 0;
 
                 // Verifica se já existe o registo pivot
                 $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
@@ -186,14 +191,53 @@ class UnidadeController extends Controller
 
             // Atualiza XP
             $user->xp += $xpTotal;
-            $user->save();
+
+            // Verificação da streak aqui
+
+            $user->save();            
 
             // Marca a unidade como concluída
             $user->unidade()->syncWithoutDetaching([
                 $validatedData['idUnidade'] => ['status' => true],
             ]);
 
-            $taxaAcerto = round($jogosAcertados / count($validatedData['jogos']) * 100, 2);
+            $taxaAcerto = round($numJogosAcertados / count($validatedData['jogos']) * 100, 2);
+            
+            $minhaMissoesAntesAtualizar = $user->userMissao()
+                ->whereDate('data', Carbon::today())
+                ->whereHas('missao', function ($query) {
+                    $query->where('tipo', 'missao');
+                })->get();
+
+            $missoes = (object) [
+                'unidade' => $unidade,
+                'tempo' => $validatedData['tempo'],
+                'jogo' => $jogosAcertados,
+                'xp' => $xpTotal,
+                'taxaAcerto' => $taxaAcerto,
+            ];
+                
+            $missaoController = new MissaoController();
+            $missaoController->progressoMissao($missoes);
+
+            $minhaMissoesDepoisAtualizar = $user->userMissao()
+                ->whereDate('data', Carbon::today())
+                ->whereHas('missao', function ($query) {
+                    $query->where('tipo', 'missao');
+                })->get();
+                
+            $missoes = $minhaMissoesAntesAtualizar->map(function ($antes, $index) use ($minhaMissoesDepoisAtualizar) {
+                $depois = $minhaMissoesDepoisAtualizar[$index];
+
+                return [
+                    'descricao' => $depois->missao->descricao,
+                    'objetivo' => $depois->missao->objetivo ?? null,
+                    'moedas' => $depois->missao->moedas,
+                    'concluida' => $depois->concluida,
+                    'progresso_antes' => $antes->progresso,
+                    'progresso_depois' => $depois->progresso,
+                ];
+            });
 
             \DB::commit();
 
@@ -202,6 +246,7 @@ class UnidadeController extends Controller
                 'xpGanho' => $xpTotal,
                 'idCurso' => $idCurso,
                 'taxaAcerto' => $taxaAcerto,
+                'missoes' => $missoes,
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();

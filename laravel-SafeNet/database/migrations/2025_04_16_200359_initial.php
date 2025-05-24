@@ -5,8 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up(): void {
-        
+    public function up(): void
+    {
+
         // Tabela Ranks (id, nome, imagem, maximo, minimo)
         Schema::create('ranks', function (Blueprint $table) {
             $table->id();
@@ -37,7 +38,7 @@ return new class extends Migration {
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('estado');
+            $table->boolean('estado');
         });
 
         // Tabela Unidade (id, titulo, ordem, estado, idCurso)
@@ -64,7 +65,7 @@ return new class extends Migration {
         // Tabela Pagina (id, descricao, ordem, idUnidade)
         Schema::create('paginas', function (Blueprint $table) {
             $table->id();
-            $table->text('descricao');
+            $table->longText('descricao');
             $table->integer('ordem');
             $table->unsignedBigInteger('idUnidade');
             $table->foreign('idUnidade')->references('id')->on('unidades')->onDelete('cascade');
@@ -125,10 +126,11 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // Tabela TipoProduto (id, tipo)
+        // Tabela TipoProduto (id, tipo, imagem)
         Schema::create('tipoProdutos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
+            $table->string('imagem')->nullable();
         });
 
         // Tabela Produto (id, nome, preco, valor, idTipoProduto)
@@ -157,13 +159,14 @@ return new class extends Migration {
             $table->string('tipo');
         });
 
-        // Tabela Missoes (id, tipo, estado, descricao, objetivo, idTipoMissao)
+        // Tabela Missoes (id, tipo, estado, descricao, objetivo, moedas, idTipoMissao)
         Schema::create('missoes', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
-            $table->string('estado');
+            $table->boolean('estado');
             $table->text('descricao');
             $table->integer('objetivo');
+            $table->integer('moedas');
             $table->unsignedBigInteger('idTipoMissao');
             $table->foreign('idTipoMissao')->references('id')->on('tipoMissoes')->onDelete('cascade');
         });
@@ -171,10 +174,11 @@ return new class extends Migration {
         // Tabela Users_Missoes (id, idUser, idMissao)
         Schema::create('users_missoes', function (Blueprint $table) {
             $table->id();
-            $table->string('estado');
-            $table->integer('presente');
+            $table->boolean('concluida');
+            $table->integer('progresso')->default(0);
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idMissao');
+            $table->date('data')->nullable();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idMissao')->references('id')->on('missoes')->onDelete('cascade');
             $table->timestamps();
@@ -195,10 +199,10 @@ return new class extends Migration {
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('cascade');
             $table->foreign('idLink')->references('id')->on('linksExternos')->onDelete('cascade');
         });
-        
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         // Schema::dropIfExists('ranks');
         // Schema::dropIfExists('amigos');
         // Schema::dropIfExists('cursos');

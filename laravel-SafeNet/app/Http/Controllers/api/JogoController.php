@@ -9,8 +9,7 @@ use App\Models\Unidade;
 
 class JogoController extends Controller
 {
-    public function show($idJogo)
-    {
+    public function show($idJogo){
         // Verifica se o jogo existe
         $jogo = Jogo::find($idJogo);
         if (!$jogo) {
@@ -36,8 +35,7 @@ class JogoController extends Controller
         return response()->json($jogo);
     }
 
-    public function index($idUnidade)
-    {
+    public function index($idUnidade){
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);
         if (!$unidade) {
@@ -139,8 +137,7 @@ class JogoController extends Controller
         return response()->json($jogo, 201);
     }
 
-    public function updateJogo(Request $request, $idJogo)
-    {
+    public function updateJogo(Request $request, $idJogo){
         // Valida os dados da requisição
         $validatedData = $request->validate([
             'xp' => 'required|integer',
@@ -207,8 +204,7 @@ class JogoController extends Controller
         return response()->json($jogo);
     }
 
-    public function mudarEstadoJogo(Request $request, $idJogo)
-    {
+    public function mudarEstadoJogo(Request $request, $idJogo){
         // Verifica se o jogo existe
         $jogo = Jogo::find($idJogo);
         if (!$jogo) {
@@ -223,9 +219,7 @@ class JogoController extends Controller
         return response()->json($jogo);
     }
 
-    public function comecarJogo(Request $request, $idUnidade)
-    {
-
+    public function comecarJogo(Request $request, $idUnidade){
         // Verifica se a unidade existe
         $unidade = Unidade::find($idUnidade);
         if (!$unidade) {
@@ -243,7 +237,7 @@ class JogoController extends Controller
         $jogos = Jogo::where('idUnidade', $idUnidade)
                     ->where('estado', true)
                     ->inRandomOrder()
-                    ->take(5)
+                    ->take(7)
                     ->get();
         
         // carrega as respostas associadas aos jogos

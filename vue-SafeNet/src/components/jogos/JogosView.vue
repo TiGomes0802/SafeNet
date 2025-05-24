@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted, computed, watch } from 'vue'
+  import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import draggable from 'vuedraggable'
   import { useJogoStore } from '@/stores/jogo'
@@ -22,6 +22,9 @@
   const report = ref(false)
   const desistir = ref(false)
   const loading = ref(true);
+
+  const tempo = ref(0);
+  let intervalo = null;
 
   const pergunta = computed(() => storeJogo.jogos?.[perguntaAtual.value])
   const totalPerguntas = computed(() => storeJogo.jogos?.length || 0)
@@ -67,12 +70,12 @@
       let respostaCorreta = true
 
       for (let i = 0; i < pergunta.value.respostas.length; i++) {
-        if (respostaSelecionada.value[i].certa != i + 1) {
+        if (respostaSelecionada.value[i].certa != i) {
           respostaCorreta = false
           break // já sabemos que está errada, não precisamos continuar
         }
       }
-
+      
       if (!respostaCorreta) {
         await storeVidas.perderVida()
       }
@@ -91,8 +94,7 @@
       respostaSelecionada.value = []
     } else {
       // Alterar para uma página de sucesso
-      //router.push({ name: 'success' })
-      storeUnidade.concluirUnidade(idUnidade, jogos.value)
+      storeUnidade.concluirUnidade(idUnidade, jogos.value, tempo.value)
     }
   }
 
@@ -107,13 +109,20 @@
     await storeJogo.comecarJogo(idUnidade)
     await storeVidas.getVidas()
     loading.value = false
+    intervalo = setInterval(() => {
+      tempo.value += 1;
+    }, 1000);
   })
+
+  onBeforeUnmount(() => {
+    clearInterval(intervalo);
+  });
 
 </script>
 
 <template>
   <div v-if="loading">
-    <Loading mensagem="A prepar as melhores pergunta para ti" />
+    <Loading mensagem="A preparar as melhores perguntas para ti..." />
   </div>
   <transition
     name="fade"

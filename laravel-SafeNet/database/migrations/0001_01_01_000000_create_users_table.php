@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('foto')->nullable();
             $table->integer('moedas')->default(0);
+            $table->integer('streak')->default(0);
             $table->integer('xp')->default(0);
             $table->integer('vida')->default(5);
             $table->string('password');

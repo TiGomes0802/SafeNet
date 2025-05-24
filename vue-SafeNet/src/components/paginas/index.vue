@@ -4,6 +4,8 @@
     import Sidebar from '@/components/Sidebar.vue'
     import CreatePagina from '@/components/paginas/create.vue'
     import Loading from '@/components/loading/BackofficeLoading.vue'
+    import { QuillEditor } from '@vueup/vue-quill' 
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     const paginaStore = usePaginaStore()
 
@@ -112,7 +114,7 @@
                                 <div class="flex justify-between items-center gap-x-2 mb-3">
                                     <div class="mb-4 w-9/10">
                                         <label class="block font-semibold mb-1">Descrição:</label>
-                                        <textarea v-model="pagina.descricao" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" rows="3" />
+                                        <QuillEditor v-model:content="descricao" content-type="html" toolbar="essentials"/>
                                     </div>
                                     <div class="mb-4 w-1/10 flex justify-center items-center">
                                         <select v-model="pagina.ordem" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
@@ -127,7 +129,7 @@
                         <div v-for="(pagina, index) in paginas" :key="pagina.id">
                             <div class="bg-white w-full p-4 rounded-lg shadow-xl flex flex-col gap-y-1">
                                 <p class="text-2xl">{{ index + 1 }}º Página</p>
-                                <p class="text-lg py-2">{{ pagina.descricao }}</p>
+                                <div content-html class="py-2" v-html="pagina.descricao"></div>
                             </div>
                         </div>
                         <div>

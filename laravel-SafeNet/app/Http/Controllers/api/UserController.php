@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserMissao;
+use App\Models\Missao;
 
 class UserController extends Controller
 {
@@ -23,7 +25,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
         ]);
         
-        $user = User::create($validatedData);
+        $user = User::create($validatedData);        
+
         return response()->json($user, 201);
     }
 

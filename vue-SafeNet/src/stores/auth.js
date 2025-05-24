@@ -5,12 +5,14 @@ import { useRouter } from 'vue-router'
 import { useErrorStore } from "@/stores/error";
 import { useCoinsStore } from "@/stores/coins";
 import { useCursoStore } from '@/stores/curso';
+import { useMissaoStore } from '@/stores/missao';
 
 export const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
     const storeError = useErrorStore();
     const storeCoins = useCoinsStore();
     const storeCurso = useCursoStore();
+    const storeMissao = useMissaoStore();
     
     //const { toast } = Toaster()
     
@@ -66,17 +68,18 @@ export const useAuthStore = defineStore('auth', () => {
     const login = async (credentials) => {
         storeError.resetMessages();
         try{
-          console.log(credentials);
           const responseLogin = await axios.post("auth/login", credentials);
           token.value = responseLogin.data.token;
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
           localStorage.setItem("token", token.value);
           const responseUser = await axios.get("users/me");
-          storeCurso.getCursosAtivos();
+          storeCurso.getCursos();
           user.value = responseUser.data.data;
-          console.log(user.value);
+          if (user.value.type == "J") {
+            storeMissao.getMinhasmissoes();
+            storeCoins.getCoins();
+          }
           repeatRefreshToken();
-          storeCoins.getCoins();
           router.push({name: "home"});
           return user.value;
         } catch (e) {

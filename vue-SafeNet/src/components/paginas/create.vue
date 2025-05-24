@@ -1,6 +1,8 @@
 <script setup>
     import { ref } from 'vue'
     import { usePaginaStore } from '@/stores/pagina'
+    import { QuillEditor } from '@vueup/vue-quill' 
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     const paginaStore = usePaginaStore()
 
@@ -12,18 +14,18 @@
         descricao: false,
     })
 
-    const criarPagina = () =>{
+    const criarPagina = () => {
         erros.value.descricao = false
 
-        if (!descricao.value.trim()) {
-            erros.value.descricao = true
-        }
+        // Cria um div temporário para interpretar o HTML e verificar se há conteúdo real
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = descricao.value
+        const textoLimpo = tempDiv.textContent?.trim() || ''
 
-        if (erros.value.descricao) {
+        if (!textoLimpo) {
+            erros.value.descricao = true
             return
         }
-
-        descricao.value = descricao.value.trim()
 
         paginaStore.createPagina(props.idUnidade, descricao.value)
     }
@@ -32,7 +34,7 @@
 <template>
     <div class="mb-4">
         <label class="block font-semibold mb-1">Página:</label>
-        <textarea v-model="descricao" class="w-full pl-5 py-2 border-1 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" :class="erros.descricao ? 'border-red-500' : 'border-black'" rows="3" />
+        <QuillEditor v-model:content="descricao" content-type="html" toolbar="essentials"/>
     </div>
     <p v-if="erros.descricao" class="text-red-600 text-md font-bold mt-4 mb-4">
         Por favor preencha todos os campos antes de criar a pergunta.

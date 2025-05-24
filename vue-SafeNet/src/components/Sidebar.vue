@@ -1,44 +1,44 @@
 <script setup>
-    import { ref, onMounted, onUnmounted } from 'vue'
-    import { useAuthStore } from '@/stores/auth'
-    import { useCoinsStore } from '@/stores/coins'
-    import { useCursoStore } from '@/stores/curso'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useCoinsStore } from '@/stores/coins'
+import { useCursoStore } from '@/stores/curso'
 
-    const storeAuth = useAuthStore()
-    const storeCoins = useCoinsStore()
-    const storeCurso = useCursoStore()
-    const isOpen = ref(false)
-    const windowWidth = ref(window.innerWidth)
+const storeAuth = useAuthStore()
+const storeCoins = useCoinsStore()
+const storeCurso = useCursoStore()
+const isOpen = ref(false)
+const windowWidth = ref(window.innerWidth)
 
-    const updateWidth = () => {
-        windowWidth.value = window.innerWidth
+const updateWidth = () => {
+    windowWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+    window.addEventListener('resize', updateWidth)
+    if (storeAuth.user?.type === 'J') {
+        storeCurso.getCursos()
     }
+})
 
-    onMounted(() => {
-        window.addEventListener('resize', updateWidth)
-        if (storeAuth.user?.type === 'J') {
-            storeCurso.getCursosAtivos()
-        }
-    })
+onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+})
 
-    onUnmounted(() => {
-        window.removeEventListener('resize', updateWidth)
-    })
+const logout = () => {
+    storeAuth.logout()
+}
 
-    const logout = () => {
-        storeAuth.logout()
+const toggleSidebar = () => {
+    isOpen.value = !isOpen.value
+}
+
+// Para fechar sidebar quando o utilizador clica num link
+const handleLinkClick = () => {
+    if (windowWidth.value < 768) {
+        isOpen.value = false
     }
-
-    const toggleSidebar = () => {
-        isOpen.value = !isOpen.value
-    }
-
-    // Para fechar sidebar quando o utilizador clica num link
-    const handleLinkClick = () => {
-        if (windowWidth.value < 768) {
-            isOpen.value = false
-        }
-    }
+}
 </script>
 
 
@@ -46,7 +46,7 @@
 
     <!-- Mini sidebar para Responsividade-->
     <aside v-if="!isOpen && windowWidth < 768"
-        class="fixed inset-y-0 left-0 w-12 bg-white shadow-md z-40 flex flex-col items-center pt-4 md:hidden">
+        class="inset-y-0 left-0  w-12 bg-white shadow-md z-40 flex flex-col items-center pt-4 md:hidden">
         <button @click="toggleSidebar" class="text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -60,24 +60,27 @@
         <aside v-if="isOpen || windowWidth >= 768"
             class="fixed md:static inset-y-0 z-40 w-64 bg-white shadow-md p-4 flex flex-col justify-between transform transition-transform duration-300 md:translate-x-0"
             :class="[
-                { '-translate-x-full': !isOpen && windowWidth < 768 },
+                { '-translate-x-full ': !isOpen && windowWidth < 768 },
                 { 'left-0': isOpen || windowWidth >= 768 }
             ]">
             <!--Botão X-->
-            <button @click="toggleSidebar" class="absolute top-4 right-4 md:hidden text-gray-600 hover:text-gray-800">
+            <button @click="toggleSidebar" class="absolute top-4 right-4 md:hidden text-gray-600 hover:text-gray-800 ">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
             <div>
-                <h1 class="text-2xl font-bold mb-6">SafeNet</h1>
+                <!-- Ícone -->
+                <img src="@/assets/SafeNetLogo.png" alt="Ícone" class="w-45 h-auto ml-1 mb-6 animate-fade-in" />
                 <div v-if="storeAuth.user?.type === 'J'">
                     <div class="mb-6">
                         <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
                         <nav class="space-y-2">
-                            <router-link v-for="curso in storeCurso.cursos" :key="curso.id" :to="`/curso/${curso.id}`"
-                                class="block py-2 px-6 rounded hover:bg-gray-100" @click="handleLinkClick">
+                            <router-link v-for="curso in storeCurso.cursos" :key="curso.id"
+                                :to="curso.estado !== 0 ? `/curso/${curso.id}` : ''" class="block py-2 px-6 rounded"
+                                :class="curso.estado === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100 text-black'"
+                                @click="curso.estado === 0 ? $event.preventDefault() : handleLinkClick">
                                 {{ curso.nome }}
                             </router-link>
                         </nav>
@@ -87,7 +90,7 @@
                         <router-link to="/missoes" class="block py-2 px-3 rounded hover:bg-gray-100"
                             @click="handleLinkClick">Missões</router-link>
                         <router-link to="/estatisticas" class="block py-2 px-3 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">Estatísticas</router-link>
+                            @click="handleLinkClick">Ranking</router-link>
                         <router-link to="/loja" class="block py-2 px-3 rounded hover:bg-gray-100"
                             @click="handleLinkClick">Loja</router-link>
                     </nav>
@@ -126,6 +129,20 @@
                             <span>Estatísticas</span>
                         </router-link>
 
+                        <router-link to="/backoffice/missoes"
+                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z" />
+                            </svg>
+
+                            <span>Missões</span>
+                        </router-link>
+
                         <router-link to="/backoffice/reports"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
@@ -155,9 +172,6 @@
                     </nav>
                 </div>
             </div>
-
-
-
 
             <div class="border-t pt-7 space-y-6">
                 <div v-if="storeAuth.user?.type === 'J'" class="block text-sm text-gray-700 font-semibold px-3">{{

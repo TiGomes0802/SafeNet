@@ -2,11 +2,13 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useErrorStore } from "@/stores/error";
+import { useMissaoStore } from "@/stores/missao";
 import { useRouter } from "vue-router";
 
 export const useUnidadeStore = defineStore("unidade", () => {
     const router = useRouter();
     const storeError = useErrorStore();
+    const storeMissao = useMissaoStore();
 
     const unidades = ref([]);
     const unidade = ref(null);
@@ -28,14 +30,16 @@ export const useUnidadeStore = defineStore("unidade", () => {
     }
 
 
-    const concluirUnidade = async (idUnidade, jogos) => {
+    const concluirUnidade = async (idUnidade, jogos, tempo) => {
         const data = {
             idUnidade: idUnidade,
             jogos: jogos,
+            tempo: tempo,
         };
         try {
             const response = await axios.post("unidade/concluir", data);
             if (response.status === 200) {
+                storeMissao.getMinhasmissoes();
                 router.push({ name: "Sucesso", state: { data: response.data } })
             }
             return true;

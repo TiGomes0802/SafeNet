@@ -22,6 +22,7 @@ import CriarPaginas from "@/components/paginas/create.vue";
 import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
+import indexMissoes from '@/components/missoes/index.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -135,6 +136,11 @@ const router = createRouter({
       props: true,
     },
     {
+      path: '/backoffice/missoes',
+      name: 'indexMissoes',
+      component: indexMissoes,
+    },
+    {
       path: '/report',
       name: 'Report',
       component: Report,
@@ -158,7 +164,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // user is not logged in
-  /*if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
+  if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
 
     next({ name: "login" });
     return;
@@ -167,7 +173,7 @@ router.beforeEach(async (to, from, next) => {
   if ((to.name === "login" || to.name === "register") && storeAuth.user) {
     next({ name: "home" });
     return;
-  }*/
+  }
 
   // user is logged in
 
