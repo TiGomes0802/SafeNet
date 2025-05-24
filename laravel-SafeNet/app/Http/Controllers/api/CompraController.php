@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class CompraController extends Controller
 {
+
+    public function index()
+    {
+        $user = Auth::user();
+        $compras = Compra::where('idUser', $user->id)
+            ->with('produto')
+            ->get();
+
+        return response()->json($compras);
+    }
+
     public function comprar($idProduto)
     {
         $user = Auth::user();

@@ -67,7 +67,7 @@ onUnmounted(() => {
       <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
       <div :class="['flex-1 bg-gray-100 p-6 overflow-y-scroll transition-all duration-300', dynamicPadding]">
 
-        <h1 class="text-3xl font-bold mb-8">Rankings</h1>
+        <h1 class="text-3xl font-bold mb-8 text-blue-600">Rankings</h1>
 
         <div class="flex flex-col md:flex-row gap-6">
 

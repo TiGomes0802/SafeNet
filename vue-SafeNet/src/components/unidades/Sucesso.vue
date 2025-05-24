@@ -26,7 +26,7 @@
   })
 
   const voltarUnidade = () => {
-    router.push({ name: 'curso', params: { idCurso: data.idCurso } }) // Altere o idCurso conforme necessário
+    router.push({ name: 'curso', params: { idCurso: data.idCurso } })
   }
 </script>
 
@@ -38,7 +38,7 @@
       <p class="font-semibold text-2xl text-gray-600 pb-20">{{ mensagemFinal }}</p>
     </div>
     <button @click="voltarUnidade" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">
-      Voltar ao curso
+      Voltar ao Curso
     </button>
   </div>
 </template>
