@@ -23,6 +23,8 @@ import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
 import indexMissoes from '@/components/missoes/index.vue';
+import indexAmigos from '@/components/amigos/index.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +80,11 @@ const router = createRouter({
       path: '/unidade/:idUnidade/gameover',
       name: 'gameover',
       component: GameOver,
+    },
+    {
+      path: '/amigos',
+      name: 'amigos',
+      component: indexAmigos,
     },
     {
       path: '/backoffice/cursos',

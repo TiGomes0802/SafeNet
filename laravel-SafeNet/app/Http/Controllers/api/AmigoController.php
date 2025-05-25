@@ -16,6 +16,7 @@ class AmigoController extends Controller
             return [
                 'nome' => $amigo->nome,
                 'username' => $amigo->username,
+                'xp' => $amigo->xp,
             ];
         });
 
@@ -31,24 +32,42 @@ class AmigoController extends Controller
 
     public function enviarPedidoAmizade(Request $request)
     {
+        $request->validate([
+            'username' => 'required|string',
+        ]);
+
         $user = auth()->user();
+
         $amigo = User::where('username', $request->input('username'))->first();
 
         if (!$amigo) {
-            return response()->json(['message' => 'Usuário não encontrado'], 404);
+            return response()->json(['message' => 'Utilizador não encontrado'], 400);
         }
-        
         if ($user->id === $amigo->id) {
             return response()->json(['message' => 'Você não pode enviar um pedido de amizade para si mesmo'], 400);
         }
-
+        
         if ($user->todosAmigos()->contains('id', $amigo->id)) {
             return response()->json(['message' => 'Já és amigo deste utilizador'], 400);
         }
 
+        $pedidoExistente = $user->amigo1()
+            ->where('idUser2', $amigo->id)
+            ->where('status', 0)
+            ->exists();
+
+        $pedidoRecebido = $user->amigo2()
+            ->where('idUser2', $amigo->id)
+            ->where('status', 0)
+            ->exists();
+
+        if ($pedidoExistente || $pedidoRecebido) {
+            return response()->json(['message' => 'Já existe um pedido de amizade pendente com este utilizador'], 400);
+        }
+
         $user->enviarPedidoAmizade($amigo);
 
-        return response()->json(['message' => 'Pedido de amizade enviado com sucesso']);
+        return response()->json(['message' => 'Pedido de amizade enviado com sucesso', 200]);
     }
 
     public function responderPedidoAmizade(Request $request)
@@ -75,39 +94,27 @@ class AmigoController extends Controller
         }
 
         if ($request->input('resposta') == -1) {
-            // Rejeitar o pedido de amizade
             $pedido->delete();
-            // Devolve a lista de pedidos atualizada
-
-            $pedidos = $this->obterPedidosPendentes();
-
-            return response()->json([
-                'message' => 'Pedido de amizade rejeitado com sucesso',
-                'pedidos' => $pedidos,
-                
-            ]);
         }else {
-            // Aceitar o pedido de amizade
             $pedido->status = 1;
             $pedido->save();
-
-            $pedidos = $this->obterPedidosPendentes();
-            $amigos = $user->todosAmigos()->map(function ($amigo) {
-                return [
-                    'nome' => $amigo->nome,
-                    'username' => $amigo->username,
-                ];
-            });
-
-            return response()->json([
-                'message' => 'Pedido de amizade aceito com sucesso',
-                'pedidos' => $pedidos,
-                'amigos' => $amigos,
-            ]);
         }
+        
+        $pedidos = $this->obterPedidosPendentes();
+        $amigos = $user->todosAmigos()->map(function ($amigo) {
+            return [
+                'nome' => $amigo->nome,
+                'username' => $amigo->username,
+            ];
+        });
+
+        return response()->json([
+            'message' => 'Pedido de amizade aceito com sucesso',
+            'pedidos' => $pedidos,
+            'amigos' => $amigos,
+        ]);
     }
 
-    // removerAmigo
     public function removerAmigo(Request $request)
     {
         $request->validate([
@@ -135,7 +142,6 @@ class AmigoController extends Controller
         return response()->json(['message' => 'Amigo removido com sucesso']);
     }
 
-
     private function obterPedidosPendentes()
     {
         $user = auth()->user();
@@ -146,7 +152,6 @@ class AmigoController extends Controller
             ->get()
             ->map(function ($pedido) {
                 return [
-                    'tipo' => 'recebido',
                     'nome' => $pedido->amigo1->nome,
                     'username' => $pedido->amigo1->username,
                 ];
@@ -158,7 +163,6 @@ class AmigoController extends Controller
             ->get()
             ->map(function ($pedido) {
                 return [
-                    'tipo' => 'enviado',
                     'nome' => $pedido->amigo2->nome,
                     'username' => $pedido->amigo2->username,
                 ];

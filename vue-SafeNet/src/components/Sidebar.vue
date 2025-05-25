@@ -93,6 +93,8 @@ const handleLinkClick = () => {
                             @click="handleLinkClick">Ranking</router-link>
                         <router-link to="/loja" class="block py-2 px-3 rounded hover:bg-gray-100"
                             @click="handleLinkClick">Loja</router-link>
+                        <router-link to="/amigos" class="block py-2 px-3 rounded hover:bg-gray-100"
+                            @click="handleLinkClick">Amigos</router-link>
                     </nav>
                 </div>
 
