@@ -29,6 +29,7 @@ class User extends Authenticatable
         'foto',
         'moedas',
         'streak',
+        'streakFeita',
         'xp',
         'vida',
         'idRank',
@@ -117,4 +118,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Jogo::class, 'estatisticas', 'idUser', 'idJogo')
             ->withPivot('numVezes', 'numAcertos');
     }
+
+    public function compra()
+    {
+        return $this->hasMany(Compra::class, 'user_id');
+    }
+    
 }

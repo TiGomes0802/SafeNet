@@ -148,6 +148,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idProduto');
+            $table->boolean('usado')->default(false);
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idProduto')->references('id')->on('produtos')->onDelete('cascade');
             $table->timestamps();

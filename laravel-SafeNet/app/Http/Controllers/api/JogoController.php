@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Jogo;
 use App\Models\Unidade;
+use Carbon\Carbon;
 
 class JogoController extends Controller
 {
@@ -248,5 +249,93 @@ class JogoController extends Controller
         return response()->json($jogos);
     }
 
+    public function processarJogosDoUsuario($user, $jogosData){
+        $xpTotal = 0;
+        $numJogosAcertados = 0;
 
+        foreach ($jogosData as $jogoData) {
+            $jogo = Jogo::find($jogoData['idJogo']);
+
+            $xpGanho = $jogoData['acertou']
+                ? $jogo->xp
+                : intval($jogo->xp * 0.5);
+
+            $xpTotal += $xpGanho;
+
+            $numJogosAcertados += ($jogoData['acertou'] ? 1 : 0);
+
+            $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
+
+            if (!$estatistica) {
+                $user->estatistica()->attach($jogo->id, [
+                    'numVezes' => 0,
+                    'numAcertos' => 0,
+                ]);
+                $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
+            }
+
+            $numVezes = $estatistica->pivot->numVezes + 1;
+            $numAcertos = $estatistica->pivot->numAcertos + ($jogoData['acertou'] ? 1 : 0);
+
+            $user->estatistica()->updateExistingPivot($jogo->id, [
+                'numVezes' => $numVezes,
+                'numAcertos' => $numAcertos,
+            ]);
+        }
+
+        $taxaAcerto = round($numJogosAcertados / count($jogosData) * 100, 2);
+
+        return [
+            'xpTotal' => $xpTotal,
+            'taxaAcerto' => $taxaAcerto,
+        ];
+    }
+
+    public function processarMissoesStreakJogos($user, $unidade, $validatedJogos, $xpTotal, $tempo){
+        $numJogosAcertados = 0;
+        $jogosAcertados = [];
+
+        foreach ($validatedJogos as $jogoData) {
+            $numJogosAcertados += ($jogoData['acertou'] ? 1 : 0);
+            $jogosAcertados[] = $jogoData['acertou'] ? 1 : 0;
+        }
+
+        $taxaAcerto = round($numJogosAcertados / count($validatedJogos) * 100, 2);
+
+        $minhaMissoesAntesAtualizar = $user->userMissao()
+            ->whereDate('data', Carbon::today())
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'missao');
+            })->get();
+
+        $missoes = (object) [
+            'unidade' => $unidade,
+            'tempo' => $tempo,
+            'jogo' => $jogosAcertados,
+            'xp' => $xpTotal,
+            'taxaAcerto' => $taxaAcerto,
+        ];
+
+        $missaoController = new MissaoController();
+        $missaoController->progressoMissao($missoes);
+
+        $minhaMissoesDepoisAtualizar = $user->userMissao()
+            ->whereDate('data', Carbon::today())
+            ->whereHas('missao', function ($query) {
+                $query->where('tipo', 'missao');
+            })->get();
+
+        return $minhaMissoesAntesAtualizar->map(function ($antes, $index) use ($minhaMissoesDepoisAtualizar) {
+            $depois = $minhaMissoesDepoisAtualizar[$index];
+
+            return [
+                'descricao' => $depois->missao->descricao,
+                'objetivo' => $depois->missao->objetivo ?? null,
+                'moedas' => $depois->missao->moedas,
+                'concluida' => $depois->concluida,
+                'progresso_antes' => $antes->progresso,
+                'progresso_depois' => $depois->progresso,
+            ];
+        });
+    }
 }
