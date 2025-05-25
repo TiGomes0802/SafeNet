@@ -13,6 +13,7 @@ class Compra extends Model
     protected $fillable = [
         'idProduto',
         'idUser',
+        'usado',
     ];
 
     public function produto()
