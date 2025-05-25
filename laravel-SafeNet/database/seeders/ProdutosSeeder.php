@@ -34,6 +34,12 @@ class ProdutosSeeder extends Seeder
                 'valor' => 10,
                 'idTipoProduto' => 2,
             ],
+            [
+                'nome' => 'Missão Extra',
+                'preco' => 30,
+                'valor' => 1,
+                'idTipoProduto' => 3,
+            ],
         ];
 
         foreach ($produtos as $produto) {
