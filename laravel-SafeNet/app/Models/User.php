@@ -78,8 +78,22 @@ class User extends Authenticatable
 
     public function todosAmigos()
     {
-        // Junta os dois lados da amizade
-        return $this->amigos1->merge($this->amigos2);
+        // Vai buscar os amigos a quem este utilizador enviou pedidos
+        $amigos1 = $this->amigo1()
+            ->where('status', 1)
+            ->with('user2')
+            ->get()
+            ->pluck('user2'); // Devolve os amigos (user2)
+
+        // Vai buscar os amigos que enviaram pedido a este utilizador
+        $amigos2 = $this->amigo2()
+            ->where('status', 1)
+            ->with('user1')
+            ->get()
+            ->pluck('user1'); // Devolve os amigos (user1)
+
+        // Junta os dois lados
+        return $amigos1->merge($amigos2);
     }
 
     public function report()
