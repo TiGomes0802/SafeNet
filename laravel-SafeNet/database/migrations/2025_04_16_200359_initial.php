@@ -26,7 +26,7 @@ return new class extends Migration {
         // Lista de Amigos (id, status, idUser1, idUser2)
         Schema::create('amigos', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->boolean('status');
             $table->unsignedBigInteger('idUser1');
             $table->unsignedBigInteger('idUser2');
             $table->foreign('idUser1')->references('id')->on('users')->onDelete('cascade');
@@ -148,6 +148,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idProduto');
+            $table->boolean('usado')->default(true);
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idProduto')->references('id')->on('produtos')->onDelete('cascade');
             $table->timestamps();

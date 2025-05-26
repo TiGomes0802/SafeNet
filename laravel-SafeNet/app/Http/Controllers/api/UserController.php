@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserMissao;
 use App\Models\Missao;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -24,8 +25,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
         ]);
-        
-        $user = User::create($validatedData);        
+
+        $user = User::create($validatedData);
 
         return response()->json($user, 201);
     }
@@ -51,11 +52,25 @@ class UserController extends Controller
 
             $user = $request->user();
             return response()->json(['coins' => $user->moedas]);
-
         } catch (\Exception $e) {
             \Log::error('Erro ao buscar moedas: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao buscar moedas'], 500);
         }
+    }
+
+    /**
+     * Ganhar moedas.
+     */
+
+    public function ganharMoedas(Request $request)
+    {
+        $user = Auth::user();
+        $quantidade = $request->input('quantidade');
+
+        $user->moedas += $quantidade;
+        $user->save();
+
+        return response()->json(['moedas' => $user->moedas]);
     }
 
     /**
@@ -67,20 +82,20 @@ class UserController extends Controller
             $nicknameFilter = $request->query('nickname', '');
 
             $users = User::where('type', 'P')
-            ->where('nickname', 'like', '%' . $nicknameFilter . '%')
-            ->orderBy('name')
-            ->select([
-                'id',
-                'name',
-                'nickname',
-                'email',
-                'type',
-                'blocked',
-                \DB::raw('(SELECT SUM(brain_coins) FROM transactions WHERE transactions.user_id = users.id) AS total_brain_coins'),
-                \DB::raw('(SELECT COUNT(*) FROM transactions WHERE transactions.user_id = users.id) AS total_transactions')
+                ->where('nickname', 'like', '%' . $nicknameFilter . '%')
+                ->orderBy('name')
+                ->select([
+                    'id',
+                    'name',
+                    'nickname',
+                    'email',
+                    'type',
+                    'blocked',
+                    \DB::raw('(SELECT SUM(brain_coins) FROM transactions WHERE transactions.user_id = users.id) AS total_brain_coins'),
+                    \DB::raw('(SELECT COUNT(*) FROM transactions WHERE transactions.user_id = users.id) AS total_transactions')
 
-            ])
-            ->paginate(10);
+                ])
+                ->paginate(10);
 
             return response()->json($users);
         } catch (\Exception $e) {
@@ -149,12 +164,12 @@ class UserController extends Controller
     /**
      * Lost 1 life.
      * @param Request $request
-    */
+     */
     public function perderVida(Request $request)
     {
         //O utilizador perdeu uma vida que esta logado perde uma vida não pode ser menor que 0
         $user = $request->user();
-        
+
         if ($user->vida > 0) {
             $user->vida -= 1;
             $user->save();
@@ -177,7 +192,7 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'O utilizador ganhou vidas com sucesso', 'vidas' => $user->vida], 200);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

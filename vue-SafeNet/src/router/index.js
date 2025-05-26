@@ -4,7 +4,7 @@ import HomeView from '../components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 import Missoes from "@/components/missoes/Missoes.vue";
-import Estatisticas from "@/components/estatisticas/Estatisticas.vue";
+import Rank from "@/components/rank/Rank.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import JogosView from "@/components/jogos/JogosView.vue";
@@ -23,6 +23,8 @@ import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
 import indexMissoes from '@/components/missoes/index.vue';
+import LojaIndex from "@/components/loja/index.vue";
+import LojaCreate from "@/components/loja/create.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,9 +55,9 @@ const router = createRouter({
       component: Missoes,
     },
     {
-      path: '/estatisticas',
-      name: 'Estatisticas',
-      component: Estatisticas,
+      path: '/rank',
+      name: 'Rank',
+      component: Rank,
     },
     {
       path: '/loja',
@@ -139,6 +141,16 @@ const router = createRouter({
       path: '/backoffice/missoes',
       name: 'indexMissoes',
       component: indexMissoes,
+    },
+    {
+      path: '/backoffice/loja',
+      name: 'LojaIndex',
+      component: LojaIndex,
+    },
+    {
+      path: '/backoffice/loja/create',
+      name: 'LojaCreate',
+      component: LojaCreate,
     },
     {
       path: '/report',

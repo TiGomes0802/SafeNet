@@ -127,8 +127,6 @@ class UnidadeController extends Controller
      */
     public function concluirUnidade(Request $request)
     {
-        // return das estatisticas do user 7 da unidade 1
-
         $validatedData = $request->validate([
             'idUnidade' => 'required|integer',
             'jogos' => 'required|array',
@@ -144,108 +142,42 @@ class UnidadeController extends Controller
 
         try {
             $user = auth()->user();
-            $xpTotal = 0;
-
-            $numJogosAcertados = 0;
-
-            $jogosAcertados = [];
-
-            foreach ($validatedData['jogos'] as $jogoData) {
-                // Garante que a ligação existe (ou cria)
-                $jogo = Jogo::find($jogoData['idJogo']);
-
-                $xpGanho = $jogoData['acertou']
-                    ? $jogo->xp
-                    : intval($jogo->xp * 0.5);
-
-                $xpTotal += $xpGanho;
-
-                // calcula a taxa de acerto so dos jogos, do foreach
-                $numJogosAcertados += ($jogoData['acertou'] ? 1 : 0);
-
-                $jogosAcertados[] = $jogoData['acertou'] ? 1 : 0;
-
-                // Verifica se já existe o registo pivot
-                $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
-
-                if (!$estatistica) {
-                    // Só cria se não existir
-                    $user->estatistica()->attach($jogo->id, [
-                        'numVezes' => 0,
-                        'numAcertos' => 0,
-                    ]);
-
-                    // Volta a ir buscar após criar
-                    $estatistica = $user->estatistica()->where('idJogo', $jogo->id)->first();
-                }
-
-                // Atualiza os valores
-                $numVezes = $estatistica->pivot->numVezes + 1;
-                $numAcertos = $estatistica->pivot->numAcertos + ($jogoData['acertou'] ? 1 : 0);
-
-                $user->estatistica()->updateExistingPivot($jogo->id, [
-                    'numVezes' => $numVezes,
-                    'numAcertos' => $numAcertos,
-                ]);
-            }
-
-            // Atualiza XP
-            $user->xp += $xpTotal;
-
-            // Verificação da streak aqui
-
-            $user->save();            
 
             // Marca a unidade como concluída
             $user->unidade()->syncWithoutDetaching([
                 $validatedData['idUnidade'] => ['status' => true],
             ]);
 
-            $taxaAcerto = round($numJogosAcertados / count($validatedData['jogos']) * 100, 2);
-            
-            $minhaMissoesAntesAtualizar = $user->userMissao()
-                ->whereDate('data', Carbon::today())
-                ->whereHas('missao', function ($query) {
-                    $query->where('tipo', 'missao');
-                })->get();
+            // Chama método do controlador dos jogos para processar os jogos
+            $jogoController = new JogoController();
+            $resultadoJogos = $jogoController->processarJogosDoUsuario($user, $validatedData['jogos']);
 
-            $missoes = (object) [
-                'unidade' => $unidade,
-                'tempo' => $validatedData['tempo'],
-                'jogo' => $jogosAcertados,
-                'xp' => $xpTotal,
-                'taxaAcerto' => $taxaAcerto,
-            ];
-                
-            $missaoController = new MissaoController();
-            $missaoController->progressoMissao($missoes);
+            // Atualiza XP e streak
+            $user->xp += $resultadoJogos['xpTotal'];
 
-            $minhaMissoesDepoisAtualizar = $user->userMissao()
-                ->whereDate('data', Carbon::today())
-                ->whereHas('missao', function ($query) {
-                    $query->where('tipo', 'missao');
-                })->get();
-                
-            $missoes = $minhaMissoesAntesAtualizar->map(function ($antes, $index) use ($minhaMissoesDepoisAtualizar) {
-                $depois = $minhaMissoesDepoisAtualizar[$index];
+            if (!$user->streakFeita) {
+                $user->streak += 1;
+                $user->streakFeita = true;
+            }
 
-                return [
-                    'descricao' => $depois->missao->descricao,
-                    'objetivo' => $depois->missao->objetivo ?? null,
-                    'moedas' => $depois->missao->moedas,
-                    'concluida' => $depois->concluida,
-                    'progresso_antes' => $antes->progresso,
-                    'progresso_depois' => $depois->progresso,
-                ];
-            });
+            $user->save();
+
+            // Processa missões (streak, jogos, etc)
+            $missoes = $jogoController->processarMissoesStreakJogos(
+                $user,
+                $unidade,
+                $validatedData['jogos'],
+                $resultadoJogos['xpTotal'],
+                $validatedData['tempo']
+            );
 
             \DB::commit();
 
             return response()->json([
                 'message' => 'Unidade terminada com sucesso',
-                'xpGanho' => $xpTotal,
+                'xpGanho' => $resultadoJogos['xpTotal'],
                 'idCurso' => $idCurso,
-                'taxaAcerto' => $taxaAcerto,
+                'taxaAcerto' => $resultadoJogos['taxaAcerto'],
                 'missoes' => $missoes,
             ]);
         } catch (\Exception $e) {

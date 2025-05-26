@@ -4,7 +4,7 @@
     import Sidebar from '@/components/Sidebar.vue';
     import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-    const storeMissao = useMissaoStore();
+const storeMissao = useMissaoStore();
 
     const loading = ref(true);
     const tempoRestante = ref('');

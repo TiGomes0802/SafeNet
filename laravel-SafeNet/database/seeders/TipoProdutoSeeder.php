@@ -15,6 +15,7 @@ class TipoProdutoSeeder extends Seeder
         $tiposProdutos = [
             ['tipo' => 'Gelo', 'imagem' => '/icons/gelo.png',],
             ['tipo' => 'Vidas', 'imagem' => '/icons/vida.png',],
+            ['tipo' => 'Missao', 'imagem' => '/icons/missao.png',],
         ];
 
         foreach ($tiposProdutos as $tipoProduto) {

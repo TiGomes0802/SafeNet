@@ -72,9 +72,8 @@ export const useAuthStore = defineStore('auth', () => {
           token.value = responseLogin.data.token;
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
           localStorage.setItem("token", token.value);
-          const responseUser = await axios.get("users/me");
+          getUser();
           storeCurso.getCursos();
-          user.value = responseUser.data.data;
           if (user.value.type == "J") {
             storeMissao.getMinhasmissoes();
             storeCoins.getCoins();
@@ -98,6 +97,23 @@ export const useAuthStore = defineStore('auth', () => {
             }
             return false;
         }
+    }
+
+    const getUser = async () => {
+      try {
+        const responseUser = await axios.get("users/me");
+        user.value = responseUser.data.data;
+        return true
+      } catch (error) {
+        clearUser();
+        storeError.setErrorMessages(
+          error.response.data.message,
+          error.response.data.errors,
+          error.response.status,
+          "Authentication Error!"
+        );
+        return false;
+      }
     }
 
     const register = async (credentials) => {
@@ -170,6 +186,7 @@ export const useAuthStore = defineStore('auth', () => {
       user,
       errorLogin,
       errorResgistar,
+      getUser,
       login,
       register,
       logout,
