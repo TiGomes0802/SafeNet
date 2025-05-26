@@ -13,7 +13,7 @@ Schedule::command('app:gerar-missoes-diarias')
     ->everyMinute();
     //->timezone('Europe/Lisbon');
 
-/*Schedule::command('app:verificar-streaks')
+Schedule::command('app:verificar-streaks')
     //->dailyAt('00:00')
     ->hourly();
-    //->timezone('Europe/Lisbon');*/
+    //->timezone('Europe/Lisbon');

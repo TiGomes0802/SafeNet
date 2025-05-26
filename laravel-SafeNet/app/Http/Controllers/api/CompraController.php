@@ -51,15 +51,16 @@ class CompraController extends Controller
 
         try {
             // Registar a compra
-            Compra::create([
+            $compra = Compra::create([
                 'idProduto' => $produto->id,
                 'idUser' => $user->id,
             ]);
 
-
             $user->moedas -= $produto->preco;
 
-            
+            if ($produto->idTipoProduto == 1) {
+                $compra->usado = false;
+            }
 
             // Se for vidas
             if ($produto->idTipoProduto == 2) {
@@ -72,6 +73,7 @@ class CompraController extends Controller
                 $servico->gerarPara($user, 1, true);
             }
 
+            $compra->save();
             $user->save();
 
             DB::commit();

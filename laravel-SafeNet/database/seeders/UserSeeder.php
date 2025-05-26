@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             #Region Clientes
             ['type' => 'J', 'nome' => 'João Silva', 'email' => 'cliente1@mail.com', 'username' => 'joao_silva', 'xp' => rand(1, 2751), 'foto' => '169_675422da5e01e.jpg'],
             ['type' => 'J', 'nome' => 'Ana Silva', 'email' => 'ana.silva@mail.com', 'username' => 'ana_silva', 'xp' => rand(1, 2751), 'foto' => '4_675422d974d6e.jpg'],
-            ['type' => 'J', 'nome' => 'Bruno Costa', 'email' => 'bruno.costa@mail.com', 'username' => 'bruno_c', 'xp' => rand(1, 2751), 'foto' => '2_675422d96fa8e.jpg'],
+            /*['type' => 'J', 'nome' => 'Bruno Costa', 'email' => 'bruno.costa@mail.com', 'username' => 'bruno_c', 'xp' => rand(1, 2751), 'foto' => '2_675422d96fa8e.jpg'],
             ['type' => 'J', 'nome' => 'Carla Mendes', 'email' => 'carla.mendes@mail.com', 'username' => 'carlam', 'xp' => rand(1, 2751), 'foto' => '6_675422d97b79a.jpg'],
             ['type' => 'J', 'nome' => 'David Rocha', 'email' => 'david.rocha@mail.com', 'username' => 'david_r', 'xp' => rand(1, 2751), 'foto' => '3_675422d972104.jpg'],
             ['type' => 'J', 'nome' => 'Eva Lopes', 'email' => 'eva.lopes@mail.com', 'username' => 'evalopes', 'xp' => rand(1, 2751), 'foto' => '23_675422d9e9e9c.jpg'],
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             ['type' => 'J', 'nome' => 'Quélia Tavares', 'email' => 'quelia.tavares@mail.com', 'username' => 'queliat', 'xp' => rand(1, 2751), 'foto' => '1_675422d96d11b.jpg'],
             ['type' => 'J', 'nome' => 'Ricardo Vieira', 'email' => 'ricardo.vieira@mail.com', 'username' => 'ricardov', 'xp' => rand(1, 2751), 'foto' => '11_675422d98863c.jpg'],
             ['type' => 'J', 'nome' => 'Sara Monteiro', 'email' => 'sara.monteiro@mail.com', 'username' => 'saram', 'xp' => rand(1, 2751), 'foto' => '9_675422d982f13.jpg'],
-            ['type' => 'J', 'nome' => 'Tiago Cruz', 'email' => 'tiago.cruz@mail.com', 'username' => 'tiagoc', 'xp' => rand(1, 2751), 'foto' => '10_675422d9859ad.jpg'],
+            ['type' => 'J', 'nome' => 'Tiago Cruz', 'email' => 'tiago.cruz@mail.com', 'username' => 'tiagoc', 'xp' => rand(1, 2751), 'foto' => '10_675422d9859ad.jpg'],*/
             #EndRegion
 
             #Region Gestores

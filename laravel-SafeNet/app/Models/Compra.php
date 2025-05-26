@@ -23,6 +23,6 @@ class Compra extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'idCompra');
+        return $this->belongsTo(User::class, 'idUser');
     }
 }
