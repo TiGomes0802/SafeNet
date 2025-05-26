@@ -1,8 +1,10 @@
 <script setup>
   import { ref, computed, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
+  import { useAuthStore } from '@/stores/auth'
 
   const router = useRouter()
+  const storeAuth = useAuthStore()
 
   const data = history.state.data
   const progressoVisivel = ref([])
@@ -30,9 +32,11 @@
     router.push({ name: 'curso', params: { idCurso: data.idCurso } })
   }
 
-  onMounted(() => {
+  onMounted(async () => {
+    await storeAuth.getUser();
+    console.log('Dados da user:')
+    console.log(storeAuth.user)
     progressoVisivel.value = missoes.value.map(m => m.progresso_antes)
-
     // Anima progressivamente até ao progresso final
     missoes.value.forEach((missao, i) => {
       const intervalo = setInterval(() => {
