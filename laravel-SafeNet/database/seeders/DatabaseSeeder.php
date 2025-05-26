@@ -24,6 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(JogosSeeder::class);
         $this->call(RespostasSeeder::class);
         $this->call(RankSeeder::class);
-        //$this->call(AmigosSeeder::class);
+        $this->call(AmigosSeeder::class);
     }
 }
