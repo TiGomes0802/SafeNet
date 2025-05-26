@@ -174,12 +174,25 @@ const handleLinkClick = () => {
             </div>
 
             <div class="border-t pt-7 space-y-6">
-                <div v-if="storeAuth.user?.type === 'J'" class="block text-sm text-gray-700 font-semibold px-3">{{
-                    storeCoins.gameCoins }} 🪙</div>
+                <div v-if="storeAuth.user?.type === 'J'" class="flex flex-row space-x-2 px-3">
+                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                        {{ storeCoins.gameCoins }} 🪙
+                    </div>
+                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                        {{ storeAuth.user.streak }} 
+                        {{ storeAuth.user.streakFeita ? '🔥' : '❄️' }}
+                    </div>
+                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                        {{ storeAuth.user.vida }} 
+                        {{ storeAuth.user.vida === 0 ? '💔' : '❤️' }}
+                    </div>
+                </div>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
-                    @click="handleLinkClick">Perfil</router-link>
+                    @click="handleLinkClick">Perfil
+                </router-link>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
-                    @click="logout">Logout</router-link>
+                    @click="logout">Logout
+                </router-link>
             </div>
         </aside>
     </transition>
