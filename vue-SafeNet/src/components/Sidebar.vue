@@ -180,11 +180,17 @@ const handleLinkClick = () => {
                     </div>
                     <div class="block text-sm text-gray-700 font-semibold px-3">
                         {{ storeAuth.user.streak }} 
-                        {{ storeAuth.user.streakFeita ? '🔥' : '❄️' }}
+                        {{ storeAuth.user.streakFeita ? '🔥' : '🌡️' }}
                     </div>
-                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                    <div class="relative group block text-sm text-gray-700 font-semibold px-3">
                         {{ storeAuth.user.vida }} 
                         {{ storeAuth.user.vida === 0 ? '💔' : '❤️' }}
+                        <span 
+                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
+                                bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
+                                opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                            {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Uma nova vida será adicionada em breve.' }}
+                        </span>
                     </div>
                 </div>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"

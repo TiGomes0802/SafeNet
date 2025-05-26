@@ -39,7 +39,7 @@ class VerificarStreaks extends Command
                 $congelar = $jogador->compra()
                     ->where('usado', false)
                     ->whereHas('produto.tipoProduto', function($query) {
-                        $query->where('tipo', 'congelar');
+                        $query->where('tipo', 'Gelo');
                     })
                     ->latest()
                     ->first();
@@ -48,7 +48,7 @@ class VerificarStreaks extends Command
                     $congelar->estado = true;
                     $congelar->save();
 
-                    $jogador->streakFeita = true;
+                    $jogador->streakFeita = false;
                     $jogador->save();
                     continue; 
                 }
