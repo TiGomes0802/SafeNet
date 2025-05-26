@@ -22,6 +22,8 @@ import CriarPaginas from "@/components/paginas/create.vue";
 import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
+import LojaIndex from "@/components/loja/index.vue";
+import LojaCreate from "@/components/loja/create.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -133,6 +135,16 @@ const router = createRouter({
       name: 'CriarPagianas',
       component: CriarPaginas,
       props: true,
+    },
+    {
+      path: '/backoffice/loja',
+      name: 'LojaIndex',
+      component: LojaIndex,
+    },
+    {
+      path: '/backoffice/loja/create',
+      name: 'LojaCreate',
+      component: LojaCreate,
     },
     {
       path: '/report',

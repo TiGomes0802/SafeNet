@@ -175,14 +175,14 @@
         </div>
 
         <!-- Vidas, Barra e butões -->
-        <div class="flex items-center justify-between mb-4">
-          <button @click="desistir = true" class="bg-gray-300 px-5 py-2 rounded font-semibold">Sair</button>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
+          <button @click="desistir = true" class="bg-gray-300 px-4 py-2 rounded font-semibold w-full md:w-auto">Sair</button>
 
           <div v-if="desistir">
             <DesistirJogo :idCurso="idCurso" :idUnidade="idUnidade"  @fecharSairJogo="desistir = false"/>
           </div>
 
-          <div class="flex items-center space-x-1">
+          <div class="flex items-center space-x-1 w-full md:w-auto">
             <span class="text-red-600 font-bold text-xl">{{ storeVidas.vidas }}</span>
             <img src="/icons/vida.png" alt="Vida" class="w-20 h-15" />
             <div class="w-130 h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -191,8 +191,9 @@
             </div>
           </div>
 
+
           <button @click="report = true"
-            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" >
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full md:w-auto" >
             Reportar pergunta
           </button>
 
@@ -201,7 +202,7 @@
           </div>        
           
           <button @click="validarResposta" :disabled="respostaSelecionada === null"
-            class="bg-gray-300 px-5 py-2 rounded font-semibold disabled:opacity-50">
+            class="bg-green-500 text-white px-4 py-2 rounded font-semibold transition-colors disabled:opacity-50 w-full md:w-auto">
             Validar
           </button>
         </div>
