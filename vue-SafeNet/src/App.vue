@@ -1,10 +1,3 @@
-<script setup>
-  import { ref, onMounted } from 'vue'
-
-  const isReady = ref(false)
-
-</script>
-
 <template>
   <main>
     <div id="app">

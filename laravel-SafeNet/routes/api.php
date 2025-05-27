@@ -11,6 +11,7 @@ use App\Http\Controllers\api\PaginaController;
 use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\api\ProdutoController;
 use App\Http\Controllers\api\MissaoController;
+use App\Http\Controllers\api\AmigoController;
 use App\Http\Controllers\api\CompraController;
 use App\Http\Controllers\api\RankController;
 use App\Http\Controllers\api\TipoProdutoController;
@@ -67,8 +68,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/tipos-produtos', [TipoProdutoController::class, 'index']);
     Route::post('/loja', [ProdutoController::class, 'create']);
 
-
-
     Route::get('/missoes', [MissaoController::class, 'index']);
     Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
     Route::get('/missoes/minhasConquistas', [MissaoController::class, 'minhasConquistas']);
@@ -76,6 +75,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/missoes/alterarEstado/{id}', [MissaoController::class, 'alterarEstadoMissao']);
 
     Route::get('/rank', [RankController::class, 'index']);
+
+    Route::get('/amigos', [AmigoController::class, 'getAmigos']);
+    Route::get('/amigos/pedidos', [AmigoController::class, 'getPedidosAmizade']);
+    Route::post('/amigos/pedido', [AmigoController::class, 'enviarPedidoAmizade']);
+    Route::post('/amigos/responderPedido', [AmigoController::class, 'responderPedidoAmizade']);
+    Route::delete('/amigos/removerAmigo', [AmigoController::class, 'removerAmigo']);
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
