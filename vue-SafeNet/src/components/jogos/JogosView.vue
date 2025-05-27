@@ -36,12 +36,15 @@
 
     // Escolha múltipla, V/F e Ordenação
     if (tipo === 1) {
+      console.log('Resposta selecionada:', respostaSelecionada.value)
+      console.log('Pergunta:', pergunta.value)
+
+      console.log(respostaSelecionada.value.certa == 1)
+
       let respostaCorreta = false;
-      for (let i = 0; i < pergunta.value.respostas.length; i++) {
-        if (respostaSelecionada.value.id == pergunta.value.respostas[i].id) {
-          respostaCorreta = true
-          break
-        }
+
+      if (respostaSelecionada.value.certa == 1) {
+        respostaCorreta = true
       }
 
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
@@ -49,6 +52,7 @@
       if (!respostaCorreta) {
         await storeVidas.perderVida()
       }
+
     } else if (tipo === 2) {
       let respostaCorreta = true
 

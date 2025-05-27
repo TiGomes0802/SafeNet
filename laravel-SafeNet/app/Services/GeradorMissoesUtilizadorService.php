@@ -18,6 +18,9 @@ class GeradorMissoesUtilizadorService
         // Contar missões NÃO concluídas do utilizador
         $missoesNaoConcluidas = UserMissao::where('idUser', $user->id)
             ->where('concluida', false)
+            ->whereHas('missao', function($query) {
+                $query->where('tipo', 'missao');
+            })
             ->count();
 
         // Limite máximo de missões em aberto

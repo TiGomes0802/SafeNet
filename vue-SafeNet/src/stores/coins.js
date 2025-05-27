@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { ref } from 'vue'
+import { useAuthStore } from './auth.js'
 
 export const useCoinsStore = defineStore('coins', () => {
-
-  const gameCoins = ref();
+  const storeAuth = useAuthStore();
 
   const getCoins = async () => {
     try {
       const response = await axios.get('users/me/coins');
-      gameCoins.value = response.data.coins;
+      storeAuth.user.moedas = response.data.coins;
     } catch (error) {
       console.error('Error in Getting Coins:', error);
     }
@@ -22,7 +22,7 @@ export const useCoinsStore = defineStore('coins', () => {
       // Colocar pop up mais bonito
       alert(response.data.message);
 
-      gameCoins.value = response.data.moedas;
+      storeAuth.getUser();
 
     } catch (error) {
       alert(error.response?.data?.message || 'Erro na compra');
@@ -36,7 +36,7 @@ export const useCoinsStore = defineStore('coins', () => {
         quantidade: quantidade
       });
 
-      gameCoins.value = response.data.moedas;
+      storeAuth.user.moedas = response.data.moedas;
 
       // Colocar pop up mais bonito
       alert(`Ganhaste ${quantidade} moedas!`);
@@ -47,7 +47,6 @@ export const useCoinsStore = defineStore('coins', () => {
   };
 
   return {
-    gameCoins,
     getCoins,
     comprarProduto,
     ganharMoedas

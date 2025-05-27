@@ -33,9 +33,11 @@ class CompraController extends Controller
         }
 
         if ($produto->idTipoProduto == 3) {
-            
             $missoesNaoConcluidas = UserMissao::where('idUser', $user->id)
                 ->where('concluida', false)
+                ->whereHas('missao', function($query) {
+                    $query->where('tipo', 'missao');
+                })
                 ->count();
 
             $limiteMaximo = 5;
