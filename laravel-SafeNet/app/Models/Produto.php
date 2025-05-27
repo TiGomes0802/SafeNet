@@ -14,6 +14,7 @@ class Produto extends Model
         'nome',
         'preco',
         'valor',
+        'estado',
         'idTipoProduto',
     ];
 

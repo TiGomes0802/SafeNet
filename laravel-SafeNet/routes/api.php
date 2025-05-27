@@ -13,6 +13,7 @@ use App\Http\Controllers\api\ProdutoController;
 use App\Http\Controllers\api\MissaoController;
 use App\Http\Controllers\api\CompraController;
 use App\Http\Controllers\api\RankController;
+use App\Http\Controllers\api\TipoProdutoController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -61,6 +62,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/loja', [ProdutoController::class, 'index']);
     Route::post('/comprar/{idProduto}', [CompraController::class, 'comprar']);
+    Route::put('/loja/{id}/alterarEstado', [ProdutoController::class, 'alterarEstado']);
+    Route::get('/tipos-produtos', [TipoProdutoController::class, 'index']);
+    Route::post('/loja', [ProdutoController::class, 'create']);
+
+
 
     Route::get('/missoes', [MissaoController::class, 'index']);
     Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);
