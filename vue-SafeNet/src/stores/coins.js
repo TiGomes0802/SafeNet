@@ -15,36 +15,41 @@ export const useCoinsStore = defineStore('coins', () => {
     }
   };
 
-  /*
   const comprarProduto = async (produtoId) => {
     try {
       const response = await axios.post(`/comprar/${produtoId}`);
 
+      // Colocar pop up mais bonito
       alert(response.data.message);
 
-      // Atualiza as moedas na store
-      coinsStore.setCoins(response.data.moedas);
-
-      // Podes também mostrar as novas vidas, se quiseres
-      // console.log('Novas vidas:', response.data.vidas)
+      gameCoins.value = response.data.moedas;
 
     } catch (error) {
       alert(error.response?.data?.message || 'Erro na compra');
     }
   };
 
-  const comprarProduto = async (produtoId) => {
-        try {
-            const response = await axios.post(`/comprar/${produtoId}`);
-            alert(response.data.message);
-        } catch (error) {
-            alert(error.response?.data?.message || 'Erro na compra');
-        }
-    };
-    */
+  // APAGAR FUTURAMENTE-------------------------------------------------------------------------------------
+  const ganharMoedas = async (quantidade) => {
+    try {
+      const response = await axios.post('/users/me/ganhar-moedas', {
+        quantidade: quantidade
+      });
+
+      gameCoins.value = response.data.moedas;
+
+      // Colocar pop up mais bonito
+      alert(`Ganhaste ${quantidade} moedas!`);
+
+    } catch (error) {
+      alert(error.response?.data?.message || 'Erro ao ganhar moedas');
+    }
+  };
 
   return {
     gameCoins,
-    getCoins
+    getCoins,
+    comprarProduto,
+    ganharMoedas
   }
 });

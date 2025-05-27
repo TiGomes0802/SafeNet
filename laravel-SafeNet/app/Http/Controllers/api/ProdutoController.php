@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Produto;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
@@ -30,5 +30,41 @@ class ProdutoController extends Controller
         }
 
         return response()->json($produto);
+    }
+
+
+    public function alterarEstado($id)
+    {
+        $produto = Produto::find($id);
+
+        if (!$produto) {
+            return response()->json(['error' => 'Produto não encontrado'], 404);
+        }
+
+        $produto->estado = $produto->estado == 1 ? 0 : 1;
+        $produto->save();
+
+
+        return response()->json(['success' => true, 'novo_estado' => $produto->estado], 200);
+    }
+
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'preco' => 'required|numeric|min:0',
+            'valor' => 'required|numeric|min:0',
+            'idTipoProduto' => 'required|exists:tipoProdutos,id',
+        ]);
+
+        $produto = Produto::create([
+            'nome' => $validated['nome'],
+            'preco' => $validated['preco'],
+            'valor' => $validated['valor'],
+            'idTipoProduto' => $validated['idTipoProduto'],
+            'estado' => 0,
+        ]);
+
+        return response()->json($produto, 201);
     }
 }

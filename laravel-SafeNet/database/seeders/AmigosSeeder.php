@@ -18,7 +18,7 @@ class AmigosSeeder extends Seeder
 
         foreach ($ids as $id1) {
             // Cada utilizador vai ter entre 2 e 4 amigos
-            $numAmigos = rand(2, 4);
+            $numAmigos = rand(11, 15);
             $possiveis = array_diff($ids, [$id1]);
 
             shuffle($possiveis);

@@ -14,6 +14,7 @@ class Produto extends Model
         'nome',
         'preco',
         'valor',
+        'estado',
         'idTipoProduto',
     ];
 
@@ -24,7 +25,7 @@ class Produto extends Model
 
     public function compra()
     {
-        return $this->belongsToMany(User::class, 'compra', 'idProduto', 'idCompra')
+        return $this->belongsToMany(User::class, 'compra', 'idProduto', 'idUser')
             ->withPivot('quantidade')
             ->withTimestamps();
     }

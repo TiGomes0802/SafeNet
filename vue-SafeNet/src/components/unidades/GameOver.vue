@@ -1,13 +1,11 @@
 <script setup>
 
 import { useRouter } from 'vue-router'
-import { useCursoStore } from '@/stores/curso'
 
 const router = useRouter()
-const storeCurso = useCursoStore()
 
-const voltarCurso = () => {
-    router.push()
+const voltarHome = () => {
+    router.push({ name: 'home' })
 }
 </script>
 
@@ -19,9 +17,9 @@ const voltarCurso = () => {
         <p class="text-2xl sm:text-3xl font-semibold text-gray-600 mb-20">Tenta novamente mais tarde ou
             adquire mais vidas na loja!</p>
 
-        <button @click="voltarCurso"
+        <button @click="voltarHome"
             class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">
-            Voltar ao Menu
+            Voltar ao Curso
         </button>
     </div>
 </template>

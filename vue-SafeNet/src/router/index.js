@@ -14,7 +14,7 @@ import CursosEdit from '@/components/cursos/edit.vue'
 import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
 import UnidadesCreate from '@/components/unidades/create.vue';
-//import UnidadesEdit from '@/components/unidades/edit.vue';
+import UnidadesEdit from '@/components/unidades/edit.vue';
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
@@ -24,6 +24,8 @@ import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
 import indexMissoes from '@/components/missoes/index.vue';
 import indexAmigos from '@/components/amigos/index.vue';
+import LojaIndex from "@/components/loja/index.vue";
+import LojaCreate from "@/components/loja/create.vue";
 
 
 const router = createRouter({
@@ -119,6 +121,12 @@ const router = createRouter({
       props: true,
     },
     {
+      path: '/backoffice/unidade/:idUnidade/edit',
+      name: 'UnidadesEdit',
+      component: UnidadesEdit,
+      props: true,
+    },
+    {
       path: '/backoffice/unidade/:idUnidade/jogos/criar',
       name: 'CriarJogo',
       component: CriarJogo,
@@ -146,6 +154,16 @@ const router = createRouter({
       path: '/backoffice/missoes',
       name: 'indexMissoes',
       component: indexMissoes,
+    },
+    {
+      path: '/backoffice/loja',
+      name: 'LojaIndex',
+      component: LojaIndex,
+    },
+    {
+      path: '/backoffice/loja/create',
+      name: 'LojaCreate',
+      component: LojaCreate,
     },
     {
       path: '/report',

@@ -14,25 +14,35 @@ class ProdutosSeeder extends Seeder
                 'nome' => 'Congelar Streak',
                 'preco' => 20,
                 'valor' => 1,
+                'estado' => 1,
                 'idTipoProduto' => 1,
             ],
             [
                 'nome' => '1 Vida Extra',
                 'preco' => 10,
                 'valor' => 1,
+                'estado' => 1,
                 'idTipoProduto' => 2,
             ],
             [
                 'nome' => '5 Vidas Extras',
                 'preco' => 45,
                 'valor' => 5,
+                'estado' => 1,
                 'idTipoProduto' => 2,
             ],
             [
                 'nome' => '10 Vidas Extras',
                 'preco' => 90,
                 'valor' => 10,
+                'estado' => 1,
                 'idTipoProduto' => 2,
+            ],
+            [
+                'nome' => 'Missão Extra',
+                'preco' => 30,
+                'valor' => 1,
+                'idTipoProduto' => 3,
             ],
         ];
 

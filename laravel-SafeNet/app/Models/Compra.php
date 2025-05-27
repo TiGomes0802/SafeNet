@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
 {
-    protected $table = 'compra';
+    protected $table = 'compras';
 
     public $timestamps = false;
 
     protected $fillable = [
         'idProduto',
         'idUser',
+        'usado',
     ];
 
     public function produto()
@@ -22,6 +23,6 @@ class Compra extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'idCompra');
+        return $this->belongsTo(User::class, 'idUser');
     }
 }

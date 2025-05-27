@@ -11,7 +11,6 @@ const cursoStore = useCursoStore()
 const paginaStore = usePaginaStore()
 
 const idUnidade = route.params.idUnidade
-const cursoId = parseInt(route.params.idCurso)
 const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
 const loading = ref(true);
 

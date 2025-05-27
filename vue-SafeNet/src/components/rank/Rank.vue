@@ -1,71 +1,148 @@
 <script setup>
-    import { ref, onMounted, computed } from 'vue';
-    import { useRankStore } from '@/stores/rank';
-    import Sidebar from '@/components/Sidebar.vue';
-    
-    const storeRank = useRankStore();
-    const loading = ref(true);
-    
-    const amigosPorPagina = 10;
-    const paginaActual = ref(1);
-    const todosOsAmigos = ref([]);
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import Sidebar from '@/components/Sidebar.vue'
+import Loading from '@/components/loading/FrontofficeLaoding.vue'
+import { useRankStore } from '@/stores/rank'
 
-    // Computar os amigos paginados conforme a página actual
-    const amigosPaginados = computed(() => {
-        const inicio = (paginaActual.value - 1) * amigosPorPagina;
-        return todosOsAmigos.value.slice(inicio, inicio + amigosPorPagina);
-    });
+const storeRank = useRankStore()
+const loading = ref(true)
+const windowWidth = ref(window.innerWidth)
+const isSidebarOpen = ref(false)
+const apiDomain = import.meta.env.VITE_API_DOMAIN
 
-    const paginaSeguinte = () => {
-        if (paginaActual.value * amigosPorPagina < todosOsAmigos.value.length) {
-            paginaActual.value++;
-        }
-    };
 
-    onMounted(() => {
-        storeRank.getRank().then(() => {
-            console.log("Dados carregados:", storeRank.rank);
-            todosOsAmigos.value = Array.isArray(storeRank.rank.amigos) ? storeRank.rank.amigos : [];
-            loading.value = false;
-        });
-    });
+const updateWidth = () => {
+  windowWidth.value = window.innerWidth
+}
+
+// Paginação amigos
+const amigosPorPagina = 10
+const paginaActual = ref(1)
+const todosOsAmigos = ref([])
+
+const amigosPaginados = computed(() => {
+  const inicio = (paginaActual.value - 1) * amigosPorPagina
+  return todosOsAmigos.value.slice(inicio, inicio + amigosPorPagina)
+})
+
+const paginaSeguinte = () => {
+  if (paginaActual.value * amigosPorPagina < todosOsAmigos.value.length) {
+    paginaActual.value++
+  }
+}
+const paginaAnterior = () => {
+  if (paginaActual.value > 1) {
+    paginaActual.value--
+  }
+}
+
+// Padding dinâmico
+const dynamicPadding = computed(() => {
+  if (windowWidth.value < 768 && !isSidebarOpen.value) {
+    return 'pl-20'
+  }
+  return 'pl-10'
+})
+
+onMounted(() => {
+  window.addEventListener('resize', updateWidth)
+  storeRank.getRank().then(() => {
+    todosOsAmigos.value = Array.isArray(storeRank.rank.amigos) ? storeRank.rank.amigos : []
+    loading.value = false
+  })
+
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWidth)
+})
 </script>
 
-
 <template>
-    <div v-if="loading">
-        <Loading />
-    </div>
-    <transition
-        name="fade"
-        appear
-        enter-active-class="transition-opacity duration-700"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100">
-        <div v-if="!loading" class="flex">
-            <Sidebar />
-            <div class="flex-1 bg-gray-200 w-screen h-screen overflow-y-scroll">
-                <h2>Ranking Mundial</h2>
-                <ul>
-                    <li v-for="jogador in storeRank.rank.mundial" :key="jogador.username">
-                        {{ jogador.posicao }} - {{ jogador.username }} ({{ jogador.rank }}) - {{ jogador.xp }}
-                    </li>
-                </ul>
+  <div v-if="loading">
+    <Loading />
+  </div>
+  <transition name="fade" appear enter-active-class="transition-opacity duration-700" enter-from-class="opacity-0" enter-to-class="opacity-100">
+    <div class="flex h-screen">
+      <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
+      <div :class="['flex-1 bg-gray-100 p-6 overflow-y-scroll transition-all duration-300', dynamicPadding]">
 
-                <h2>Ranking dos Amigos</h2>
-                <ul>
-                    <li v-for="amigo in amigosPaginados" :key="amigo.username">
-                        {{ amigo.posicao }} - {{ amigo.username }} ({{ amigo.rank }}) - {{ amigo.xp }}
-                    </li>
-                </ul>
+        <h1 class="text-3xl font-bold mb-8 text-blue-600">Rankings</h1>
 
-                <button @click="paginaActual--" :disabled="paginaActual === 1">Anterior</button>
-                <span>Página {{ paginaActual }}</span>
-                <button 
-                @click="paginaSeguinte">
-                    Seguinte
-                </button>
+        <div class="flex flex-col md:flex-row gap-6">
+
+          <!-- Global -->
+          <div class="w-full md:w-1/2">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Ranking Global 🌍</h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white shadow-md rounded-xl overflow-hidden">
+                <thead class="bg-blue-500 text-white">
+                  <tr>
+                    <th class="py-3 px-6 text-left">#</th>
+                    <th class="py-3 px-6 text-left">Utilizador</th>
+                    <th class="py-3 px-6 text-center">XP</th>
+                    <th class="py-3 px-6 text-center">Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(user, index) in storeRank.rank.mundial" :key="user.username"
+                      :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                      class="hover:bg-blue-100 transition duration-300">
+                    <td class="py-3 px-6 font-bold text-blue-600">{{ user.posicao }}</td>
+                    <td class="py-3 px-6 flex items-center gap-3">
+                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
+                      {{ user.username }}
+                    </td>
+                    <td class="py-3 px-6 text-center text-yellow-700 font-semibold">{{ user.xp }}</td>
+                    <td class="py-3 px-6 text-center">{{ user.rank }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+
+          <!-- Amigos -->
+          <div class="w-full md:w-1/2">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Ranking dos Amigos 👥</h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white shadow-md rounded-xl overflow-hidden">
+                <thead class="bg-green-500 text-white">
+                  <tr>
+                    <th class="py-3 px-6 text-left">#</th>
+                    <th class="py-3 px-6 text-left">Utilizador</th>
+                    <th class="py-3 px-6 text-center">XP</th>
+                    <th class="py-3 px-6 text-center">Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(user, index) in amigosPaginados" :key="user.username"
+                      :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                      class="hover:bg-green-100 transition duration-300">
+                    <td class="py-3 px-6 font-bold text-green-700">{{ user.posicao }}</td>
+                    <td class="py-3 px-6 flex items-center gap-3">
+                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
+                      {{ user.username }}
+                    </td>
+                    <td class="py-3 px-6 text-center text-yellow-700 font-semibold">{{ user.xp }}</td>
+                    <td class="py-3 px-6 text-center">{{ user.rank }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="flex justify-between items-center mt-4">
+                <button @click="paginaAnterior" :disabled="paginaActual === 1" class="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50">
+                  Anterior
+                </button>
+                <span class="text-gray-700">Página {{ paginaActual }}</span>
+                <button @click="paginaSeguinte" :disabled="paginaActual * amigosPorPagina >= todosOsAmigos.length" class="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50">
+                  Seguinte
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
-    </transition>
+
+      </div>
+    </div>
+  </transition>
 </template>
