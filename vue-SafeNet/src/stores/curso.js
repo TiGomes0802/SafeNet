@@ -24,7 +24,7 @@ export const useCursoStore = defineStore('cursos', () => {
         error.response.data.message,
         error.response.data.errors,
         error.response.status,
-        "Error fetching units!"
+        "Erro ao buscar cursos!"
       );
       return false;
     }
@@ -41,7 +41,7 @@ export const useCursoStore = defineStore('cursos', () => {
         error.response.data.message,
         error.response.data.errors,
         error.response.status,
-        "Error fetching course!"
+        "Erro ao buscar curso!"
       );
       return false
     }
@@ -60,7 +60,7 @@ export const useCursoStore = defineStore('cursos', () => {
         error.response.data.message,
         error.response.data.errors,
         error.response.status,
-        "Error creating course!"
+        "Erro ao criar curso!"
       );
       return false
     }
@@ -75,7 +75,7 @@ export const useCursoStore = defineStore('cursos', () => {
         error.response.data.message,
         error.response.data.errors,
         error.response.status,
-        "Error updating course!"
+        "Erro ao atualizar curso!"
       );
       return false
     }

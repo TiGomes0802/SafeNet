@@ -84,36 +84,28 @@ class UnidadeController extends Controller
     }
 
 
-
-    public function update(Request $request, $idCurso, $idUnidade)
+    public function edit(Request $request, $idUnidade)
     {
-        $curso = Curso::find($idCurso);
-        if (!$curso) {
-            return response()->json(['error' => 'Curso não encontrado'], 404);
-        }
-
-        $unidade = Unidade::where('idCurso', $idCurso)->find($idUnidade);
+        $unidade = Unidade::find($idUnidade);
         if (!$unidade) {
             return response()->json(['error' => 'Unidade não encontrada'], 404);
         }
 
-        // Valida os dados recebidos
         $validatedData = $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'ordem' => 'required|integer',
             'estado' => 'required|boolean',
         ]);
 
         $unidade->update([
             'titulo' => $validatedData['titulo'],
             'descricao' => $validatedData['descricao'],
-            'ordem' => $validatedData['ordem'],
             'estado' => $validatedData['estado'],
         ]);
 
         return response()->json($unidade);
     }
+
 
     /**
      * Uma função que recebe o xp ganho pelo utilizador, o id da unidade e os id's dos jogos e se foram respondidos corretamente ou não

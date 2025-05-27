@@ -21,11 +21,27 @@ export const useUnidadeStore = defineStore("unidade", () => {
                 e.response.data.message,
                 e.response.data.errors,
                 e.response.status,
-                "Error fetching units!"
+                "Erro ao buscar unidades!"
             );
             return false;
         }
     }
+
+    const getUnidade = async (idUnidade) => {
+        try {
+            const response = await axios.get(`/unidades/${idUnidade}`);
+            unidade.value = response.data;
+            return true;
+        } catch (e) {
+            storeError.setErrorMessages(
+                e.response?.data?.message,
+                e.response?.data?.errors,
+                e.response?.status,
+                "Erro ao carregar unidade!"
+            );
+            return false;
+        }
+    };
 
 
     const concluirUnidade = async (idUnidade, jogos) => {
@@ -44,7 +60,7 @@ export const useUnidadeStore = defineStore("unidade", () => {
                 e.response.data.message,
                 e.response.data.errors,
                 e.response.status,
-                "Error concluding unit!"
+                "Erro a concluir unidade!"
             );
             return false;
         }
@@ -62,21 +78,39 @@ export const useUnidadeStore = defineStore("unidade", () => {
             }
         } catch (e) {
             storeError.setErrorMessages(
-                e.response?.data?.message || 'Unknown error',
-                e.response?.data?.errors || [],
-                e.response?.status || 500,
-                "Error updating unit order!"
+                e.response?.data?.message,
+                e.response?.data?.errors,
+                e.response?.status,
+                "Erro a atualizar ordem das unidades!"
             );
             return false;
         }
     }
+
+    const updateUnidade = async (idUnidade, data) => {
+        try {
+            const response = await axios.put(`/unidades/${idUnidade}`, data);
+            unidade.value = response.data;
+            return true;
+        } catch (e) {
+            storeError.setErrorMessages(
+                e.response?.data?.message,
+                e.response?.data?.errors,
+                e.response?.status,
+                "Erro ao atualizar unidade!"
+            );
+            return false;
+        }
+    };
 
 
     return {
         unidades,
         unidade,
         getUnidades,
+        getUnidade,
         concluirUnidade,
         updateUnidadeOrder,
+        updateUnidade
     }
 });
