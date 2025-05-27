@@ -97,7 +97,7 @@ const onOrderChange = () => {
                                 </td>
                                 <td class="px-6 py-4">{{ element.descricao }}</td>
                                 <td class="px-6 py-4 flex justify-end space-x-2">
-                                    <router-link :to="`/backoffice/`"
+                                    <router-link :to="`/backoffice/unidade/${element.id}/edit`"
                                         class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
                                         Editar
                                     </router-link>

@@ -4,6 +4,16 @@ import axios from 'axios'
 
 export const useLojaStore = defineStore('loja', () => {
     const produtos = ref([])
+    const tiposProdutos = ref([])
+
+    const fetchTiposProdutos = async () => {
+        try {
+            const response = await axios.get('/tipos-produtos')
+            tiposProdutos.value = response.data
+        } catch (e) {
+            console.error('Erro ao buscar tipos de produtos:', e)
+        }
+    }
 
     const fetchProdutos = async () => {
         try {
@@ -48,6 +58,8 @@ export const useLojaStore = defineStore('loja', () => {
 
     return {
         produtos,
+        tiposProdutos,
+        fetchTiposProdutos,
         fetchProdutos,
         alterarEstadoProduto,
         createProduto

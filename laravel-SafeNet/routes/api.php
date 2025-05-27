@@ -13,6 +13,7 @@ use App\Http\Controllers\api\ProdutoController;
 use App\Http\Controllers\api\MissaoController;
 use App\Http\Controllers\api\CompraController;
 use App\Http\Controllers\api\RankController;
+use App\Http\Controllers\api\TipoProdutoController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -42,7 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/cursos/{idCurso}/unidades', [UnidadeController::class, 'index']);
     Route::get('/unidades/{idUnidade}', [UnidadeController::class, 'show']);
     Route::post('/cursos/{idCurso}/unidades', [UnidadeController::class, 'createUnidade']);
-    Route::put('/unidades/{idUnidade}', [UnidadeController::class, 'update']);
+    Route::put('/unidades/{idUnidade}', [UnidadeController::class, 'edit']);
+
     Route::post('/cursos/{curso}/unidades/order', [UnidadeController::class, 'atualizarOrdem']);
     Route::post('/unidade/{idUnidade}/jogo', [JogoController::class, 'createJogo']);
 
@@ -61,6 +63,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/loja', [ProdutoController::class, 'index']);
     Route::post('/comprar/{idProduto}', [CompraController::class, 'comprar']);
+    Route::put('/loja/{id}/alterarEstado', [ProdutoController::class, 'alterarEstado']);
+    Route::get('/tipos-produtos', [TipoProdutoController::class, 'index']);
+    Route::post('/loja', [ProdutoController::class, 'create']);
+
+
 
     Route::get('/missoes', [MissaoController::class, 'index']);
     Route::get('/missoes/minhasMissoes', [MissaoController::class, 'minhasMissoes']);

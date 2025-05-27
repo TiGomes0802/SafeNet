@@ -140,6 +140,7 @@ return new class extends Migration {
             $table->integer('preco');
             $table->integer('valor');
             $table->unsignedBigInteger('idTipoProduto');
+            $table->boolean('estado')->default(0);
             $table->foreign('idTipoProduto')->references('id')->on('tipoProdutos')->onDelete('cascade');
         });
 

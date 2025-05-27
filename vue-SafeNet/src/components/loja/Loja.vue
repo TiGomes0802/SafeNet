@@ -26,7 +26,9 @@ onUnmounted(() => {
     window.removeEventListener('resize', updateWidth)
 })
 
-const produtos = computed(() => lojaStore.produtos)
+
+// Apenas mostrar produtos ativos
+const produtos = computed(() => lojaStore.produtos.filter(p => p.estado === 1))
 
 const dynamicPadding = computed(() => {
     if (windowWidth.value < 768 && !isSidebarOpen.value) {

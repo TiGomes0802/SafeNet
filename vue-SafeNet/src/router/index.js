@@ -14,7 +14,7 @@ import CursosEdit from '@/components/cursos/edit.vue'
 import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
 import UnidadesCreate from '@/components/unidades/create.vue';
-//import UnidadesEdit from '@/components/unidades/edit.vue';
+import UnidadesEdit from '@/components/unidades/edit.vue';
 import CriarJogo from "@/components/jogos/create.vue";
 import EditarJogo from "@/components/jogos/editar.vue";
 import Paginas from "@/components/paginas/index.vue";
@@ -25,6 +25,7 @@ import GameOver from '@/components/unidades/GameOver.vue';
 import indexMissoes from '@/components/missoes/index.vue';
 import LojaIndex from "@/components/loja/index.vue";
 import LojaCreate from "@/components/loja/create.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -111,6 +112,12 @@ const router = createRouter({
       path: '/backoffice/cursos/:idCurso/unidades/create',
       name: 'UnidadesCreate',
       component: UnidadesCreate,
+      props: true,
+    },
+    {
+      path: '/backoffice/unidade/:idUnidade/edit',
+      name: 'UnidadesEdit',
+      component: UnidadesEdit,
       props: true,
     },
     {
