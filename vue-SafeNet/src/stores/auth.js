@@ -72,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
           token.value = responseLogin.data.token;
           axios.defaults.headers.common.Authorization = `Bearer ${token.value}`;
           localStorage.setItem("token", token.value);
-          getUser();
+          await getUser();
           storeCurso.getCursos();
           if (user.value.type == "J") {
             storeMissao.getMinhasmissoes();
