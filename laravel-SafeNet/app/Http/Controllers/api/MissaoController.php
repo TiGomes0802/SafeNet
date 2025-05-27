@@ -206,56 +206,31 @@ class MissaoController extends Controller
     }
 
     // progressaoMissaoDeAmigos
-    public function progressoMissaoDeAmigos(request $request)
+    public function progressoMissaoDeAmigos($user)
     {
-        $request->validate([
-            'idAmigo' => 'required|integer',
-        ]);
-
-        $user = auth()->user();
-
         $missoes = $user->userMissao()
             ->whereDate('data', Carbon::today())
             ->where('concluida', 0)
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');
             })
+            ->whereHas('missao.tipoMissao', function ($query) {
+                $query->where('id', '9');
+            })
             ->get();
         
-
         $conquistas = $user->userMissao()
             ->where('concluida', 0)
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'conquista');
             })
+            ->whereHas('missao.tipoMissao', function ($query) {
+                $query->where('id', '9');
+            })
             ->get();
 
         $minhasMissoes = array_merge($missoes->all(), $conquistas->all());
-
-        $amigo = User::find($request->idAmigo);
-        if (!$amigo) {
-            return response()->json(['error' => 'Usuário não encontrado'], 404);
-        }
-
-        $missoes = $amigo->userMissao()
-            ->whereDate('data', Carbon::today())
-            ->where('concluida', 0)
-            ->whereHas('missao', function ($query) {
-                $query->where('tipo', 'missao');
-            })
-            ->get();
         
-
-        $conquistas = $amigo->userMissao()
-            ->where('concluida', 0)
-            ->whereHas('missao', function ($query) {
-                $query->where('tipo', 'conquista');
-            })
-            ->get();
-
-        
-        $amigoMissoes = array_merge($missoes->all(), $conquistas->all());
-
         foreach($minhasMissoes as $missao){
             $missao->progresso += 1;
             if ($missao->progresso >= $missao->missao->objetivo) {
@@ -266,16 +241,5 @@ class MissaoController extends Controller
             $missao->save();
         }
         $user->save();
-
-        foreach($amigoMissoes as $missao){
-            $missao->progresso += 1;
-            if ($missao->progresso >= $missao->missao->objetivo) {
-                $missao->concluida = 1;
-                $missao->progresso = $missao->missao->objetivo;
-                $amigo->moedas += $missao->missao->moedas;
-            }
-            $missao->save();
-        }
-        $amigo->save();
     }
 }

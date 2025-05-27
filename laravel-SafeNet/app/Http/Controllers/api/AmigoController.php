@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\api\MissaoController;
 use App\Models\User;
 use App\Models\Amigo;
 
@@ -98,6 +99,10 @@ class AmigoController extends Controller
         }else {
             $pedido->status = 1;
             $pedido->save();
+
+            $missaoController = new MissaoController();
+            $missaoController->progressoMissaoDeAmigos($user);
+            $missaoController->progressoMissaoDeAmigos($amigo);
         }
         
         $pedidos = $this->obterPedidosPendentes();
