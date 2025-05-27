@@ -29,6 +29,7 @@ export const useCoinsStore = defineStore('coins', () => {
     }
   };
 
+  // APAGAR FUTURAMENTE-------------------------------------------------------------------------------------
   const ganharMoedas = async (quantidade) => {
     try {
       const response = await axios.post('/users/me/ganhar-moedas', {

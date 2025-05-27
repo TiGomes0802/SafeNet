@@ -103,7 +103,7 @@ const handleLinkClick = () => {
                         </router-link>
 
                         <router-link to="/rank" class="flex items-center py-2 px-3 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">  
+                            @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -114,7 +114,7 @@ const handleLinkClick = () => {
                         </router-link>
 
                         <router-link to="/loja" class="flex items-center py-2 px-3 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">                       
+                            @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -161,18 +161,21 @@ const handleLinkClick = () => {
                             <span>Estatísticas</span>
                         </router-link>
 
-                        <router-link to="/backoffice/missoes"
-                            class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
-                            @click="handleLinkClick">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z" />
-                            </svg>
 
-                            <span>Missões</span>
+
+                        <router-link to="/backoffice/missoes"
+                            class="flex items-center py-2 px-3 rounded hover:bg-gray-100" @click="handleLinkClick">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path d="M11 9a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" />
+                                <path fill-rule="evenodd"
+                                    d="M9.896 3.051a2.681 2.681 0 0 1 4.208 0c.147.186.38.282.615.255a2.681 2.681 0 0 1 2.976 2.975.681.681 0 0 0 .254.615 2.681 2.681 0 0 1 0 4.208.682.682 0 0 0-.254.615 2.681 2.681 0 0 1-2.976 2.976.681.681 0 0 0-.615.254 2.682 2.682 0 0 1-4.208 0 .681.681 0 0 0-.614-.255 2.681 2.681 0 0 1-2.976-2.975.681.681 0 0 0-.255-.615 2.681 2.681 0 0 1 0-4.208.681.681 0 0 0 .255-.615 2.681 2.681 0 0 1 2.976-2.975.681.681 0 0 0 .614-.255ZM12 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+                                    clip-rule="evenodd" />
+                                <path
+                                    d="M5.395 15.055 4.07 19a1 1 0 0 0 1.264 1.267l1.95-.65 1.144 1.707A1 1 0 0 0 10.2 21.1l1.12-3.18a4.641 4.641 0 0 1-2.515-1.208 4.667 4.667 0 0 1-3.411-1.656Zm7.269 2.867 1.12 3.177a1 1 0 0 0 1.773.224l1.144-1.707 1.95.65A1 1 0 0 0 19.915 19l-1.32-3.93a4.667 4.667 0 0 1-3.4 1.642 4.643 4.643 0 0 1-2.53 1.21Z" />
+                            </svg>
+                            <span class="ml-2">Missões</span>
                         </router-link>
 
                         <router-link to="/backoffice/reports"
@@ -222,14 +225,13 @@ const handleLinkClick = () => {
                         {{ storeCoins.gameCoins }} 🪙
                     </div>
                     <div class="block text-sm text-gray-700 font-semibold px-3">
-                        {{ storeAuth.user.streak }} 
+                        {{ storeAuth.user.streak }}
                         {{ storeAuth.user.streakFeita ? '🔥' : '🌡️' }}
                     </div>
                     <div class="relative group block text-sm text-gray-700 font-semibold px-3">
-                        {{ storeAuth.user.vida }} 
+                        {{ storeAuth.user.vida }}
                         {{ storeAuth.user.vida === 0 ? '💔' : '❤️' }}
-                        <span 
-                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
+                        <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
                                 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
                                 opacity-0 group-hover:opacity-100 transition-opacity z-50">
                             {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Uma nova vida será adicionada em breve.' }}
@@ -239,8 +241,7 @@ const handleLinkClick = () => {
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
                     @click="handleLinkClick">Perfil
                 </router-link>
-                <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
-                    @click="logout">Logout
+                <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3" @click="logout">Logout
                 </router-link>
             </div>
         </aside>
