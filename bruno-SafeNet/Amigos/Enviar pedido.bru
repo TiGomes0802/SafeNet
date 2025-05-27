@@ -1,0 +1,21 @@
+meta {
+  name: Enviar pedido
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:8081/api/amigos/pedido
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "username" : "cliente10"
+  }
+}

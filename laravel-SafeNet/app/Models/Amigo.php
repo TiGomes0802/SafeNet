@@ -14,12 +14,12 @@ class Amigo extends Model
         'idUser2',
     ];
 
-    public function user1()
+    public function amigo1()
     {
         return $this->belongsTo(User::class, 'idUser1');
     }
 
-    public function user2()
+    public function amigo2()
     {
         return $this->belongsTo(User::class, 'idUser2');
     }

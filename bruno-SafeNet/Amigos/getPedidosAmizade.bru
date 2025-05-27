@@ -1,0 +1,15 @@
+meta {
+  name: getPedidosAmizade
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8081/api/amigos/pedidos
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
