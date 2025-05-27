@@ -82,12 +82,12 @@
           <!-- Se não houver curso selecionado -->
           <div v-if="!cursoId" class="relative w-full h-full">
             <img src="@/assets/SafeNetBg.jpg" alt="SafeNet Background"
-              class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-30" />
+              class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-80" />
             <div class="relative z-10 text-center p-10">
-              <h1 class="text-3xl sm:text-4xl font-bold text-gray-600 drop-shadow-lg mb-2">
-                Bem-vindo, {{ storeAuth.user.nome }}!
+              <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 drop-shadow-lg mb-2">
+                Bem-vindo, {{ storeAuth.user.nome }}! 
               </h1>
-              <p class="text-lg text-gray-500 drop-shadow">
+              <p class="text-lg text-gray-700 drop-shadow">
                 Selecione um curso no menu lateral para começar
               </p>
             </div>
