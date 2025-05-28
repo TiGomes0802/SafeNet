@@ -27,13 +27,7 @@
     const unidadeSelecionada = unidades.value.find(u => u.id === id);
 
     if (!unidadeSelecionada) return;
-
-    console.log('Unidade selecionada:', unidadeSelecionada);
-
     storeUnidade.unidade = unidadeSelecionada;
-
-    console.log('ID Unidade:', storeUnidade.unidade.id);
-
     router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
   };
 
@@ -54,7 +48,6 @@
     await storeCurso.getCursos()
     for (const curso of storeCurso.cursos) {
       if (curso.id == cursoId.value) {
-        console.log('Curso encontrado:', curso)
         storeCurso.curso = curso
         unidades.value = curso.unidades
       }

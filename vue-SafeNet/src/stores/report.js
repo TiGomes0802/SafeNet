@@ -50,7 +50,6 @@ export const useReportStore = defineStore('report', () => {
                 mensagem: mensagem,
                 idJogo: idJogo
             }
-            console.log(report);
             const response = await axios.post("report", report);
             reports.value.push(response.data);
             return true;

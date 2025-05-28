@@ -1,44 +1,76 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useCoinsStore } from '@/stores/coins'
-import { useCursoStore } from '@/stores/curso'
+    import { ref, onMounted, onUnmounted } from 'vue'
+    import { useAuthStore } from '@/stores/auth'
+    import { useCursoStore } from '@/stores/curso'
+    import { useVidasStore } from '@/stores/vidas'
+    
+    const storeAuth = useAuthStore()
+    const storeCurso = useCursoStore()
+    const storeVidas = useVidasStore()
+    const isOpen = ref(false)
+    const tempoRestante = ref(null)
 
-const storeAuth = useAuthStore()
-const storeCoins = useCoinsStore()
-const storeCurso = useCursoStore()
-const isOpen = ref(false)
-const windowWidth = ref(window.innerWidth)
+    let intervalo = null
 
-const updateWidth = () => {
-    windowWidth.value = window.innerWidth
-}
+    const windowWidth = ref(window.innerWidth)
 
-onMounted(() => {
-    window.addEventListener('resize', updateWidth)
-    if (storeAuth.user?.type === 'J') {
-        storeCurso.getCursos()
+    const updateWidth = () => {
+        windowWidth.value = window.innerWidth
     }
-})
 
-onUnmounted(() => {
-    window.removeEventListener('resize', updateWidth)
-})
+    const calcularTempoRestante = () => {
+        if (!storeAuth.user.ultima_vida_update || storeAuth.user.vida >= 5) {
+            tempoRestante.value = null
+            return
+        }
 
-const logout = () => {
-    storeAuth.logout()
-}
+        const update = new Date(storeAuth.user.ultima_vida_update)
+        const proximaVida = new Date(update.getTime() + 5 * 60000) // 5 minutos
+        const agora = new Date()
 
-const toggleSidebar = () => {
-    isOpen.value = !isOpen.value
-}
+        const diff = proximaVida - agora
 
-// Para fechar sidebar quando o utilizador clica num link
-const handleLinkClick = () => {
-    if (windowWidth.value < 768) {
-        isOpen.value = false
+        if (diff <= 0) {
+            storeVidas.getVidas()
+            return
+        }
+
+        const minutos = Math.floor(diff / 60000)
+        const segundos = Math.floor((diff % 60000) / 1000)
+        tempoRestante.value = `${minutos}:${segundos.toString().padStart(2, '0')}`
     }
-}
+
+    onMounted(async () => {
+        window.addEventListener('resize', updateWidth)
+        if (storeAuth.user?.type === 'J') {
+            await Promise.all([
+                storeAuth.getUser(),
+                storeCurso.getCursos()
+            ])
+            calcularTempoRestante()
+            intervalo = setInterval(calcularTempoRestante, 1000)
+        }
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateWidth)
+        clearInterval(intervalo)
+    })
+
+    const logout = () => {
+        storeAuth.logout()
+    }
+
+    const toggleSidebar = () => {
+        isOpen.value = !isOpen.value
+    }
+
+    // Para fechar sidebar quando o utilizador clica num link
+    const handleLinkClick = () => {
+        if (windowWidth.value < 768) {
+            isOpen.value = false
+        }
+    }
 </script>
 
 
@@ -246,7 +278,7 @@ const handleLinkClick = () => {
                         <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
                                 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
                                 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                            {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Uma nova vida será adicionada em breve.' }}
+                            {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Nova vida em ' + tempoRestante }}
                         </span>
                     </div>
                 </div>

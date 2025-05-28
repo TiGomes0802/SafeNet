@@ -64,7 +64,6 @@ export const usePaginaStore = defineStore('pagina', () => {
 
     const updatePaginas = async (paginas, idUnidade) => {
         try {
-            console.log(paginas);
             const response = await axios.put("paginas/updatePaginas", {paginas: paginas});
             if (response.status === 200) {
                 getPaginas(idUnidade);

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('streakFeita')->default(false);
             $table->integer('xp')->default(0);
             $table->integer('vida')->default(5);
+            $table->timestamp('ultima_vida_update')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

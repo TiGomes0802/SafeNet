@@ -24,8 +24,6 @@ const ativarEdicao = () => {
 const cancelarEdicao = () => {
     edicao.value = false
     paginas.value = paginaStore.paginas
-    console.log('cancelarEdicao', paginaStore.paginas)
-    console.log('cancelarEdicao', paginas.value)
 }
 
 const desativarEdicao = () => {
@@ -58,7 +56,6 @@ watch(paginas, (novasPaginas) => {
 watch(
     () => paginaStore.paginas,
     (novasPaginas) => {
-        console.log('paginaStore.paginas foi atualizado:', novasPaginas)
         paginas.value = novasPaginas
     }
 )

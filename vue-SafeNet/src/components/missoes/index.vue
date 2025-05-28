@@ -13,7 +13,6 @@
     })
 
     function alterarEstado(id) {
-      console.log(`Alterando estado da missão/conquista com ID: ${id}`);
       storeMissao.alterarEstadoMissao(id)
     }
 
