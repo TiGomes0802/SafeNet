@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             'xp' => $this->xp,
             'vida' => $this->vida,
             'idRank' => $this->idRank,
-            'foto' => $this->foto ? '/storage/photos/' . $this->photo_filename : null,
+            'foto' => $this->foto,
         ];
     }
 }

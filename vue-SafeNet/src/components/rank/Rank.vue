@@ -1,61 +1,63 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import Sidebar from '@/components/Sidebar.vue'
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
-import { useRankStore } from '@/stores/rank'
+  import { ref, onMounted, onUnmounted, computed } from 'vue'
+  import Sidebar from '@/components/Sidebar.vue'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
+  import { useRankStore } from '@/stores/rank'
+  import { useAuthStore } from '@/stores/auth'
 
-const storeRank = useRankStore()
-const loading = ref(true)
-const windowWidth = ref(window.innerWidth)
-const isSidebarOpen = ref(false)
-const apiDomain = import.meta.env.VITE_API_DOMAIN
+  const storeAuth = useAuthStore()
+  const storeRank = useRankStore()
+  const loading = ref(true)
+  const windowWidth = ref(window.innerWidth)
+  const isSidebarOpen = ref(false)
+  const apiDomain = import.meta.env.VITE_API_DOMAIN
 
 
-const updateWidth = () => {
-  windowWidth.value = window.innerWidth
-}
-
-// Paginação amigos
-const amigosPorPagina = 10
-const paginaActual = ref(1)
-const todosOsAmigos = ref([])
-
-const amigosPaginados = computed(() => {
-  const inicio = (paginaActual.value - 1) * amigosPorPagina
-  return todosOsAmigos.value.slice(inicio, inicio + amigosPorPagina)
-})
-
-const paginaSeguinte = () => {
-  if (paginaActual.value * amigosPorPagina < todosOsAmigos.value.length) {
-    paginaActual.value++
+  const updateWidth = () => {
+    windowWidth.value = window.innerWidth
   }
-}
-const paginaAnterior = () => {
-  if (paginaActual.value > 1) {
-    paginaActual.value--
-  }
-}
 
-// Padding dinâmico
-const dynamicPadding = computed(() => {
-  if (windowWidth.value < 768 && !isSidebarOpen.value) {
-    return 'pl-20'
-  }
-  return 'pl-10'
-})
+  // Paginação amigos
+  const amigosPorPagina = 15
+  const paginaActual = ref(1)
+  const todosOsAmigos = ref([])
 
-onMounted(() => {
-  window.addEventListener('resize', updateWidth)
-  storeRank.getRank().then(() => {
-    todosOsAmigos.value = Array.isArray(storeRank.rank.amigos) ? storeRank.rank.amigos : []
-    loading.value = false
+  const amigosPaginados = computed(() => {
+    const inicio = (paginaActual.value - 1) * amigosPorPagina
+    return todosOsAmigos.value.slice(inicio, inicio + amigosPorPagina)
   })
 
-})
+  const paginaSeguinte = () => {
+    if (paginaActual.value * amigosPorPagina < todosOsAmigos.value.length) {
+      paginaActual.value++
+    }
+  }
+  const paginaAnterior = () => {
+    if (paginaActual.value > 1) {
+      paginaActual.value--
+    }
+  }
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
+  // Padding dinâmico
+  const dynamicPadding = computed(() => {
+    if (windowWidth.value < 768 && !isSidebarOpen.value) {
+      return 'pl-20'
+    }
+    return 'pl-10'
+  })
+
+  onMounted(() => {
+    window.addEventListener('resize', updateWidth)
+    storeRank.getRank().then(() => {
+      todosOsAmigos.value = Array.isArray(storeRank.rank.amigos) ? storeRank.rank.amigos : []
+      loading.value = false
+    })
+
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+  })
 </script>
 
 <template>
@@ -86,8 +88,8 @@ onUnmounted(() => {
                 </thead>
                 <tbody>
                   <tr v-for="(user, index) in storeRank.rank.mundial" :key="user.username"
-                      :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
-                      class="hover:bg-blue-100 transition duration-300">
+                      :class="[ storeAuth.user.username === user.username ? 'bg-blue-300 font-bold text-blue-800'
+                      : index % 2 === 0 ? 'bg-gray-50' : 'bg-white', 'hover:bg-blue-100 transition duration-300']">
                     <td class="py-3 px-6 font-bold text-blue-600">{{ user.posicao }}</td>
                     <td class="py-3 px-6 flex items-center gap-3">
                       <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
@@ -116,11 +118,11 @@ onUnmounted(() => {
                 </thead>
                 <tbody>
                   <tr v-for="(user, index) in amigosPaginados" :key="user.username"
-                      :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
-                      class="hover:bg-green-100 transition duration-300">
+                      :class="[ storeAuth.user.username === user.username ? 'bg-green-300 font-bold text-green-800'
+                      : index % 2 === 0 ? 'bg-gray-50' : 'bg-white', 'hover:bg-green-100 transition duration-300']">
                     <td class="py-3 px-6 font-bold text-green-700">{{ user.posicao }}</td>
                     <td class="py-3 px-6 flex items-center gap-3">
-                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
+                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-green-300 object-cover" />
                       {{ user.username }}
                     </td>
                     <td class="py-3 px-6 text-center text-yellow-700 font-semibold">{{ user.xp }}</td>
