@@ -1,23 +1,41 @@
 <script setup>
   import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
   import { useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
   import Sidebar from '@/components/Sidebar.vue'
   import UnidadeCard from '@/components/UnidadeCard.vue'
   import { useAuthStore } from '@/stores/auth'
   import { useCursoStore } from '@/stores/curso'
+  import { useUnidadeStore } from '@/stores/unidade'
   import { useMissaoStore } from '@/stores/missao'
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
   const route = useRoute()
-  const user = useAuthStore().user
-  const storeCurso = useCursoStore()
-  const storeMissao = useMissaoStore()
+  const router = useRouter()
   const storeAuth = useAuthStore()
+  const storeCurso = useCursoStore()
+  const storeUnidade = useUnidadeStore()
+  const storeMissao = useMissaoStore()
+
+  const user = storeAuth.user
 
   const cursoId = ref(route.params.idCurso)
-  const curso = ref({})
   const unidades = ref([])
   const loading = ref(true);
+
+  const irParaUnidade = (id) => {
+    const unidadeSelecionada = unidades.value.find(u => u.id === id);
+
+    if (!unidadeSelecionada) return;
+
+    console.log('Unidade selecionada:', unidadeSelecionada);
+
+    storeUnidade.unidade = unidadeSelecionada;
+
+    console.log('ID Unidade:', storeUnidade.unidade.id);
+
+    router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
+  };
 
   watch(() => route.params.idCurso, (newVal) => {
     cursoId.value = newVal
@@ -36,6 +54,7 @@
     await storeCurso.getCursos()
     for (const curso of storeCurso.cursos) {
       if (curso.id == cursoId.value) {
+        console.log('Curso encontrado:', curso)
         storeCurso.curso = curso
         unidades.value = curso.unidades
       }
@@ -95,16 +114,20 @@
 
           <!-- Se houver curso selecionado -->
           <div v-else :class="['p-6', dynamicPadding]">
-            <h1 class="text-3xl font-bold text-blue-600 mb-6">{{ curso.nome }}</h1>
+            <p class="text-3xl font-bold text-blue-600 mb-6">{{ storeCurso.curso.nome }} </p>
 
             <!-- Lista de Unidades -->
             <div class="space-y-12">
               <template v-for="unidade in unidades" :key="unidade.id">
                 <!-- Link apenas se for clicável -->
-                <router-link v-if="unidade.status !== -1" :to="`/curso/${cursoId}/unidade/${unidade.id}`"
-                  class="block transform transition duration-300 hover:scale-101 hover:shadow-lg">
-                  <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" :status="unidade.status" />
-                </router-link>
+                <div v-if="unidade.status !== -1" @click="irParaUnidade(unidade.id)"
+                  class="cursor-pointer block transform transition duration-300 hover:scale-101 hover:shadow-lg">
+                  <UnidadeCard
+                    :titulo="unidade.titulo"
+                    :descricao="unidade.descricao"
+                    :status="unidade.status"
+                  />
+                </div>
                 <!-- Apenas o card, sem link, se estiver bloqueado -->
                 <div v-else>
                   <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" :status="unidade.status" />

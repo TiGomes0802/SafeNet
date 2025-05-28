@@ -58,7 +58,7 @@ const onOrderChange = () => {
     </div>
     <transition name="fade" appear enter-active-class="transition-opacity duration-700" enter-from-class="opacity-0"
         enter-to-class="opacity-100">
-        <div class="flex min-h-screen">
+        <div class="flex h-screen">
             <Sidebar class="h-screen" />
             <main class="flex-1 p-6 bg-gray-50 overflow-auto">
                 <div class="flex justify-between items-center mb-6">

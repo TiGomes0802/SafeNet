@@ -1,22 +1,25 @@
 <script setup>
-    import { useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router'
+  import { useUnidadeStore } from '@/stores/unidade'
+  import { useCursoStore } from '@/stores/curso'
 
-    const router = useRouter()
+  const router = useRouter()
+  const storeUnidade = useUnidadeStore()
+  const storeCurso = useCursoStore()
 
-    const emit = defineEmits(['fecharSairJogo'])
+  const emit = defineEmits(['fecharSairJogo'])
 
-    const { idUnidade, idCurso } = defineProps({
-      idUnidade: Number,
-      idCurso: Number
-    })
+  const { idCurso } = defineProps({
+    idCurso: Number
+  })
 
-    console.log('ID Unidade:', idUnidade)
-    console.log('ID Curso:', idCurso)
+  console.log('ID Unidade:', storeUnidade.unidade.id)
+  console.log('ID Curso:', idCurso)
 
-    const desistirJogo = () => {
-      // Redireciona para a página de unidades
-      router.push(`/curso/${idCurso}/unidade/${idUnidade}`)
-    }
+  const desistirJogo = () => {
+    // Redireciona para a página de unidades
+    router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
+  }
 </script>
 
 <template>
