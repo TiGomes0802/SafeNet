@@ -26,6 +26,7 @@ import indexMissoes from '@/components/missoes/index.vue';
 import indexAmigos from '@/components/amigos/index.vue';
 import LojaIndex from "@/components/loja/index.vue";
 import LojaCreate from "@/components/loja/create.vue";
+import Perfil from '@/components/auth/Perfil.vue';
 
 
 const router = createRouter({
@@ -175,6 +176,11 @@ const router = createRouter({
       name: 'Sucesso',
       component: Sucesso,
     },
+    {
+      path: '/profile',
+      name: 'Perfil',
+      component: Perfil,
+    }
   ],
 })
 

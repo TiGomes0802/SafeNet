@@ -9,6 +9,7 @@ const storeCoins = useCoinsStore()
 const storeCurso = useCursoStore()
 const isOpen = ref(false)
 const windowWidth = ref(window.innerWidth)
+const apiDomain = import.meta.env.VITE_API_DOMAIN
 
 const updateWidth = () => {
     windowWidth.value = window.innerWidth
@@ -250,8 +251,14 @@ const handleLinkClick = () => {
                         </span>
                     </div>
                 </div>
-                <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3"
-                    @click="handleLinkClick">Perfil
+                <router-link to="/profile"
+                    class="flex items-center space-x-3 px-3 py-2 rounded hover:bg-gray-100 cursor-pointer"
+                    @click="handleLinkClick">
+                    <img :src="storeAuth.user?.foto
+                        ? `http://${apiDomain}/storage/photos/${storeAuth.user.foto}`
+                        : require('@/assets/avatar-default.png')" alt="Foto de perfil"
+                        class="w-9 h-9 rounded-full object-cover border" />
+                    <span class="text-sm text-gray-700 font-semibold">{{ storeAuth.user?.nome }}</span>
                 </router-link>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3" @click="logout">Logout
                 </router-link>
