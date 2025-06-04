@@ -10,11 +10,6 @@
     const isOpen = ref(false)
     const tempoRestante = ref(null)
 
-    const storeAuth = useAuthStore()
-    const storeCoins = useCoinsStore()
-    const storeCurso = useCursoStore()
-    const isOpen = ref(false)
-    const windowWidth = ref(window.innerWidth)
     const apiDomain = import.meta.env.VITE_API_DOMAIN
     let intervalo = null
 
