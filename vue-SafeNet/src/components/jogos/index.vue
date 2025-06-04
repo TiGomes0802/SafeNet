@@ -17,10 +17,6 @@ onMounted(async () => {
     loading.value = false
 });
 
-//waht para ver ficar a lista de jogos atualizada
-watch(() => jogoStore.jogos, (newJogos) => {
-    console.log('Lista de jogos atualizada:', newJogos);
-});
 </script>
 
 <template>

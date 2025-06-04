@@ -13,9 +13,6 @@
     idCurso: Number
   })
 
-  console.log('ID Unidade:', storeUnidade.unidade.id)
-  console.log('ID Curso:', idCurso)
-
   const desistirJogo = () => {
     // Redireciona para a página de unidades
     router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)

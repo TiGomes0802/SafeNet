@@ -67,7 +67,6 @@ export const useAmigoStore = defineStore('amigo', () => {
     mensagemError.value = null;
     try {
       const response = await axios.post("/amigos/pedido", { username: nome });
-      console.log(response)
       if (response.status === 200) {
         await getPedidos();
         return true;

@@ -4,6 +4,7 @@
   import draggable from 'vuedraggable'
   import { useJogoStore } from '@/stores/jogo'
   import { useVidasStore } from '@/stores/vidas'
+  import { useAuthStore } from '@/stores/auth'
   import { useUnidadeStore } from '@/stores/unidade'
   import ReportarPergunta from '@/components/reports/Report.vue'
   import DesistirJogo from '@/components/jogos/DesistirJogo.vue'
@@ -14,6 +15,7 @@
   const storeUnidade = useUnidadeStore()
   const storeJogo = useJogoStore()
   const storeVidas = useVidasStore()
+  const storeAuth = useAuthStore()
 
   const idUnidade = route.params.idUnidade
 
@@ -36,11 +38,6 @@
 
     // Escolha múltipla, V/F e Ordenação
     if (tipo === 1) {
-      console.log('Resposta selecionada:', respostaSelecionada.value)
-      console.log('Pergunta:', pergunta.value)
-
-      console.log(respostaSelecionada.value.certa == 1)
-
       let respostaCorreta = false;
 
       if (respostaSelecionada.value.certa == 1) {
@@ -87,7 +84,7 @@
       jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
     }
 
-    if (storeVidas.vidas <= 0) {
+    if (storeAuth.user.vida <= 0) {
       router.push({ name: 'gameover', params: { idUnidade } })
       return
     }
@@ -196,7 +193,7 @@
           </div>
 
           <div class="flex items-center space-x-1 w-full md:w-auto">
-            <span class="text-red-600 font-bold text-xl">{{ storeVidas.vidas }}</span>
+            <span class="text-red-600 font-bold text-xl">{{ storeAuth.user.vida }}</span>
             <img src="/icons/vida.png" alt="Vida" class="w-20 h-15" />
             <div class="w-130 h-3 bg-gray-200 rounded-full overflow-hidden">
               <div class="h-full bg-green-600" :style="{ width: ((perguntaAtual + 1) / totalPerguntas) * 100 + '%' }">

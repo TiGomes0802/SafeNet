@@ -2,19 +2,19 @@ import {ref } from 'vue'
 import {defineStore} from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
-import { useRouter } from 'vue-router'
+import { useAuthStore } from "@/stores/auth";
 
 export const useVidasStore = defineStore('vidas', () => {
-    const router = useRouter()
     const storeError = useErrorStore();
+    const storeAuth = useAuthStore();
 
-    const vidas = ref(null)
     const errorVidas = ref(null)
 
     const getVidas = async () => {
         try {
             const response = await axios.get("/users/getVidas");
-            vidas.value = response.data.vidas;
+            storeAuth.user.vida = response.data.vidas;
+            storeAuth.user.ultima_vida_update = response.data.ultimaReposicao;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
@@ -31,7 +31,8 @@ export const useVidasStore = defineStore('vidas', () => {
     const perderVida = async () => {
         try {
             const response = await axios.post("/users/perderVida");
-            vidas.value = response.data.vidas;
+            storeAuth.user.vida = response.data.vidas;
+            storeAuth.user.ultima_vida_update = response.data.ultimaReposicao;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
@@ -48,7 +49,8 @@ export const useVidasStore = defineStore('vidas', () => {
     const ganharVidas = async (vidas) => {
         try {
             const response = await axios.post("/users/ganharVidas", {numVidas:vidas});
-            vidas.value = response.data.vidas;
+            storeAuth.user.vida = response.data.vidas;
+            storeAuth.user.ultima_vida_update = response.data.ultimaReposicao;
             return true;
         } catch (e) {
             errorVidas.value = e.response.data.message;
@@ -63,7 +65,6 @@ export const useVidasStore = defineStore('vidas', () => {
     }
 
     return {
-        vidas,
         getVidas,
         perderVida,
         ganharVidas

@@ -45,7 +45,6 @@ export const useJogoStore = defineStore('jogo', () => {
 
     const createJogo = async (jogo) => {
         try {
-            console.log("Creating game with data:", { jogo });
             const response = await axios.post("unidade/" + jogo.idUnidade + "/jogo", jogo);
             if (response.status === 201) {
                 router.push({ name: "Jogos", params: { idUnidade: jogo.idUnidade } });

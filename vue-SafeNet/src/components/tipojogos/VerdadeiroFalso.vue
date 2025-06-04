@@ -75,8 +75,6 @@
             erros.value.xp = true
         }
 
-        console.log('jogo', jogo.value)
-
         // Se houver erros, não prossegue
         if (erros.value.pergunta || erros.value.respostas.length > 0 || erros?.respostaCerta?.length || erros.value.xp) {
             return
@@ -86,10 +84,8 @@
 
         
         if (props.modo === 'editar' && jogoStore.jogo) {
-            console.log('atualizando jogo', jogo.value)
             jogoStore.updateJogo(jogo.value)
         } else{
-            console.log('criando jogo', jogo.value)
             jogoStore.createJogo(jogo.value)
         }
 

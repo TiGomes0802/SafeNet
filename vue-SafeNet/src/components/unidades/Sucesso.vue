@@ -9,7 +9,6 @@
   const data = history.state.data
   const progressoVisivel = ref([])
   const missoes = ref(data?.missoes || [])
-  console.log('missões', data.missoes)
   if (!data) {
     router.push({ name: 'home' })
   }
@@ -34,8 +33,6 @@
 
   onMounted(async () => {
     await storeAuth.getUser();
-    console.log('Dados da user:')
-    console.log(storeAuth.user)
     progressoVisivel.value = missoes.value.map(m => m.progresso_antes)
     // Anima progressivamente até ao progresso final
     missoes.value.forEach((missao, i) => {

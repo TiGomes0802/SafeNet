@@ -43,7 +43,10 @@ class UserController extends Controller
      */
     public function showMe(Request $request)
     {
-        return new UserResource($request->user());
+        $user = $request->user();
+        $user->updateLives();
+
+        return new UserResource($user);
     }
 
     public function getCoins(Request $request)
@@ -158,7 +161,12 @@ class UserController extends Controller
     {
         //O utilizador que esta logado tem vidas
         $user = $request->user();
-        return response()->json(['vidas' => $user->vida], 200);
+        $user->updateLives();
+
+        return response()->json([
+            'vidas' => $user->vida,
+            'ultimaReposicao' => $user->ultima_vida_update,
+        ], 200);
     }
 
     /**
@@ -170,10 +178,23 @@ class UserController extends Controller
         //O utilizador perdeu uma vida que esta logado perde uma vida não pode ser menor que 0
         $user = $request->user();
 
+        $user->updateLives();
+
         if ($user->vida > 0) {
             $user->vida -= 1;
+            
+            if ($user->vida < 5 && $user->ultima_vida_update === null) {
+                $user->ultima_vida_update = now();
+            }
+            
             $user->save();
-            return response()->json(['message' => 'O utilizador perdeu uma vida com sucesso', 'vidas' => $user->vida], 200);
+
+            return response()->json([
+                'message' => 'O utilizador perdeu uma vida com sucesso', 
+                'vidas' => $user->vida,
+                'ultimaReposicao' => $user->ultima_vida_update,
+            ], 200);
+
         } else {
             return response()->json(['message' => 'O utilizador já não tem vidas'], 400);
         }
@@ -188,9 +209,17 @@ class UserController extends Controller
 
         //O utilizador ganhou uma vida que esta logado ganha uma vida
         $user = $request->user();
+        $user->updateLives();
         $user->vida += $request->numVidas;
+        if ($user->vida >= 5) {
+            $user->ultima_vida_update = null;
+        }
         $user->save();
-        return response()->json(['message' => 'O utilizador ganhou vidas com sucesso', 'vidas' => $user->vida], 200);
+        return response()->json([
+            'message' => 'O utilizador ganhou vidas com sucesso',
+            'vidas' => $user->vida,
+            'ultimaReposicao' => $user->ultima_vida_update,
+        ], 200);
     }
 
 

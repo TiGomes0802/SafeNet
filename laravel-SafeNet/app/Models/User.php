@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon; 
 
 class User extends Authenticatable
 {
@@ -150,5 +151,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Compra::class, 'idUser');
     }
+
+    public function updateLives()
+    {
+        $vidasMaximas = 5;
+        $minutosPorVida = 5;
+        $user = auth()->user();
+
+        if ($user->vida >= $vidasMaximas) {
+            // Já tem o máximo → não precisa contar mais
+            if ($user->ultima_vida_update !== null) {
+                $user->ultima_vida_update = null;
+                $user->save();
+            }
+            return;
+        }
+
+        $lastUpdate = $user->ultima_vida_update ? Carbon::parse($user->ultima_vida_update) : now();
+        $minutosPassaram = $lastUpdate->diffInMinutes(now());
+        $AdicionarVida = floor($minutosPassaram / $minutosPorVida);
+
+        if ($AdicionarVida > 0) {
+            $user->vida = min($vidasMaximas, $user->vida + $AdicionarVida);
+            $user->ultima_vida_update = $user->vida < $vidasMaximas
+                ? $lastUpdate->copy()->addMinutes($AdicionarVida * $minutosPorVida)
+                : now();
+            $user->save();
+        }
+    }
+
     
 }

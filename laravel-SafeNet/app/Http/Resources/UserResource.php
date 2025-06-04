@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'streakFeita' => $this->streakFeita,
             'xp' => $this->xp,
             'vida' => $this->vida,
+            'ultima_vida_update' => $this->ultima_vida_update,
             'idRank' => $this->idRank,
             'foto' => $this->foto,
         ];
