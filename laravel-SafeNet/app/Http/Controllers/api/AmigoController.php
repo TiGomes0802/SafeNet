@@ -18,6 +18,7 @@ class AmigoController extends Controller
                 'nome' => $amigo->nome,
                 'username' => $amigo->username,
                 'xp' => $amigo->xp,
+                'foto' => $amigo->foto ? asset('storage/photos/' . $amigo->foto) : null,
             ];
         });
 
@@ -58,7 +59,7 @@ class AmigoController extends Controller
             ->exists();
 
         $pedidoRecebido = $user->amigo2()
-            ->where('idUser2', $amigo->id)
+            ->where('idUser1', $amigo->id)
             ->where('status', 0)
             ->exists();
 

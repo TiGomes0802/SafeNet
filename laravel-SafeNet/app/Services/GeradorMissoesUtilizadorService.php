@@ -18,6 +18,7 @@ class GeradorMissoesUtilizadorService
         // Contar missões NÃO concluídas do utilizador
         $missoesNaoConcluidas = UserMissao::where('idUser', $user->id)
             ->where('concluida', false)
+            ->whereDate('data', $hoje)
             ->whereHas('missao', function($query) {
                 $query->where('tipo', 'missao');
             })

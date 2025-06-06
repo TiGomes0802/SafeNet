@@ -4,6 +4,7 @@
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
   import { useRankStore } from '@/stores/rank'
   import { useAuthStore } from '@/stores/auth'
+  import defaultAvatar from '@/assets/avatar-default-icon.png'
 
   const storeAuth = useAuthStore()
   const storeRank = useRankStore()
@@ -51,8 +52,8 @@
     storeRank.getRank().then(() => {
       todosOsAmigos.value = Array.isArray(storeRank.rank.amigos) ? storeRank.rank.amigos : []
       loading.value = false
+      console.log(storeRank.rank.mundial)
     })
-
   })
 
   onUnmounted(() => {
@@ -91,9 +92,13 @@
                       :class="[ storeAuth.user.username === user.username ? 'bg-blue-300 font-bold text-blue-800'
                       : index % 2 === 0 ? 'bg-gray-50' : 'bg-white', 'hover:bg-blue-100 transition duration-300']">
                     <td class="py-3 px-6 font-bold text-blue-600">{{ user.posicao }}</td>
-                    <td class="py-3 px-6 flex items-center gap-3">
-                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
-                      {{ user.username }}
+                    <td class="py-3 px-6">
+                      <router-link :to="{ name: 'Perfil', params: { username: user.username } }"
+                        class="flex items-center gap-3 text-blue-600">
+                        <img :src="user.foto || defaultAvatar"
+                            class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
+                        {{ user.username }}
+                      </router-link>
                     </td>
                     <td class="py-3 px-6 text-center text-yellow-700 font-semibold">{{ user.xp }}</td>
                     <td class="py-3 px-6 text-center">{{ user.rank }}</td>
@@ -121,9 +126,13 @@
                       :class="[ storeAuth.user.username === user.username ? 'bg-green-300 font-bold text-green-800'
                       : index % 2 === 0 ? 'bg-gray-50' : 'bg-white', 'hover:bg-green-100 transition duration-300']">
                     <td class="py-3 px-6 font-bold text-green-700">{{ user.posicao }}</td>
-                    <td class="py-3 px-6 flex items-center gap-3">
-                      <img :src="`http://${apiDomain}/storage/photos/${user.foto}`" class="w-10 h-10 rounded-full border-2 border-green-300 object-cover" />
-                      {{ user.username }}
+                    <td class="py-3 px-6">
+                      <router-link :to="{ name: 'Perfil', params: { username: user.username } }"
+                        class="flex items-center gap-3">
+                        <img :src="user.foto || defaultAvatar"
+                            class="w-10 h-10 rounded-full border-2 border-green-300 object-cover" />
+                        {{ user.username }}
+                      </router-link>
                     </td>
                     <td class="py-3 px-6 text-center text-yellow-700 font-semibold">{{ user.xp }}</td>
                     <td class="py-3 px-6 text-center">{{ user.rank }}</td>

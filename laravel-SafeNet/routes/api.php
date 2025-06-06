@@ -19,6 +19,7 @@ use App\Http\Controllers\api\TipoProdutoController;
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::post('/auth/refreshtoken', [AuthController::class, 'refreshToken']);
+    Route::put('/auth/updateProfile', [AuthController::class, 'updateMe']);
 
     Route::get('/users/me', [UserController::class, 'showMe']);
     Route::get('/users/me/coins', [UserController::class, 'getCoins']);
@@ -26,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/users/perderVida', [UserController::class, 'perderVida']);
     Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
     Route::get('/users/getVidas', [UserController::class, 'getVidas']);
+    Route::get('/users/username/{username}', [UserController::class, 'getUserByUsername']);
 
     Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'index']);
 

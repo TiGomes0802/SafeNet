@@ -12,7 +12,8 @@ const credentials = ref({
     nome: '',
     username: '',
     email: '',
-    password: ''
+    password: '',
+    type: 'J'
 })
 
 const register = async () => {

@@ -12,8 +12,11 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use App\Services\GeradorMissoesUtilizadorService;
+use App\Models\User;
+use App\Models\Missao;
+use App\Models\UserMissao;
 
 class AuthController extends Controller
 {
@@ -80,8 +83,8 @@ class AuthController extends Controller
         $user = new User();
         $user->fill($request->validated());
         $user->save();
-
-        if ($user->type == 'P') {
+        
+        if ($user->type == 'J') {
             $conquistas = Missao::where('tipo', 'conquista')->get();
 
             foreach ($conquistas as $conquista) {
@@ -99,31 +102,68 @@ class AuthController extends Controller
         return new UserResource($user);
     }
 
-    public function updateProfile(UpdateUserRequest $request)
+    public function updateMe(Request $request)
     {
-        $user = Auth::user();
-        $data = $request->only(['nome', 'email', 'username', 'password', 'confirmPassword']);
+        $user = auth()->user();
 
-        if (!empty($data['password'])) {
-            if (empty($data['confirmPassword']) || $data['password'] !== $data['confirmPassword']) {
-                return response()->json([
-                    'message' => 'Password and confirm password must match and both are required when updating password.',
-                    'errors' => [
-                        'confirmPassword' => ['Password and confirm password must match and both are required when updating password.']
-                    ]
-                ], 400);
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'password' => 'nullable|string|confirmed',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $fotoAntiga = $user->foto;
+
+        if ($request->hasFile('foto')) {
+            // Apagar todas as fotos antigas com o prefixo do username
+            $ficheiros = Storage::disk('public')->files('photos');
+            $prefixo = $user->username . '_update_';
+
+            foreach ($ficheiros as $ficheiro) {
+                if (str_starts_with(basename($ficheiro), $prefixo)) {
+                    Storage::disk('public')->delete($ficheiro);
+                }
             }
 
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
-            unset($data['confirmPassword']);
+            // Criar novo nome único com timestamp
+            $extensao = $request->file('foto')->getClientOriginalExtension();
+            $timestamp = now()->timestamp;
+            $nomeFoto = $request->username . '_update_' . $timestamp . '.' . $extensao;
+
+            $request->file('foto')->storeAs('photos', $nomeFoto, 'public');
+
+            $user->foto = $nomeFoto;
+        } elseif ($fotoAntiga && $request->username !== $user->username) {
+            // Renomear se mudou o username mas manteve a foto
+            $partes = explode('_update_', $fotoAntiga);
+            if (count($partes) === 2) {
+                $extensao = pathinfo($fotoAntiga, PATHINFO_EXTENSION);
+                $novoNome = $request->username . '_update_' . pathinfo($fotoAntiga, PATHINFO_FILENAME, PATHINFO_EXTENSION) . '.' . $extensao;
+
+                if (Storage::disk('public')->exists('photos/' . $fotoAntiga)) {
+                    Storage::disk('public')->move('photos/' . $fotoAntiga, 'photos/' . $novoNome);
+                    $user->foto = $novoNome;
+                }
+            }
         }
 
-        $user->update($data);
+        // Campos normais
+        $user->nome = $request->nome;
+        $user->username = $request->username;
 
-        return new UserResource($user);
-    }  
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Perfil atualizado com sucesso.',
+            'data' => new UserResource($user)
+        ]);
+    }
+
 
     /**
      * Delete the user account

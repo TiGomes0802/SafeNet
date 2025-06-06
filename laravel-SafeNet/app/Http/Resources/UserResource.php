@@ -26,8 +26,8 @@ class UserResource extends JsonResource
             'xp' => $this->xp,
             'vida' => $this->vida,
             'ultima_vida_update' => $this->ultima_vida_update,
-            'idRank' => $this->idRank,
-            'foto' => $this->foto,
+            'rank' => $this->rank ?? null,
+            'foto' => $this->foto ? asset('storage/photos/' . $this->foto) : null,
         ];
     }
 }

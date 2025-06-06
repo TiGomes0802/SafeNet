@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserMissao;
 use App\Models\Missao;
+use App\Models\Rank;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -45,6 +46,10 @@ class UserController extends Controller
     {
         $user = $request->user();
         $user->updateLives();
+
+        $user->rank = Rank::where('minimo', '<=', $user->xp)
+            ->where('maximo', '>=', $user->xp)
+            ->value('nome');
 
         return new UserResource($user);
     }
@@ -231,5 +236,48 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
+    }
+
+    /**
+     * Get user by username.
+     */
+    public function getUserByUsername($username, Request $request)
+    {
+        if (!$username) {
+            return response()->json(['error' => 'Username is required'], 400);
+        }
+
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $authUser = $request->user();
+
+        $user->isFriend = $authUser->todosAmigos()->contains('id', $user->id);;
+
+        $pedidoEnviado = $authUser->amigo1()
+            ->where('idUser2', $user->id)
+            ->where('status', 0)
+            ->exists();
+        
+        $pedidoRecebido = $authUser->amigo2()
+            ->where('idUser1', $user->id)
+            ->where('status', 0)
+            ->exists();
+
+        $user->isHaveRequest = ($pedidoEnviado || $pedidoRecebido);
+
+        $user->rank = Rank::where('minimo', '<=', $user->xp)
+            ->where('maximo', '>=', $user->xp)
+            ->value('nome');
+
+        $user->foto = $user->foto ? asset('storage/photos/' . $user->foto) : null;
+
+        // Escolher os campos que quer retornar
+        $user->makeHidden(['password', 'remember_token', 'email_verified_at', 'created_at', 'updated_at', 'email_verified_at', 'moedas', 'streakFeita', 'vida', 'ultima_vida_update', 'deleted_at', 'idRank']);
+        
+        return $user;
     }
 }

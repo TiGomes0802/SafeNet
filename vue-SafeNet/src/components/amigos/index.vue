@@ -184,7 +184,14 @@
                   </thead>
                   <tbody>
                     <tr v-for="(amigo, index) in storeAmigo.amigos" :key="amigo.id" class="border-t hover:bg-gray-50">
-                      <td class="px-6 py-4">{{ amigo.nome }}</td>
+                      <td class="px-6 py-4">
+                        <router-link :to="{ name: 'Perfil', params: { username: amigo.username } }"
+                          class="flex items-center gap-3">
+                          <img :src="amigo.foto || defaultAvatar"
+                              class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
+                          {{ amigo.username }}
+                      </router-link>
+                      </td>
                       <td class="px-6 py-4">{{ amigo.username }}</td>
                       <td class="px-6 py-4">{{ amigo.xp }}</td>
                       <td class="px-6 py-4 justify-end space-x-2">

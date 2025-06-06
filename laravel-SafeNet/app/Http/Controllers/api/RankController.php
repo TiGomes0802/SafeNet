@@ -35,7 +35,7 @@ class RankController extends Controller
             return [
                 'posicao' => $posicoes[$u->id],
                 'username' => $u->username,
-                'foto' => $u->foto,
+                'foto' => $u->foto ? asset('storage/photos/' . $u->foto) : null,
                 'rank' => $getRank($u->xp),
                 'xp' => $u->xp,
             ];
@@ -51,7 +51,7 @@ class RankController extends Controller
                 return [
                     'posicao' => $posicoes[$amigo->id],
                     'username' => $amigo->username,
-                    'foto' => $amigo->foto,
+                    'foto' => $amigo->foto ? asset('storage/photos/' . $amigo->foto) : null,
                     'rank' => $getRank($amigo->xp),
                     'xp' => $amigo->xp,
                 ];

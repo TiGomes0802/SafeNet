@@ -1,0 +1,15 @@
+meta {
+  name: GetByUsername
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:8081/api/users/username/ana_silva
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

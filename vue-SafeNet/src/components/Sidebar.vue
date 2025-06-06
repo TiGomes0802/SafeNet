@@ -3,6 +3,7 @@
     import { useAuthStore } from '@/stores/auth'
     import { useCursoStore } from '@/stores/curso'
     import { useVidasStore } from '@/stores/vidas'
+    import defaultAvatar from '@/assets/avatar-default-icon.png'
     
     const storeAuth = useAuthStore()
     const storeCurso = useCursoStore()
@@ -283,14 +284,12 @@
                         </span>
                     </div>
                 </div>
-                <router-link to="/profile"
+                <router-link :to="`/profile/${storeAuth.user.username}`"
                     class="flex items-center space-x-3 px-3 py-2 rounded hover:bg-gray-100 cursor-pointer"
                     @click="handleLinkClick">
-                    <img :src="storeAuth.user?.foto
-                        ? `http://${apiDomain}/storage/photos/${storeAuth.user.foto}`
-                        : require('@/assets/avatar-default.png')" alt="Foto de perfil"
+                    <img :src= "storeAuth.user?.foto || defaultAvatar" alt="Foto de perfil"
                         class="w-9 h-9 rounded-full object-cover border" />
-                    <span class="text-sm text-gray-700 font-semibold">{{ storeAuth.user?.nome }}</span>
+                    <span class="text-sm text-gray-700 font-semibold">{{ storeAuth.user?.username }}</span>
                 </router-link>
                 <router-link to="#" class="block text-sm text-gray-500 hover:underline px-3" @click="logout">Logout
                 </router-link>

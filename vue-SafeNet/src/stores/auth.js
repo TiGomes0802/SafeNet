@@ -1,5 +1,5 @@
-import {ref } from 'vue'
-import {defineStore} from 'pinia'
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useErrorStore } from "@/stores/error";
@@ -182,6 +182,42 @@ export const useAuthStore = defineStore('auth', () => {
       return false;
     };
 
+    // Função para obter um usuário pelo nome de usuário
+    const getUserByUsername = async (username) => {
+      try {
+        const response = await axios.get(`users/username/${username}`);
+        return response.data;
+      }
+      catch (error) {
+        storeError.setErrorMessages(
+          error.response.data.message,
+          error.response.data.errors,
+          error.response.status,
+          "User Retrieval Error!"
+        );
+        return null;
+      }
+    }
+
+    const atualizarPerfil = async (userData) => {
+      storeError.resetMessages();
+      try {
+        userData.append('_method', 'PUT') // simula um PUT
+        const response = await axios.post("auth/updateProfile", userData)
+        console.log(response.data.data);
+        user.value = response.data.data;
+        return true;
+      } catch (e) {
+        storeError.setErrorMessages(
+          e.response.data.message,
+          e.response.data.errors,
+          e.response.status,
+          "Profile Update Error!"
+        );
+        return false;
+      }
+    }
+
     return {
       user,
       errorLogin,
@@ -190,6 +226,8 @@ export const useAuthStore = defineStore('auth', () => {
       login,
       register,
       logout,
-      restoreToken
+      restoreToken,
+      getUserByUsername,
+      atualizarPerfil,
     };
 });

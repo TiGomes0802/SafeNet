@@ -27,7 +27,7 @@ import indexAmigos from '@/components/amigos/index.vue';
 import LojaIndex from "@/components/loja/index.vue";
 import LojaCreate from "@/components/loja/create.vue";
 import Perfil from '@/components/auth/Perfil.vue';
-
+import UpdatePerfil from '@/components/auth/UpdatePerfil.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -109,7 +109,27 @@ const router = createRouter({
       name: 'Unidade',
       component: UnidadeView,
       props: true,
-    },    
+    },
+    {
+      path: '/report',
+      name: 'Report',
+      component: Report,
+    },
+    {
+      path: '/sucesso',
+      name: 'Sucesso',
+      component: Sucesso,
+    },
+    {
+      path: '/profile/:username',
+      name: 'Perfil',
+      component: Perfil,
+    },
+    {
+      path: '/profile/update',
+      name: 'UpdatePerfil',
+      component: UpdatePerfil,
+    },
     {
       path: '/backoffice/cursos/:idCurso/unidades',
       name: 'UnidadesCurso',
@@ -147,7 +167,7 @@ const router = createRouter({
     },
     {
       path: '/backoffice/unidade/:idUnidade/paginas/criar',
-      name: 'CriarPagianas',
+      name: 'CriarPaginas',
       component: CriarPaginas,
       props: true,
     },
@@ -166,21 +186,6 @@ const router = createRouter({
       name: 'LojaCreate',
       component: LojaCreate,
     },
-    {
-      path: '/report',
-      name: 'Report',
-      component: Report,
-    },
-    {
-      path: '/sucesso',
-      name: 'Sucesso',
-      component: Sucesso,
-    },
-    {
-      path: '/profile',
-      name: 'Perfil',
-      component: Perfil,
-    }
   ],
 })
 
