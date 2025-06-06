@@ -48,7 +48,7 @@ onMounted(async () => {
           <div>
             <div class="flex flex-col pb-4 sm:pb-0 sm:flex-row">
               <h1 class="text-2xl font-bold text-blue-600 mb-4">
-                {{ cursoStore.curso.nome }} | Unidade: {{ idUnidade }}
+                {{ cursoStore.curso?.nome }} | Unidade: {{ idUnidade }}
               </h1>
               <div class="sm:Justify-end flex-grow text-right">
                 <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"
