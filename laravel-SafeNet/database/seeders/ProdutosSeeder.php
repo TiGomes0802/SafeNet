@@ -42,6 +42,7 @@ class ProdutosSeeder extends Seeder
                 'nome' => 'Missão Extra',
                 'preco' => 30,
                 'valor' => 1,
+                'estado' => 1,
                 'idTipoProduto' => 3,
             ],
         ];
