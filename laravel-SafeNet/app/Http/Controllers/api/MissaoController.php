@@ -106,7 +106,7 @@ class MissaoController extends Controller
         foreach($userMissoes as $missao){
             if($missao->missao->idTipoMissao == 1){
                 // Streak
-                $missao->progresso += $user->streak;
+                $missao->progresso = $user->streak;
                 if ($missao->progresso >= $missao->missao->objetivo) {
                     $missao->concluida = 1;
                     $missao->progresso = $missao->missao->objetivo;
