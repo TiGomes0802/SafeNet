@@ -3,6 +3,7 @@
     import { useAmigoStore } from '@/stores/amigo';
     import Loading from '@/components/loading/FrontofficeLaoding.vue'
     import Sidebar from '@/components/Sidebar.vue';
+    import defaultAvatar from '@/assets/avatar-default-icon.png'
 
     const storeAmigo = useAmigoStore();
 
@@ -187,7 +188,7 @@
                       <td class="px-6 py-4">
                         <router-link :to="{ name: 'Perfil', params: { username: amigo.username } }"
                           class="flex items-center gap-3">
-                          <img :src="amigo.foto || defaultAvatar"
+                          <img :src="amigo.foto || defaultAvatar" alt="Foto de perfil"
                               class="w-10 h-10 rounded-full border-2 border-blue-300 object-cover" />
                           {{ amigo.username }}
                       </router-link>
