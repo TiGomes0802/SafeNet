@@ -139,6 +139,8 @@ return new class extends Migration {
             $table->string('nome');
             $table->integer('preco');
             $table->integer('valor');
+            $table->string('imagem');
+            $table->text('descricao');
             $table->unsignedBigInteger('idTipoProduto');
             $table->boolean('estado')->default(0);
             $table->foreign('idTipoProduto')->references('id')->on('tipoProdutos')->onDelete('cascade');
