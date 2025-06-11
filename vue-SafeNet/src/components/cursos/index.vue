@@ -1,17 +1,17 @@
 <script setup>
-import { onMounted } from 'vue'
-import { useCursoStore } from '@/stores/curso'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+  import { onMounted } from 'vue'
+  import { useCursoStore } from '@/stores/curso'
+  import Sidebar from '@/components/SideBar/Sidebar.vue'
 
-const storeCurso = useCursoStore()
+  const storeCurso = useCursoStore()
 
-onMounted(async () => {
-  storeCurso.getCursos()
-})
+  onMounted(async () => {
+    await storeCurso.getCursos()
+  })
 
-function alterarEstado(id) {
-  storeCurso.alterarEstadoCurso(id)
-}
+  function alterarEstado(id) {
+    storeCurso.alterarEstadoCurso(id)
+  }
 
 </script>
 
