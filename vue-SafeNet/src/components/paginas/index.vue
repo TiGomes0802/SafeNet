@@ -1,76 +1,74 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { usePaginaStore } from '@/stores/pagina'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
-import CreatePagina from '@/components/paginas/create.vue'
-import Loading from '@/components/loading/BackofficeLoading.vue'
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
+    import { ref, onMounted, watch } from 'vue'
+    import { usePaginaStore } from '@/stores/pagina'
+    import Sidebar from '@/components/SideBar/Sidebar.vue'
+    import CreatePagina from '@/components/paginas/create.vue'
+    import Loading from '@/components/loading/BackofficeLoading.vue'
+    import { QuillEditor } from '@vueup/vue-quill'
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
-const paginaStore = usePaginaStore()
+    const paginaStore = usePaginaStore()
 
-const paginas = ref([])
-const edicao = ref(false)
-const paginasAnteriores = ref([])
+    const paginas = ref([])
+    const edicao = ref(false)
+    const paginasAnteriores = ref([])
 
-const props = defineProps(['idUnidade'])
+    const props = defineProps(['idUnidade'])
 
-const loading = ref(true);
+    const loading = ref(true);
 
-const ativarEdicao = () => {
-    edicao.value = true
-}
-
-const cancelarEdicao = () => {
-    edicao.value = false
-    paginas.value = paginaStore.paginas
-}
-
-const desativarEdicao = () => {
-    edicao.value = false
-    paginaStore.updatePaginas(paginas.value, props.idUnidade)
-}
-
-watch(paginas, (novasPaginas) => {
-    novasPaginas.forEach((pagina, i) => {
-        const ordemAntiga = paginasAnteriores.value[i]?.ordem
-        const ordemNova = pagina.ordem
-
-        // Verifica se houve mudança na ordem
-        if (ordemAntiga !== ordemNova) {
-            // Encontrar a página com a ordem nova para trocar
-            const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
-
-            if (paginaEmConflito) {
-                // Troca as ordens entre páginas
-                paginaEmConflito.ordem = ordemAntiga
-            }
-        }
-    })
-
-    // Atualiza a cópia profunda após as mudanças
-    paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
-}, { deep: true })
-
-
-watch(
-    () => paginaStore.paginas,
-    (novasPaginas) => {
-        paginas.value = novasPaginas
+    const ativarEdicao = () => {
+        edicao.value = true
     }
-)
 
-onMounted(async () => {
-    await paginaStore.getPaginas(props.idUnidade);
-    paginas.value = JSON.parse(JSON.stringify(paginaStore.paginas))
-    paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
-    loading.value = false
-});
+    const cancelarEdicao = () => {
+        edicao.value = false
+        paginas.value = paginaStore.paginas
+    }
 
+    const desativarEdicao = () => {
+        edicao.value = false
+        paginaStore.updatePaginas(paginas.value, props.idUnidade)
+    }
+
+    watch(paginas, (novasPaginas) => {
+        novasPaginas.forEach((pagina, i) => {
+            const ordemAntiga = paginasAnteriores.value[i]?.ordem
+            const ordemNova = pagina.ordem
+
+            // Verifica se houve mudança na ordem
+            if (ordemAntiga !== ordemNova) {
+                // Encontrar a página com a ordem nova para trocar
+                const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
+
+                if (paginaEmConflito) {
+                    // Troca as ordens entre páginas
+                    paginaEmConflito.ordem = ordemAntiga
+                }
+            }
+        })
+
+        // Atualiza a cópia profunda após as mudanças
+        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
+    }, { deep: true })
+
+
+    watch(
+        () => paginaStore.paginas,
+        (novasPaginas) => {
+            paginas.value = novasPaginas
+        }
+    )
+
+    onMounted(async () => {
+        await paginaStore.getPaginas(props.idUnidade);
+        paginas.value = JSON.parse(JSON.stringify(paginaStore.paginas))
+        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
+        loading.value = false
+    });
 </script>
 
 <template>
-
     <div v-if="loading">
         <Loading />
     </div>
@@ -103,14 +101,14 @@ onMounted(async () => {
                     <div v-else class="flex justify-center mb-3">
                         <p class="text-lg"> Ainda não foram criadas páginas para esta unidade </p>
                     </div>
-                    <div v-if="edicao" class="flex flex-col gap-y-7 px-5 pt-3">
+                    <div v-if="edicao" class="flex flex-col gap-y-7 px-5 pt-3 pb-10">
                         <div v-for="(pagina, index) in paginas" :key="pagina.id">
                             <div class="bg-white p-4 rounded-lg shadow-xl flex flex-col gap-y-1">
                                 <p class="text-2xl">{{ index + 1 }}º Página</p>
                                 <div class="flex justify-between items-center gap-x-2 mb-3">
                                     <div class="mb-4 w-9/10">
                                         <label class="block font-semibold mb-1">Descrição:</label>
-                                        <QuillEditor v-model:content="descricao" content-type="html"
+                                        <QuillEditor v-model:content="pagina.descricao" content-type="html"
                                             toolbar="essentials" />
                                     </div>
                                     <div class="mb-4 w-1/10 flex justify-center items-center">
