@@ -101,7 +101,7 @@
                     <h1 class="text-3xl font-bold text-blue-700 mb-2">{{ user?.nome }}</h1>
                     <p class="text-lg text-gray-600 mb-4">@{{ user?.username }}</p>
                     <template v-if="user?.type === 'J'">
-                        <div class="flex flex-wrap gap-6 justify-center mb-6">
+                        <div class="flex flex-wrap gap-8 justify-center mb-6">
                             <div class="flex flex-col items-center">
                                 <span class="text-xl font-semibold text-yellow-600">{{ user?.xp }}</span>
                                 <span class="text-gray-500 text-sm">XP</span>
@@ -111,8 +111,12 @@
                                 <span class="text-gray-500 text-sm">Rank</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <span class="text-xl font-semibold text-orange-600">{{ user?.streak }}</span>
+                                <span class="text-xl font-semibold text-orange-600">{{ user?.streak }} {{ user.streakFeita ? '🔥' : '🌡️' }}</span>
                                 <span class="text-gray-500 text-sm">Streak</span>
+                            </div>
+                            <div v-if="storeAuth.user?.username === route.params.username" class="flex flex-col items-center">
+                                <span class="text-xl font-semibold text-blue-600">{{ user?.congelar }} ❄️</span>
+                                <span class="text-gray-500 text-sm">Congelar</span>
                             </div>
                         </div>
                     </template>
