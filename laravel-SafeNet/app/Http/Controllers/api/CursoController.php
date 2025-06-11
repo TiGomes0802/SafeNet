@@ -43,12 +43,40 @@ class CursoController extends Controller
 
     public function show($idCurso)
     {
-        $curso = Curso::with('unidades')->find($idCurso);
+        if(auth()->user()->type == 'J') {
+            $curso = Curso::with('unidades')->findOrFail($idCurso);
 
-        if (!$curso) {
-            return response()->json(['error' => 'Curso não encontrado'], 404);
+            if(!$curso) {
+                return response()->json(['error' => 'Curso não encontrado'], 404);
+            }
+
+            if($curso->estado == 0) {
+                return response()->json(['error' => 'Curso não está ativo'], 403);
+            }
+
+            $primeiraPorFazerMarcada = false;
+            foreach ($curso->unidades as $unidade) {
+                // Verifica na pivot se a unidade foi feita
+                $pivot = auth()->user()->unidade()->where('idUnidade', $unidade->id)->first();
+
+                if ($pivot && $pivot->pivot->status) {
+                    $unidade->status = 1;
+                } else {
+                    if (!$primeiraPorFazerMarcada) {
+                        $unidade->status = 0;
+                        $primeiraPorFazerMarcada = true;
+                    } else {
+                        $unidade->status = -1;
+                    }
+                }
+            }
+
+
+            return response()->json($curso);
         }
 
+        $curso = Curso::with('unidades')->findOrFail($idCurso);
+        
         return response()->json($curso);
     }
 

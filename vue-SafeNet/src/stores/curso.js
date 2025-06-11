@@ -33,10 +33,15 @@ export const useCursoStore = defineStore('cursos', () => {
   const getCurso = async (id) => {
     try {
       const response = await axios.get(`/cursos/${id}`)
-      curso.value = response.data
-      storeUnidade.unidades = response.data.unidades
-      return true
+      if (response.status == 200) {
+        curso.value = response.data
+        storeUnidade.unidades = response.data.unidades
+        return true
+      }
     } catch (error) {
+      if (error.response.status === 403) {
+        router.push({ name: "home" });
+      }
       storeError.setErrorMessages(
         error.response.data.message,
         error.response.data.errors,

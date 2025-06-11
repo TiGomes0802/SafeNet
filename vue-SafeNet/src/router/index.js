@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from "@/stores/auth";
-import HomeView from '../components/HomeView.vue'
+import HomeView from '@/components/HomeView.vue'
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 import Missoes from "@/components/missoes/Missoes.vue";
@@ -31,7 +31,7 @@ import Perfil from '@/components/auth/Perfil.vue';
 import UpdatePerfil from '@/components/auth/UpdatePerfil.vue';
 import Users from '@/components/users/index.vue';
 import UsersCreate from '@/components/users/create.vue';
-
+import CursoView from '@/components/cursos/view.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,12 +39,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView, // Terá que ser um bem-vindo ou assim, para não mostrar unidades à toa
+      component: HomeView,
     },
     {
       path: '/curso/:idCurso',
       name: 'curso',
-      component: HomeView
+      component: CursoView
     },
     {
       path: '/login',
@@ -88,7 +88,7 @@ const router = createRouter({
       component: indexAmigos,
     },
     {
-      path: '/curso/:idCurso/unidade/:idUnidade',
+      path: '/unidade/:idUnidade',
       name: 'Unidade',
       component: UnidadeView,
       props: true,
