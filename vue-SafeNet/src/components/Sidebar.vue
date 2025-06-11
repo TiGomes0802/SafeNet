@@ -270,17 +270,23 @@
                     <div class="block text-sm text-gray-700 font-semibold px-2">
                         {{ storeAuth.user.moedas }} 🪙
                     </div>
-                    <div class="block text-sm text-gray-700 font-semibold px-1">
+                    <div class="relative group block text-sm text-gray-700 font-semibold px-1">
                         {{ storeAuth.user.streak }}
                         {{ storeAuth.user.streakFeita ? '🔥' : '🌡️' }}
+                        <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
+                            bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-normal text-center
+                            opacity-0 group-hover:opacity-100 transition-opacity z-50 w-48">
+                                Uma streak é uma sequência de dias em que completaste pelo menos uma unidade.
+                        </span>
                     </div>
-                    <div class="block text-sm text-gray-700 font-semibold px-2">
+
+                    <div class="relative group block text-sm text-gray-700 font-semibold px-2">
                         {{ storeAuth.user.vida }}
                         {{ storeAuth.user.vida === 0 ? '💔' : '❤️' }}
                         <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
-                                bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
-                                opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                            {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Nova vida em ' + tempoRestante }}
+                            bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
+                            opacity-0 group-hover:opacity-100 transition-opacity z-50 ">
+                                {{ storeAuth.user.vida >= 5 ? 'Já tens todas as vidas!' : 'Nova vida em ' + tempoRestante }}
                         </span>
                     </div>
                 </div>
