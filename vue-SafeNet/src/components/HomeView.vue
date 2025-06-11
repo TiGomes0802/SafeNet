@@ -31,52 +31,52 @@
     router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
   };
 
-watch(() => route.params.idCurso, (newVal) => {
-  cursoId.value = newVal
-  for (const curso of storeCurso.cursos) {
-    if (curso.id == cursoId.value) {
-      storeCurso.curso = curso
-      unidades.value = curso.unidades
+  watch(() => route.params.idCurso, (newVal) => {
+    cursoId.value = newVal
+    for (const curso of storeCurso.cursos) {
+      if (curso.id == cursoId.value) {
+        storeCurso.curso = curso
+        unidades.value = curso.unidades
+      }
     }
-  }
-})
+  })
 
-const windowWidth = ref(window.innerWidth)
-const isSidebarOpen = ref(false)
+  const windowWidth = ref(window.innerWidth)
+  const isSidebarOpen = ref(false)
 
-onMounted(async () => {
-  await storeCurso.getCursos()
-  for (const curso of storeCurso.cursos) {
-    if (curso.id == cursoId.value) {
-      storeCurso.curso = curso
-      unidades.value = curso.unidades
+  onMounted(async () => {
+    await storeCurso.getCursos()
+    for (const curso of storeCurso.cursos) {
+      if (curso.id == cursoId.value) {
+        storeCurso.curso = curso
+        unidades.value = curso.unidades
+      }
+      window.addEventListener('resize', updateWidth)
+      loading.value = false
+      if (user.type === 'J') {
+        storeMissao.getMinhasmissoes()
+      }
     }
-    window.addEventListener('resize', updateWidth)
-    loading.value = false
-    if (user.type === 'J') {
-      storeMissao.getMinhasmissoes()
+  });
+
+  const updateWidth = () => {
+    windowWidth.value = window.innerWidth
+  }
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+  })
+
+  const dynamicPadding = computed(() => {
+    if (windowWidth.value < 768 && !isSidebarOpen.value) {
+      return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
     }
+    return 'pl-10'  // Ecrãs maiores
+  })
+
+  const closeSidebar = () => {
+    isSidebarOpen.value = false
   }
-});
-
-const updateWidth = () => {
-  windowWidth.value = window.innerWidth
-}
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
-
-const dynamicPadding = computed(() => {
-  if (windowWidth.value < 768 && !isSidebarOpen.value) {
-    return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
-  }
-  return 'pl-10'  // Ecrãs maiores
-})
-
-const closeSidebar = () => {
-  isSidebarOpen.value = false
-}
 
 </script>
 
