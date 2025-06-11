@@ -135,7 +135,7 @@
                     <!-- Botões de ação futuros -->
                     <div class="mt-6 flex gap-4">
                         <button class="btn-soft" @click="() => router.push({ name: 'UpdatePerfil' })" v-if="isOwnProfile">Editar Perfil</button>
-                        <button class="btn-soft" @click="adicionarAmigo" :disabled="!loadingAdicionar" v-if="!isOwnProfile && !user?.isFriend && !user?.isHaveRequest">Adicionar Amigo</button>
+                        <button class="btn-soft" @click="adicionarAmigo" :disabled="!loadingAdicionar" v-if="!isOwnProfile && !user?.isFriend && !user?.isHaveRequest && user?.type == 'J'">Adicionar Amigo</button>
                     </div>
                 </div>
             </div>

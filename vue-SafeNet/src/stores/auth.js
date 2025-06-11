@@ -17,6 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
     //const { toast } = Toaster()
     
     const user = ref(null)
+    const users = ref([])
     const token = ref(null)
 
     const errorLogin = ref(null)
@@ -121,11 +122,7 @@ export const useAuthStore = defineStore('auth', () => {
       storeError.resetMessages(); // Reseta mensagens de erro antes de iniciar
       try {
         await axios.post("auth/register", credentials);
-        await login({
-          email: credentials.email,
-          password: credentials.password,
-        });
-
+        return true;
       } catch (e) {
         storeError.setErrorMessages(
           e.response.data.message,
@@ -199,6 +196,23 @@ export const useAuthStore = defineStore('auth', () => {
       }
     }
 
+    const getAllGestoresAdmins = async () => {
+      try {
+        console.log("Fetching all gestores/admins...");
+        const response = await axios.get("users/getAllGestoresAdmins");
+        users.value = response.data;
+        return true;
+      } catch (e) {
+        storeError.setErrorMessages(
+          e.response.data.message,
+          e.response.data.errors,
+          e.response.status,
+          "Error fetching gestores/admins!"
+        );
+        return null;
+      }
+    }
+
     const atualizarPerfil = async (userData) => {
       storeError.resetMessages();
       try {
@@ -220,6 +234,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     return {
       user,
+      users,
       errorLogin,
       errorResgistar,
       getUser,
@@ -229,5 +244,6 @@ export const useAuthStore = defineStore('auth', () => {
       restoreToken,
       getUserByUsername,
       atualizarPerfil,
+      getAllGestoresAdmins,
     };
 });

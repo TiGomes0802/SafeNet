@@ -28,6 +28,8 @@ import LojaIndex from "@/components/loja/index.vue";
 import LojaCreate from "@/components/loja/create.vue";
 import Perfil from '@/components/auth/Perfil.vue';
 import UpdatePerfil from '@/components/auth/UpdatePerfil.vue';
+import Users from '@/components/users/index.vue';
+import UsersCreate from '@/components/users/create.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,12 +70,6 @@ const router = createRouter({
       component: Loja,
     },
     {
-      path: '/backoffice/unidade/:idUnidade/jogos',
-      name: 'Jogos',
-      component: Jogo,
-      props: true,
-    },
-    {
       path: '/unidade/:idUnidade/jogos/play',
       name: 'JogosView',
       component: JogosView,
@@ -88,21 +84,6 @@ const router = createRouter({
       path: '/amigos',
       name: 'amigos',
       component: indexAmigos,
-    },
-    {
-      path: '/backoffice/cursos',
-      name: 'CursosIndex',
-      component: CursosIndex,
-    },
-    {
-      path: '/backoffice/cursos/create',
-      name: 'CursosCreate',
-      component: CursosCreate,
-    },
-    {
-      path: '/backoffice/cursos/:id/edit',
-      name: 'CursosEdit',
-      component: CursosEdit,
     },
     {
       path: '/curso/:idCurso/unidade/:idUnidade',
@@ -129,6 +110,27 @@ const router = createRouter({
       path: '/profile/update',
       name: 'UpdatePerfil',
       component: UpdatePerfil,
+    },
+        {
+      path: '/backoffice/unidade/:idUnidade/jogos',
+      name: 'Jogos',
+      component: Jogo,
+      props: true,
+    },
+    {
+      path: '/backoffice/cursos',
+      name: 'CursosIndex',
+      component: CursosIndex,
+    },
+    {
+      path: '/backoffice/cursos/create',
+      name: 'CursosCreate',
+      component: CursosCreate,
+    },
+    {
+      path: '/backoffice/cursos/:id/edit',
+      name: 'CursosEdit',
+      component: CursosEdit,
     },
     {
       path: '/backoffice/cursos/:idCurso/unidades',
@@ -185,6 +187,16 @@ const router = createRouter({
       path: '/backoffice/loja/create',
       name: 'LojaCreate',
       component: LojaCreate,
+    },
+    {
+      path: '/admin/users',
+      name: 'Users',
+      component: Users,
+    },
+    {
+      path: '/admin/users/create',
+      name: 'UsersCreate',
+      component: UsersCreate,
     },
   ],
 })

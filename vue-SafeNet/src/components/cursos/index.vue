@@ -16,7 +16,7 @@ function alterarEstado(id) {
 </script>
 
 <template>
-  <div class="flex min-h-screen">
+  <div class="flex h-screen">
     <Sidebar class="h-screen" />
 
     <main class="flex-1 p-6 bg-gray-50 overflow-auto">

@@ -28,7 +28,13 @@ const register = async () => {
     loading.value = true
 
     try {
-        await storeAuth.register(credentials.value)
+        const registado = await storeAuth.register(credentials.value)
+        if (registado) {
+            await storeAuth.login({
+                email: credentials.value.email,
+                password: credentials.value.password
+            })
+        }
     } finally {
         loading.value = false
     }

@@ -84,32 +84,16 @@ class UserController extends Controller
     /**
      * Get all users.
      */
-    public function getAllUsers(Request $request)
+    public function getAllGestoresAdmins(Request $request)
     {
-        try {
-            $nicknameFilter = $request->query('nickname', '');
+        $users = User::whereIn('type', ['G', 'A'])->get();
 
-            $users = User::where('type', 'P')
-                ->where('nickname', 'like', '%' . $nicknameFilter . '%')
-                ->orderBy('name')
-                ->select([
-                    'id',
-                    'name',
-                    'nickname',
-                    'email',
-                    'type',
-                    'blocked',
-                    \DB::raw('(SELECT SUM(brain_coins) FROM transactions WHERE transactions.user_id = users.id) AS total_brain_coins'),
-                    \DB::raw('(SELECT COUNT(*) FROM transactions WHERE transactions.user_id = users.id) AS total_transactions')
-
-                ])
-                ->paginate(10);
-
-            return response()->json($users);
-        } catch (\Exception $e) {
-            \Log::error('Erro ao buscar utilizadores: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao buscar utilizadores'], 500);
+        foreach ($users as $user) {
+            $user->foto = $user->foto ? asset('storage/photos/' . $user->foto) : null;
+            $user->makeHidden(['password', 'remember_token', 'email_verified_at', 'created_at', 'updated_at', 'email_verified_at', 'moedas', 'streakFeita', 'vida', 'ultima_vida_update', 'deleted_at', 'idRank']);
         }
+
+        return response()->json($users);
     }
 
     /**

@@ -238,7 +238,7 @@
                             <span>Reports</span>
                         </router-link>
 
-                        <router-link to="/backoffice/users"
+                        <router-link to="/admin/users"
                             class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
                             @click="handleLinkClick">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
