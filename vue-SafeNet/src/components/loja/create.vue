@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useLojaStore } from '@/stores/loja'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 import { useRouter } from 'vue-router'
 
 const lojaStore = useLojaStore()

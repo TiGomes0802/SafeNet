@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useJogoStore } from '@/stores/jogo'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 import Ordernar from '../tipojogos/ShowOrdenar.vue'
 import VerdadeiroFalso from '../tipojogos/ShowVerdadeiroFalso.vue'
 import EscolhaMultipla from '../tipojogos/ShowEscolhaMultipla.vue'
@@ -34,7 +34,7 @@ onMounted(async () => {
                         <button @click="$router.push({ name: 'CriarJogo', params: { idUnidade: props.idUnidade } })"
                             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
                             Criar Jogo
-                        </button>   
+                        </button>
                     </div>
                     <div class="flex flex-col gap-y-7 px-5 pt-3">
                         <div v-for="(jogo, index) in jogoStore.jogos" :key="jogo.id">

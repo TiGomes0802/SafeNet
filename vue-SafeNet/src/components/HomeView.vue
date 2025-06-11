@@ -1,82 +1,82 @@
 <script setup>
-  import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
-  import { useRoute } from 'vue-router'
-  import { useRouter } from 'vue-router'
-  import Sidebar from '@/components/Sidebar.vue'
-  import UnidadeCard from '@/components/UnidadeCard.vue'
-  import { useAuthStore } from '@/stores/auth'
-  import { useCursoStore } from '@/stores/curso'
-  import { useUnidadeStore } from '@/stores/unidade'
-  import { useMissaoStore } from '@/stores/missao'
-  import Loading from '@/components/loading/FrontofficeLaoding.vue'
+import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
+import UnidadeCard from '@/components/UnidadeCard.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useCursoStore } from '@/stores/curso'
+import { useUnidadeStore } from '@/stores/unidade'
+import { useMissaoStore } from '@/stores/missao'
+import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-  const route = useRoute()
-  const router = useRouter()
-  const storeAuth = useAuthStore()
-  const storeCurso = useCursoStore()
-  const storeUnidade = useUnidadeStore()
-  const storeMissao = useMissaoStore()
+const route = useRoute()
+const router = useRouter()
+const storeAuth = useAuthStore()
+const storeCurso = useCursoStore()
+const storeUnidade = useUnidadeStore()
+const storeMissao = useMissaoStore()
 
-  const user = storeAuth.user
+const user = storeAuth.user
 
-  const cursoId = ref(route.params.idCurso)
-  const unidades = ref([])
-  const loading = ref(true);
+const cursoId = ref(route.params.idCurso)
+const unidades = ref([])
+const loading = ref(true);
 
-  const irParaUnidade = (id) => {
-    const unidadeSelecionada = unidades.value.find(u => u.id === id);
+const irParaUnidade = (id) => {
+  const unidadeSelecionada = unidades.value.find(u => u.id === id);
 
-    if (!unidadeSelecionada) return;
-    storeUnidade.unidade = unidadeSelecionada;
-    router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
-  };
+  if (!unidadeSelecionada) return;
+  storeUnidade.unidade = unidadeSelecionada;
+  router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
+};
 
-  watch(() => route.params.idCurso, (newVal) => {
-    cursoId.value = newVal
-    for (const curso of storeCurso.cursos) {
-      if (curso.id == cursoId.value) {
-        storeCurso.curso = curso
-        unidades.value = curso.unidades
-      }
+watch(() => route.params.idCurso, (newVal) => {
+  cursoId.value = newVal
+  for (const curso of storeCurso.cursos) {
+    if (curso.id == cursoId.value) {
+      storeCurso.curso = curso
+      unidades.value = curso.unidades
     }
-  })
-
-  const windowWidth = ref(window.innerWidth)
-  const isSidebarOpen = ref(false)
-
-  onMounted(async () => {
-    await storeCurso.getCursos()
-    for (const curso of storeCurso.cursos) {
-      if (curso.id == cursoId.value) {
-        storeCurso.curso = curso
-        unidades.value = curso.unidades
-      }
-      window.addEventListener('resize', updateWidth)
-      loading.value = false
-      if (user.type === 'J') {
-        storeMissao.getMinhasmissoes()
-      }
-    }
-  });
-
-  const updateWidth = () => {
-    windowWidth.value = window.innerWidth
   }
+})
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateWidth)
-  })
+const windowWidth = ref(window.innerWidth)
+const isSidebarOpen = ref(false)
 
-  const dynamicPadding = computed(() => {
-    if (windowWidth.value < 768 && !isSidebarOpen.value) {
-      return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
+onMounted(async () => {
+  await storeCurso.getCursos()
+  for (const curso of storeCurso.cursos) {
+    if (curso.id == cursoId.value) {
+      storeCurso.curso = curso
+      unidades.value = curso.unidades
     }
-    return 'pl-10'  // Ecrãs maiores
-  })
-
-  const closeSidebar = () => {
-    isSidebarOpen.value = false
+    window.addEventListener('resize', updateWidth)
+    loading.value = false
+    if (user.type === 'J') {
+      storeMissao.getMinhasmissoes()
+    }
   }
+});
+
+const updateWidth = () => {
+  windowWidth.value = window.innerWidth
+}
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWidth)
+})
+
+const dynamicPadding = computed(() => {
+  if (windowWidth.value < 768 && !isSidebarOpen.value) {
+    return 'pl-20' // Padding 20 para home não ficar por baixo da sidebar
+  }
+  return 'pl-10'  // Ecrãs maiores
+})
+
+const closeSidebar = () => {
+  isSidebarOpen.value = false
+}
 
 </script>
 
@@ -97,7 +97,7 @@
               class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-80" />
             <div class="relative z-10 text-center p-10">
               <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 drop-shadow-lg mb-2">
-                Bem-vindo, {{ storeAuth.user.nome }}! 
+                Bem-vindo, {{ storeAuth.user.nome }}!
               </h1>
               <p class="text-lg text-gray-700 drop-shadow">
                 Selecione um curso no menu lateral para começar
@@ -115,11 +115,7 @@
                 <!-- Link apenas se for clicável -->
                 <div v-if="unidade.status !== -1" @click="irParaUnidade(unidade.id)"
                   class="cursor-pointer block transform transition duration-300 hover:scale-101 hover:shadow-lg">
-                  <UnidadeCard
-                    :titulo="unidade.titulo"
-                    :descricao="unidade.descricao"
-                    :status="unidade.status"
-                  />
+                  <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" :status="unidade.status" />
                 </div>
                 <!-- Apenas o card, sem link, se estiver bloqueado -->
                 <div v-else>

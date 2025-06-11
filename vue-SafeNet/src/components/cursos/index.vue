@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useCursoStore } from '@/stores/curso'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 
 const storeCurso = useCursoStore()
 

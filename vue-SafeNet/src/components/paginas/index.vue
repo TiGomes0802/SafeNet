@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { usePaginaStore } from '@/stores/pagina'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 import CreatePagina from '@/components/paginas/create.vue'
 import Loading from '@/components/loading/BackofficeLoading.vue'
 import { QuillEditor } from '@vueup/vue-quill'

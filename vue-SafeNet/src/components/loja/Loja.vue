@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useLojaStore } from '@/stores/loja'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 import { useCoinsStore } from '@/stores/coins'
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar/Sidebar.vue'
 import { useCursoStore } from '@/stores/curso'
 import { useUnidadeStore } from '@/stores/unidade'
 import draggable from 'vuedraggable'
@@ -27,7 +27,7 @@ onMounted(async () => {
             }
         }
     }
-    
+
     loading.value = false
 })
 
