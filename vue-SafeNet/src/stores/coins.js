@@ -29,26 +29,8 @@ export const useCoinsStore = defineStore('coins', () => {
     }
   };
 
-  // APAGAR FUTURAMENTE-------------------------------------------------------------------------------------
-  const ganharMoedas = async (quantidade) => {
-    try {
-      const response = await axios.post('/users/me/ganhar-moedas', {
-        quantidade: quantidade
-      });
-
-      storeAuth.user.moedas = response.data.moedas;
-
-      // Colocar pop up mais bonito
-      alert(`Ganhaste ${quantidade} moedas!`);
-
-    } catch (error) {
-      alert(error.response?.data?.message || 'Erro ao ganhar moedas');
-    }
-  };
-
   return {
     getCoins,
-    comprarProduto,
-    ganharMoedas
+    comprarProduto
   }
 });

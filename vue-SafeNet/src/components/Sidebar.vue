@@ -267,14 +267,14 @@
 
             <div class="border-t pt-7 space-y-6">
                 <div v-if="storeAuth.user?.type === 'J'" class="flex flex-row space-x-2 px-3">
-                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                    <div class="block text-sm text-gray-700 font-semibold px-2">
                         {{ storeAuth.user.moedas }} 🪙
                     </div>
-                    <div class="block text-sm text-gray-700 font-semibold px-3">
+                    <div class="block text-sm text-gray-700 font-semibold px-1">
                         {{ storeAuth.user.streak }}
                         {{ storeAuth.user.streakFeita ? '🔥' : '🌡️' }}
                     </div>
-                    <div class="relative group block text-sm text-gray-700 font-semibold px-3">
+                    <div class="relative group block text-sm text-gray-700 font-semibold px-2">
                         {{ storeAuth.user.vida }}
                         {{ storeAuth.user.vida === 0 ? '💔' : '❤️' }}
                         <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 

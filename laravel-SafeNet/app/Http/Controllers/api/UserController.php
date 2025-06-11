@@ -67,21 +67,6 @@ class UserController extends Controller
     }
 
     /**
-     * Ganhar moedas.
-     */
-
-    public function ganharMoedas(Request $request)
-    {
-        $user = Auth::user();
-        $quantidade = $request->input('quantidade');
-
-        $user->moedas += $quantidade;
-        $user->save();
-
-        return response()->json(['moedas' => $user->moedas]);
-    }
-
-    /**
      * Get all users.
      */
     public function getAllGestoresAdmins(Request $request)

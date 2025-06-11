@@ -69,9 +69,6 @@ const dynamicPadding = computed(() => {
 
                     </div>
                 </div>
-                <button @click="coinsStore.ganharMoedas(100)" class="bg-blue-500 text-white ml-250 px-4 py-2 rounded">
-                    Ganhar 100 moedas
-                </button>
             </div>
         </div>
     </transition>

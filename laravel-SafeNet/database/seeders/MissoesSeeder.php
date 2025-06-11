@@ -17,7 +17,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "conquista",
                 "estado" => true,
-                "descricao" => "Topo da montanha - Chegar à divisão de mestre",
+                "descricao" => "Topo da montanha - Chegar ao Rank Mestre",
                 "objetivo" => "2751",
                 "moedas" => "50",
                 "idTipoMissao" => "8",
@@ -25,7 +25,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "conquista",
                 "estado" => true,
-                "descricao" => "Diamante - Chegar à divisão de diamante",
+                "descricao" => "Diamante - Chegar ao Rank Diamante",
                 "objetivo" => "2201",
                 "moedas" => "40",
                 "idTipoMissao" => "8",
@@ -33,7 +33,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "conquista",
                 "estado" => true,
-                "descricao" => "Desbravador - Chegar à divisão de platina",
+                "descricao" => "Desbravador - Chegar ao Rank Platina",
                 "objetivo" => "1651",
                 "moedas" => "30",
                 "idTipoMissao" => "8",
@@ -41,7 +41,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "conquista",
                 "estado" => true,
-                "descricao" => "Aventureiro - Chegar à divisão de ouro",
+                "descricao" => "Aventureiro - Chegar ao Rank Ouro",
                 "objetivo" => "1101",
                 "moedas" => "20",
                 "idTipoMissao" => "8",
@@ -49,7 +49,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "conquista",
                 "estado" => true,
-                "descricao" => "Explorador - Chegar à divisão de prata",
+                "descricao" => "Explorador - Chegar ao Rank Prata",
                 "objetivo" => "551",
                 "moedas" => "10",
                 "idTipoMissao" => "8",

@@ -23,7 +23,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/users/me', [UserController::class, 'showMe']);
     Route::get('/users/me/coins', [UserController::class, 'getCoins']);
-    Route::post('users/me/ganhar-moedas', [UserController::class, 'ganharMoedas']);
     Route::post('/users/perderVida', [UserController::class, 'perderVida']);
     Route::post('/users/ganharVidas', [UserController::class, 'ganharVidas']);
     Route::get('/users/getVidas', [UserController::class, 'getVidas']);
