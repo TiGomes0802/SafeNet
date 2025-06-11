@@ -8,6 +8,8 @@ import Rank from "@/components/rank/Rank.vue";
 import Loja from "@/components/loja/Loja.vue";
 import Jogo from "@/components/jogos/index.vue";
 import JogosView from "@/components/jogos/JogosView.vue";
+import CriarJogo from "@/components/jogos/create.vue";
+import EditarJogo from "@/components/jogos/editar.vue";
 import CursosIndex from '@/components/cursos/index.vue'
 import CursosCreate from '@/components/cursos/create.vue'
 import CursosEdit from '@/components/cursos/edit.vue'
@@ -15,13 +17,12 @@ import UnidadeView from '@/components/unidades/UnidadeView.vue';
 import UnidadesIndex from '@/components/unidades/index.vue';
 import UnidadesCreate from '@/components/unidades/create.vue';
 import UnidadesEdit from '@/components/unidades/edit.vue';
-import CriarJogo from "@/components/jogos/create.vue";
-import EditarJogo from "@/components/jogos/editar.vue";
-import Paginas from "@/components/paginas/index.vue";
-import CriarPaginas from "@/components/paginas/create.vue";
-import Report from "@/components/reports/Report.vue";
 import Sucesso from "@/components/unidades/Sucesso.vue";
 import GameOver from '@/components/unidades/GameOver.vue';
+import Paginas from "@/components/paginas/index.vue";
+import CriarPaginas from "@/components/paginas/create.vue";
+import CreateReport from "@/components/reports/Report.vue";
+import Report from "@/components/reports/index.vue";
 import indexMissoes from '@/components/missoes/index.vue';
 import indexAmigos from '@/components/amigos/index.vue';
 import LojaIndex from "@/components/loja/index.vue";
@@ -30,6 +31,7 @@ import Perfil from '@/components/auth/Perfil.vue';
 import UpdatePerfil from '@/components/auth/UpdatePerfil.vue';
 import Users from '@/components/users/index.vue';
 import UsersCreate from '@/components/users/create.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -93,8 +95,8 @@ const router = createRouter({
     },
     {
       path: '/report',
-      name: 'Report',
-      component: Report,
+      name: 'CreateReport',
+      component: CreateReport,
     },
     {
       path: '/sucesso',
@@ -111,7 +113,7 @@ const router = createRouter({
       name: 'UpdatePerfil',
       component: UpdatePerfil,
     },
-        {
+    {
       path: '/backoffice/unidade/:idUnidade/jogos',
       name: 'Jogos',
       component: Jogo,
@@ -187,6 +189,11 @@ const router = createRouter({
       path: '/backoffice/loja/create',
       name: 'LojaCreate',
       component: LojaCreate,
+    },
+    {
+      path: '/backoffice/reports',
+      name: 'Report',
+      component: Report,
     },
     {
       path: '/admin/users',

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('vida')->default(5);
             $table->timestamp('ultima_vida_update')->nullable();
             $table->string('password');
+            $table->boolean('blocked')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

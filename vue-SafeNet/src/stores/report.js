@@ -2,35 +2,16 @@ import { ref } from 'vue'
 import { defineStore} from 'pinia'
 import axios from 'axios'
 import { useErrorStore } from "@/stores/error";
-import { useRouter } from 'vue-router'
 
 export const useReportStore = defineStore('report', () => {
-    const router = useRouter()
     const storeError = useErrorStore();
     
     const reports = ref([])
     const report = ref(null)
 
-    const getReport = async (idJogo) => {
-        try {
-            const response = await axios.get("report/report/" + idJogo);
-            report.value = response.data;
-            return true;
-        }
-        catch (e) {
-            storeError.setErrorMessages(
-                e.response.data.message,
-                e.response.data.errors,
-                e.response.status,
-                "Error fetching report!"
-            );
-            return false;
-        }
-    }
-
     const getReports = async () => {
         try {
-            const response = await axios.get("report/getReports");
+            const response = await axios.get("reports");
             reports.value = response.data;
             return true;
         } catch (e) {
@@ -64,11 +45,12 @@ export const useReportStore = defineStore('report', () => {
         }
     }
 
-    const updateEstadoReport = async (idJogo) => {
+    const updateEstadoReport = async (idReport) => {
         try {
-            const response = await axios.put("report/" + idJogo + "/estado");
+            const response = await axios.put("report/" + idReport + "/estado");
             if (response.status === 200) {
                 report.value = response.data.estado;
+                await getReports(); // Refresh the reports list
                 return true;
             }
             return false;
@@ -85,7 +67,6 @@ export const useReportStore = defineStore('report', () => {
 
     return{
         reports,
-        getReport,
         getReports,
         reportarJogo,
         updateEstadoReport

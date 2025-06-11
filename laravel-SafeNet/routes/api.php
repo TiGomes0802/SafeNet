@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/getVidas', [UserController::class, 'getVidas']);
     Route::get('/users/username/{username}', [UserController::class, 'getUserByUsername']);
     Route::get('/users/getAllGestoresAdmins', [UserController::class, 'getAllGestoresAdmins']);
+    Route::put('/users/block', [UserController::class, 'block']);
 
     Route::get('/tipojogo/getTiposJogos', [TipoJogoController::class, 'index']);
 
