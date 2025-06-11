@@ -1,143 +1,146 @@
 <script setup>
-import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import draggable from 'vuedraggable'
-import { useJogoStore } from '@/stores/jogo'
-import { useVidasStore } from '@/stores/vidas'
-import { useAuthStore } from '@/stores/auth'
-import { useUnidadeStore } from '@/stores/unidade'
-import ReportarPergunta from '@/components/reports/Report.vue'
-import DesistirJogo from '@/components/jogos/DesistirJogo.vue'
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
+  import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import draggable from 'vuedraggable'
+  import { useJogoStore } from '@/stores/jogo'
+  import { useVidasStore } from '@/stores/vidas'
+  import { useAuthStore } from '@/stores/auth'
+  import { useUnidadeStore } from '@/stores/unidade'
+  import ReportarPergunta from '@/components/reports/Report.vue'
+  import DesistirJogo from '@/components/jogos/DesistirJogo.vue'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-const route = useRoute()
-const router = useRouter()
-const storeUnidade = useUnidadeStore()
-const storeJogo = useJogoStore()
-const storeVidas = useVidasStore()
-const storeAuth = useAuthStore()
+  const route = useRoute()
+  const router = useRouter()
+  const storeUnidade = useUnidadeStore()
+  const storeJogo = useJogoStore()
+  const storeVidas = useVidasStore()
+  const storeAuth = useAuthStore()
 
-const idUnidade = route.params.idUnidade
+  const idUnidade = route.params.idUnidade
 
-const respostaSelecionada = ref([])
-const report = ref(false)
-const desistir = ref(false)
-const loading = ref(true);
+  const respostaSelecionada = ref([])
+  const report = ref(false)
+  const desistir = ref(false)
+  const loading = ref(true);
 
-const tempo = ref(0);
-let intervalo = null;
+  const tempo = ref(0);
+  let intervalo = null;
 
-const indiceAtual = ref(0)
-const pergunta = computed(() => filaPerguntas.value[indiceAtual.value])
-const totalPerguntas = ref(0)
+  const indiceAtual = ref(0)
+  const pergunta = computed(() => filaPerguntas.value[indiceAtual.value])
+  const totalPerguntas = ref(0)
 
-const jogos = ref([])
+  const jogos = ref([])
 
-const filaPerguntas = ref([])
-const perguntasErradas = ref([])
-const progresso = ref(0) // para só avançar quando a resposta for correta
+  const filaPerguntas = ref([])
+  const perguntasErradas = ref([])
+  const progresso = ref(0) // para só avançar quando a resposta for correta
 
-const mostrarFeedback = ref(false)
-const respostaCorretaAtual = ref(false)
+  const mostrarFeedback = ref(false)
+  const respostaCorretaAtual = ref(false)
 
 
-const validarResposta = async () => {
-  const tipo = pergunta.value?.idTipo
-  let respostaCorreta = false
+  const validarResposta = async () => {
+    const tipo = pergunta.value?.idTipo
+    let respostaCorreta = false
 
-  if (tipo === 1) {
-    respostaCorreta = respostaSelecionada.value.certa === 1
-  } else if (tipo === 2) {
-    respostaCorreta = true
-    for (let i = 0; i < pergunta.value.respostas.length; i++) {
-      if (respostaSelecionada.value[i] != pergunta.value.respostas[i].certa) {
-        respostaCorreta = false
-        break
+    if (tipo === 1) {
+      respostaCorreta = respostaSelecionada.value.certa === 1
+    } else if (tipo === 2) {
+      respostaCorreta = true
+      for (let i = 0; i < pergunta.value.respostas.length; i++) {
+        if (respostaSelecionada.value[i] != pergunta.value.respostas[i].certa) {
+          respostaCorreta = false
+          break
+        }
+      }
+    } else if (tipo === 3) {
+      respostaCorreta = true
+      for (let i = 0; i < pergunta.value.respostas.length; i++) {
+        if (respostaSelecionada.value[i].certa != i) {
+          respostaCorreta = false
+          break
+        }
       }
     }
-  } else if (tipo === 3) {
-    respostaCorreta = true
-    for (let i = 0; i < pergunta.value.respostas.length; i++) {
-      if (respostaSelecionada.value[i].certa != i) {
-        respostaCorreta = false
-        break
+
+    if(!jogos.value.some(jogo => jogo.idJogo === pergunta.value.id )) {
+      jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
+    }
+    
+    respostaCorretaAtual.value = respostaCorreta
+    mostrarFeedback.value = true // Mostra o feedback
+    
+    if (!respostaCorreta) {
+      await storeVidas.perderVida()
+      perguntasErradas.value.push(pergunta.value) // guarda para repetir
+    } else {
+      progresso.value++
+
+      // Se a pergunta já estava marcada como errada, removê-la
+      const index = perguntasErradas.value.findIndex(p => p.id === pergunta.value.id)
+      if (index !== -1) {
+        perguntasErradas.value.splice(index, 1)
       }
     }
   }
 
-  if(!jogos.value.some(jogo => jogo.idJogo === pergunta.value.id )) {
-    jogos.value.push({ idJogo: pergunta.value.id, acertou: respostaCorreta })
-  }
-  
-  respostaCorretaAtual.value = respostaCorreta
-  mostrarFeedback.value = true // Mostra o feedback
-  
-  if (!respostaCorreta) {
-    await storeVidas.perderVida()
-    perguntasErradas.value.push(pergunta.value) // guarda para repetir
-  } else {
-    progresso.value++
-
-    // Se a pergunta já estava marcada como errada, removê-la
-    const index = perguntasErradas.value.findIndex(p => p.id === pergunta.value.id)
-    if (index !== -1) {
-      perguntasErradas.value.splice(index, 1)
+  const proximaPergunta = async () => {
+    if (storeAuth.user.vida <= 0) {
+      router.push({ name: 'gameover', params: { idUnidade } })
+      return
     }
-  }
 
-  if (storeAuth.user.vida <= 0) {
-    router.push({ name: 'gameover', params: { idUnidade } })
-    return
-  }
-}
+    mostrarFeedback.value = false
 
-const proximaPergunta = async () => {
-  mostrarFeedback.value = false
-
-  if (indiceAtual.value < filaPerguntas.value.length - 1) {
-    indiceAtual.value++
-    respostaSelecionada.value = []
-  } else {
-    if (perguntasErradas.value.length > 0) {
-      filaPerguntas.value = [...perguntasErradas.value]
-      perguntasErradas.value = []
-      indiceAtual.value = 0
+    if (indiceAtual.value < filaPerguntas.value.length - 1) {
+      indiceAtual.value++
       respostaSelecionada.value = []
     } else {
-      await storeUnidade.concluirUnidade(idUnidade, jogos.value, tempo.value)
+      if (perguntasErradas.value.length > 0) {
+        filaPerguntas.value = [...perguntasErradas.value]
+        perguntasErradas.value = []
+        indiceAtual.value = 0
+        respostaSelecionada.value = []
+      } else {
+        await storeUnidade.concluirUnidade(idUnidade, jogos.value, tempo.value)
+      }
     }
   }
-}
 
+  watch(pergunta, (novaPergunta) => {
+    if (novaPergunta?.idTipo === 2) {
+      // Reinicializar com valores undefined para forçar nova resposta
+      respostaSelecionada.value = Array(novaPergunta.respostas.length).fill(undefined)
+    }
+    else if (novaPergunta?.idTipo === 3) {
+      respostaSelecionada.value = [...novaPergunta.respostas]
+    } else {
+      respostaSelecionada.value = []
+    }
+  }, { immediate: true })
 
+  onMounted(async () => {
+    if (storeAuth.user.vida <= 0) {
+      router.push({ name: 'gameover', params: { idUnidade } })
+      return
+    }
+    await Promise.all([
+      storeJogo.comecarJogo(idUnidade),
+      storeVidas.getVidas()
+    ])
+    filaPerguntas.value = [...storeJogo.jogos]
+    totalPerguntas.value = storeJogo.jogos.length
+    loading.value = false
+    intervalo = setInterval(() => {
+      tempo.value += 1;
+    }, 1000);
+  })
 
-
-watch(pergunta, (novaPergunta) => {
-  if (novaPergunta?.idTipo === 2) {
-    // Reinicializar com valores undefined para forçar nova resposta
-    respostaSelecionada.value = Array(novaPergunta.respostas.length).fill(undefined)
-  }
-  else if (novaPergunta?.idTipo === 3) {
-    respostaSelecionada.value = [...novaPergunta.respostas]
-  } else {
-    respostaSelecionada.value = []
-  }
-}, { immediate: true })
-
-onMounted(async () => {
-  await storeJogo.comecarJogo(idUnidade)
-  await storeVidas.getVidas()
-  filaPerguntas.value = [...storeJogo.jogos] // inicializa fila com todas as perguntas
-  totalPerguntas.value = storeJogo.jogos.length
-  loading.value = false
-  intervalo = setInterval(() => {
-    tempo.value += 1;
-  }, 1000);
-})
-
-onBeforeUnmount(() => {
-  clearInterval(intervalo);
-});
+  onBeforeUnmount(() => {
+    clearInterval(intervalo);
+  });
 
 </script>
 

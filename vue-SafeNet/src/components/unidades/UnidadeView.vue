@@ -1,23 +1,25 @@
 <script setup>
   import { ref, onMounted, computed } from 'vue'
   import { useRoute } from 'vue-router'
-  import Sidebar from '@/components/SideBar/Sidebar.vue'
   import { usePaginaStore } from '@/stores/pagina'
   import { useCursoStore } from '@/stores/curso'
+  import { useAuthStore } from '@/stores/auth'
+  import Sidebar from '@/components/SideBar/Sidebar.vue'
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
   const route = useRoute()
-  const cursoStore = useCursoStore()
-  const paginaStore = usePaginaStore()
+  const storeCurso = useCursoStore()
+  const storePagina = usePaginaStore()
+  const storeAuth = useAuthStore()
 
   const idUnidade = route.params.idUnidade
-  const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
+  const paginaVisivel = computed(() => storePagina.paginas[paginaAtual.value])
   const loading = ref(true);
 
   const paginaAtual = ref(0)
 
   const proximaPagina = () => {
-    if (paginaAtual.value < paginaStore.paginas.length - 1) {
+    if (paginaAtual.value < storePagina.paginas.length - 1) {
       paginaAtual.value++
     }
   }
@@ -29,8 +31,10 @@
   }
 
   onMounted(async () => {
-    await cursoStore.getCursos()
-    await paginaStore.getPaginas(idUnidade)
+    await Promise.all([
+      storeCurso.getCursos(),
+      storePagina.getPaginas(idUnidade)
+    ])
     loading.value = false
   })
 </script>
@@ -47,17 +51,20 @@
         <div>
           <div class="flex flex-col pb-4 sm:pb-0 sm:flex-row">
             <h1 class="text-2xl font-bold text-blue-600 mb-4">
-              {{ cursoStore.curso?.nome }} | Unidade {{ idUnidade }}
+              {{ storeCurso.curso?.nome }} | Unidade {{ idUnidade }}
             </h1>
-            <div class="sm:Justify-end flex-grow text-right">
-              <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"
-                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
+            <div class="sm:justify-end flex-grow text-right">
+              <RouterLink
+                :to="`/unidade/${idUnidade}/jogos/play`"
+                class="px-4 py-2 text-white rounded"
+                :class="storeAuth.user.vida === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'"
+                :disabled="storeAuth.user.vida === 0">
                 Avaliar
               </RouterLink>
             </div>
           </div>
           <div class="bg-white p-6 rounded shadow min-h-[200px]">
-            <p v-if="paginaStore.paginas.length > 0" v-html="paginaVisivel.descricao"></p>
+            <p v-if="storePagina.paginas.length > 0" v-html="paginaVisivel.descricao"></p>
             <p v-else>A carregar páginas...</p>
           </div>
         </div>
@@ -70,10 +77,10 @@
           </button>
 
           <div class="text-gray-600 font-semibold">
-            Página {{ paginaAtual + 1 }} de {{ paginaStore.paginas.length }}
+            Página {{ paginaAtual + 1 }} de {{ storePagina.paginas.length }}
           </div>
 
-          <button v-if="paginaAtual < paginaStore.paginas.length - 1" @click="proximaPagina"
+          <button v-if="paginaAtual < storePagina.paginas.length - 1" @click="proximaPagina"
             class="absolute right-0 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
             Avançar →
           </button>
