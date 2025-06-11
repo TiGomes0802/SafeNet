@@ -218,21 +218,47 @@ router.beforeEach(async (to, from, next) => {
     await storeAuth.restoreToken();
   }
 
-  // user is not logged in
-  if (to.name !== "login" && to.name !== "register" && !storeAuth.user) {
+  const publicRoutes = ['login', 'register'];
+  const isPublicRoute = publicRoutes.includes(to.name);
+  const user = storeAuth.user;
 
-    next({ name: "login" });
-    return;
+  const tipo = (user?.type || '').toUpperCase();
+  const isAdminRoute = to.path.startsWith('/admin');
+  const isBackofficeRoute = to.path.startsWith('/backoffice');
+
+  if (!user) {
+    return isPublicRoute ? next() : next({ name: 'login' });
   }
 
-  if ((to.name === "login" || to.name === "register") && storeAuth.user) {
-    next({ name: "home" });
-    return;
+  if (isPublicRoute) {
+    return next({ name: 'home' });
   }
 
-  // user is logged in
+  // Permitir a todos o acesso ao home
+  if (to.name === 'home') {
+    return next();
+  }
 
-  next();
-})
+  if (tipo === 'A') {
+    return next();
+  }
+
+  if (tipo === 'G') {
+    if (isBackofficeRoute && !isAdminRoute) {
+      return next();
+    }
+    return next({ name: 'home' });
+  }
+
+  if (tipo === 'J') {
+    if (!isBackofficeRoute && !isAdminRoute) {
+      return next();
+    }
+    return next({ name: 'home' });
+  }
+
+  return next({ name: 'login' });
+});
+
 
 export default router
