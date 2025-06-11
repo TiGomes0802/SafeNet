@@ -28,6 +28,11 @@ class UserResource extends JsonResource
             'ultima_vida_update' => $this->ultima_vida_update,
             'rank' => $this->rank ?? null,
             'foto' => $this->foto ? asset('storage/photos/' . $this->foto) : null,
+            'congelar' => $this->compra()
+                ->where('usado', false)
+                ->whereHas('produto.tipoProduto', function($query) {
+                    $query->where('tipo', 'Gelo');
+                })->count(),
         ];
     }
 }
