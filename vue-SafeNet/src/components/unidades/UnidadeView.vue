@@ -1,39 +1,38 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
-import { usePaginaStore } from '@/stores/pagina'
-import { useCursoStore } from '@/stores/curso'
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
+  import { ref, onMounted, computed } from 'vue'
+  import { useRoute } from 'vue-router'
+  import Sidebar from '@/components/SideBar/Sidebar.vue'
+  import { usePaginaStore } from '@/stores/pagina'
+  import { useCursoStore } from '@/stores/curso'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-const route = useRoute()
-const cursoStore = useCursoStore()
-const paginaStore = usePaginaStore()
+  const route = useRoute()
+  const cursoStore = useCursoStore()
+  const paginaStore = usePaginaStore()
 
-const idUnidade = route.params.idUnidade
-const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
-const loading = ref(true);
+  const idUnidade = route.params.idUnidade
+  const paginaVisivel = computed(() => paginaStore.paginas[paginaAtual.value])
+  const loading = ref(true);
 
-const paginaAtual = ref(0)
+  const paginaAtual = ref(0)
 
-const proximaPagina = () => {
-  if (paginaAtual.value < paginaStore.paginas.length - 1) {
-    paginaAtual.value++
+  const proximaPagina = () => {
+    if (paginaAtual.value < paginaStore.paginas.length - 1) {
+      paginaAtual.value++
+    }
   }
-}
 
-const paginaAnterior = () => {
-  if (paginaAtual.value > 0) {
-    paginaAtual.value--
+  const paginaAnterior = () => {
+    if (paginaAtual.value > 0) {
+      paginaAtual.value--
+    }
   }
-}
 
-onMounted(async () => {
-  await cursoStore.getCursos()
-  await paginaStore.getPaginas(idUnidade)
-  loading.value = false
-})
-
+  onMounted(async () => {
+    await cursoStore.getCursos()
+    await paginaStore.getPaginas(idUnidade)
+    loading.value = false
+  })
 </script>
 
 <template>
@@ -48,7 +47,7 @@ onMounted(async () => {
         <div>
           <div class="flex flex-col pb-4 sm:pb-0 sm:flex-row">
             <h1 class="text-2xl font-bold text-blue-600 mb-4">
-              {{ cursoStore.curso?.nome }} | Unidade: {{ idUnidade }}
+              {{ cursoStore.curso?.nome }} | Unidade {{ idUnidade }}
             </h1>
             <div class="sm:Justify-end flex-grow text-right">
               <RouterLink :to="`/unidade/${idUnidade}/jogos/play`"

@@ -1,35 +1,35 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
-import { useRoute } from 'vue-router'
-import { useRouter } from 'vue-router'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
-import UnidadeCard from '@/components/UnidadeCard.vue'
-import { useAuthStore } from '@/stores/auth'
-import { useCursoStore } from '@/stores/curso'
-import { useUnidadeStore } from '@/stores/unidade'
-import { useMissaoStore } from '@/stores/missao'
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
+  import { ref, watch, onMounted, onUnmounted, computed, } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
+  import Sidebar from '@/components/SideBar/Sidebar.vue'
+  import UnidadeCard from '@/components/unidades/UnidadeCard.vue'
+  import { useAuthStore } from '@/stores/auth'
+  import { useCursoStore } from '@/stores/curso'
+  import { useUnidadeStore } from '@/stores/unidade'
+  import { useMissaoStore } from '@/stores/missao'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-const route = useRoute()
-const router = useRouter()
-const storeAuth = useAuthStore()
-const storeCurso = useCursoStore()
-const storeUnidade = useUnidadeStore()
-const storeMissao = useMissaoStore()
+  const route = useRoute()
+  const router = useRouter()
+  const storeAuth = useAuthStore()
+  const storeCurso = useCursoStore()
+  const storeUnidade = useUnidadeStore()
+  const storeMissao = useMissaoStore()
 
-const user = storeAuth.user
+  const user = storeAuth.user
 
-const cursoId = ref(route.params.idCurso)
-const unidades = ref([])
-const loading = ref(true);
+  const cursoId = ref(route.params.idCurso)
+  const unidades = ref([])
+  const loading = ref(true);
 
-const irParaUnidade = (id) => {
-  const unidadeSelecionada = unidades.value.find(u => u.id === id);
+  const irParaUnidade = (id) => {
+    const unidadeSelecionada = unidades.value.find(u => u.id === id);
 
-  if (!unidadeSelecionada) return;
-  storeUnidade.unidade = unidadeSelecionada;
-  router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
-};
+    if (!unidadeSelecionada) return;
+    storeUnidade.unidade = unidadeSelecionada;
+    router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
+  };
 
 watch(() => route.params.idCurso, (newVal) => {
   cursoId.value = newVal
