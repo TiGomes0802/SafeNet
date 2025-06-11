@@ -15,9 +15,6 @@
     blockIndex.value = index
     loadingBlock.value = false
 
-    console.log(index)
-    console.log(loadingBlock.value)
-
     try {
       await storeAuth.blockUser(userId)
     } catch (error) {
@@ -48,7 +45,7 @@
 
       <main class="flex-1 p-6 bg-gray-50 overflow-auto">
         <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold">Cursos</h1>
+          <h1 class="text-2xl font-bold">Users</h1>
 
           <router-link to="/admin/users/create"
             class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">

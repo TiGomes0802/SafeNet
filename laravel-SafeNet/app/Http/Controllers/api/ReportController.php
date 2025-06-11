@@ -11,49 +11,19 @@ class ReportController extends Controller
     public function index()
     {
         $reportsNaoVistos = Report::all()->where('estado', 0);
-        $reportsVistos = Report::all()->where('estado', 1);
         
         // created_at para data e hora
         $reportsNaoVistos = $reportsNaoVistos->map(function ($report) {
             return [
                 'id' => $report->id,
                 'mensagem' => $report->mensagem,
-                'estado' => $report->estado,
-                'user' => [
-                    'id' => $report->user->id,
-                    'nome' => $report->user->nome,
-                    'email' => $report->user->email,
-                    'username' => $report->user->username,
-                ],
+                'idUnidade' => $report->jogo->idUnidade,
                 'idJogo' => $report->idJogo,
                 'created_at' => $report->created_at->format('d-m-Y H:i:s'),
-                'updated_at' => $report->updated_at->format('d-m-Y H:i:s'),
             ];
-        });
+        })->values();
 
-        $reportsVistos = $reportsVistos->map(function ($report) {
-            return [
-                'id' => $report->id,
-                'mensagem' => $report->mensagem,
-                'estado' => $report->estado,
-                'user' => [
-                    'id' => $report->user->id,
-                    'nome' => $report->user->nome,
-                    'email' => $report->user->email,
-                    'username' => $report->user->username,
-                ],
-                'idJogo' => $report->idJogo,
-                'created_at' => $report->created_at->format('d-m-Y H:i:s'),
-                'updated_at' => $report->updated_at->format('d-m-Y H:i:s'),
-            ];
-        });
-
-        $reports = [
-            'reportsNaoVistos' => $reportsNaoVistos,
-            'reportsVistos' => $reportsVistos,
-        ];
-
-        return response()->json($reports);
+        return response()->json($reportsNaoVistos);
     }
 
     public function show($id)
