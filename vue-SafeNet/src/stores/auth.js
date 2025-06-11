@@ -85,9 +85,8 @@ export const useAuthStore = defineStore('auth', () => {
         } catch (e) {
             clearUser();
             console.log(e.response.data.message);
-            if (e.response.data.message == "Unauthorized") {
+            if (e.response.data.message == "Unauthorized" || e.response.data.message == "User blocked") {
                 errorLogin.value = true;
-                console.log("Unauthorized");
             }else{
               storeError.setErrorMessages(
                 e.response.data.message,
@@ -196,9 +195,26 @@ export const useAuthStore = defineStore('auth', () => {
       }
     }
 
+    const atualizarPerfil = async (userData) => {
+      storeError.resetMessages();
+      try {
+        userData.append('_method', 'PUT')
+        const response = await axios.post("auth/updateProfile", userData)
+        user.value = response.data.data;
+        return true;
+      } catch (e) {
+        storeError.setErrorMessages(
+          e.response.data.message,
+          e.response.data.errors,
+          e.response.status,
+          "Profile Update Error!"
+        );
+        return false;
+      }
+    }
+
     const getAllGestoresAdmins = async () => {
       try {
-        console.log("Fetching all gestores/admins...");
         const response = await axios.get("users/getAllGestoresAdmins");
         users.value = response.data;
         return true;
@@ -213,20 +229,19 @@ export const useAuthStore = defineStore('auth', () => {
       }
     }
 
-    const atualizarPerfil = async (userData) => {
-      storeError.resetMessages();
+    const blockUser = async (id) => {
       try {
-        userData.append('_method', 'PUT') // simula um PUT
-        const response = await axios.post("auth/updateProfile", userData)
-        console.log(response.data.data);
-        user.value = response.data.data;
-        return true;
+        const response = await axios.put(`users/block`, { id: id });
+        if (response.status === 200) {
+          await getAllGestoresAdmins();
+          return true;
+        }
       } catch (e) {
         storeError.setErrorMessages(
           e.response.data.message,
           e.response.data.errors,
           e.response.status,
-          "Profile Update Error!"
+          "User Block Error!"
         );
         return false;
       }
@@ -245,5 +260,6 @@ export const useAuthStore = defineStore('auth', () => {
       getUserByUsername,
       atualizarPerfil,
       getAllGestoresAdmins,
+      blockUser,
     };
 });

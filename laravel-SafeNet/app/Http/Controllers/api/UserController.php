@@ -101,7 +101,12 @@ class UserController extends Controller
         try {
             $userToBlock = User::findOrFail($request->id);
 
-            $userToBlock->blocked = 1;
+            if($userToBlock->blocked){
+                $userToBlock->blocked = 0;
+            }else {
+                $userToBlock->blocked = 1;
+            }
+            
             $userToBlock->save();
 
             return response()->json(['message' => 'User blocked successfully'], 200);

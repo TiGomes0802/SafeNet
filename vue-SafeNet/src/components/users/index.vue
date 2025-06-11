@@ -7,7 +7,26 @@
 
   const storeAuth = useAuthStore()
 
+  const loadingBlock = ref(true);
   const loading = ref(true)
+  const blockIndex = ref(null);
+
+  const blockUser = async (userId, index) => {
+    blockIndex.value = index
+    loadingBlock.value = false
+
+    console.log(index)
+    console.log(loadingBlock.value)
+
+    try {
+      await storeAuth.blockUser(userId)
+    } catch (error) {
+      console.error('Erro ao bloquear utilizador:', error)
+    } finally {
+      loadingBlock.value = true
+      blockIndex.value = null
+    }
+  }
 
   onMounted(async () => {
     storeAuth.getAllGestoresAdmins()
@@ -44,10 +63,11 @@
               <th class="px-6 py-3">Username</th>
               <th class="px-6 py-3">E-mail</th>
               <th class="px-6 py-3">Role</th>
+              <th class="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in storeAuth?.users" :key="user.id" class="border-t hover:bg-gray-50">
+            <tr v-for="(user, index) in storeAuth?.users" :key="user.id" class="border-t hover:bg-gray-50">
               <td class="px-6 py-4">
                 <router-link :to="{ name: 'Perfil', params: { username: user.username } }"
                   class="flex items-center gap-3">
@@ -58,6 +78,23 @@
               <td class="px-6 py-4">{{ user.username }}</td>
               <td class="px-6 py-4">{{ user.email }}</td>
               <td class="px-6 py-4">{{ user.type === 'G' ? 'Gestor' : 'Admin' }}</td>
+              <td class="px-6 py-4 flex justify-center space-x-2">
+                <button
+                  @click="blockUser(user.id, index)"
+                  :disabled="!loadingBlock"
+                  class="flex items-center justify-center px-4 py-2 rounded font-semibold text-white transition-colors duration-200 focus:outline-none"
+                  :class="{
+                    'bg-red-500 hover:bg-red-600': !user.blocked,
+                    'bg-green-500 hover:bg-green-600': user.blocked,
+                    'opacity-50 cursor-not-allowed': !loadingBlock && blockIndex === index
+                  }"
+                >
+                  <span v-if="!loadingBlock && blockIndex === index" class="spinner2 w-4 h-4"></span>
+                  <span v-else>
+                    {{ user.blocked ? 'Desbloquear' : 'Bloquear' }}
+                  </span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
