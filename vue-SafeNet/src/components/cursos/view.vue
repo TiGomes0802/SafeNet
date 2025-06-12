@@ -1,68 +1,69 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { useCursoStore } from '@/stores/curso'
-import { useUnidadeStore } from '@/stores/unidade'
-import { useMissaoStore } from '@/stores/missao'
-import Sidebar from '@/components/sideBar/Sidebar.vue'
-import UnidadeCard from '@/components/unidades/UnidadeCard.vue'
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
+  import { ref, watch, onMounted, onUnmounted, computed } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useAuthStore } from '@/stores/auth'
+  import { useCursoStore } from '@/stores/curso'
+  import { useUnidadeStore } from '@/stores/unidade'
+  import { useMissaoStore } from '@/stores/missao'
+  import Sidebar from '@/components/sideBar/Sidebar.vue'
+  import UnidadeCard from '@/components/unidades/UnidadeCard.vue'
+  import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-const route = useRoute()
-const router = useRouter()
+  const route = useRoute()
+  const router = useRouter()
 
-const storeAuth = useAuthStore()
-const storeCurso = useCursoStore()
-const storeUnidade = useUnidadeStore()
-const storeMissao = useMissaoStore()
+  const storeAuth = useAuthStore()
+  const storeCurso = useCursoStore()
+  const storeUnidade = useUnidadeStore()
+  const storeMissao = useMissaoStore()
 
-const cursoId = ref(route.params.idCurso)
-const loading = ref(true)
+  const cursoId = ref(route.params.idCurso)
+  const loading = ref(true)
 
-const windowWidth = ref(window.innerWidth)
-const isSidebarOpen = ref(false)
+  const windowWidth = ref(window.innerWidth)
+  const isSidebarOpen = ref(false)
 
-const updateWidth = () => {
-  windowWidth.value = window.innerWidth
-}
-
-const dynamicPadding = computed(() => {
-  return windowWidth.value < 768 && !isSidebarOpen.value ? 'pl-20' : 'pl-10'
-})
-
-onMounted(async () => {
-  window.addEventListener('resize', updateWidth)
-
-  await storeCurso.getCurso(cursoId.value)
-
-  if (storeAuth.user.type === 'J') {
-    await storeMissao.getMinhasmissoes()
+  const updateWidth = () => {
+    windowWidth.value = window.innerWidth
   }
 
-  loading.value = false
-})
+  const dynamicPadding = computed(() => {
+    return windowWidth.value < 768 && !isSidebarOpen.value ? 'pl-20' : 'pl-10'
+  })
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
+  onMounted(async () => {
+    window.addEventListener('resize', updateWidth)
 
-watch(() => route.params.idCurso, async (novoId) => {
-  cursoId.value = novoId
-  loading.value = true
+    await storeCurso.getCurso(cursoId.value)
 
-  await storeCurso.getCurso(cursoId.value)
+    if (storeAuth.user.type === 'J') {
+      await storeMissao.getMinhasmissoes()
+    }
 
-  if (storeAuth.user.type === 'J') {
-    await storeMissao.getMinhasmissoes()
+    loading.value = false
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth)
+  })
+
+  watch(() => route.params.idCurso, async (novoId) => {
+    cursoId.value = novoId
+    loading.value = true
+
+    await storeCurso.getCurso(cursoId.value)
+
+    if (storeAuth.user.type === 'J') {
+      await storeMissao.getMinhasmissoes()
+    }
+
+    loading.value = false
+  })
+
+  const irParaUnidade = (unidade) => {
+    storeUnidade.unidade = unidade
+    router.push({ name: 'Unidade', params: { idUnidade: unidade.id } })
   }
-
-  loading.value = false
-})
-
-const irParaUnidade = (id) => {
-  router.push({ name: 'Unidade', params: { idUnidade: id } })
-}
 </script>
 
 <template>
@@ -79,7 +80,7 @@ const irParaUnidade = (id) => {
 
           <div class="space-y-12">
             <template v-for="unidade in storeUnidade?.unidades" :key="unidade.id">
-              <div v-if="unidade.status !== -1" @click="irParaUnidade(unidade.id)"
+              <div v-if="unidade.status !== -1" @click="irParaUnidade(unidade)"
                 class="cursor-pointer block transform transition duration-300 hover:scale-101 hover:shadow-lg">
                 <UnidadeCard :titulo="unidade.titulo" :descricao="unidade.descricao" :status="unidade.status" />
               </div>

@@ -1,21 +1,15 @@
 <script setup>
   import { useRouter } from 'vue-router'
   import { useUnidadeStore } from '@/stores/unidade'
-  import { useCursoStore } from '@/stores/curso'
 
   const router = useRouter()
   const storeUnidade = useUnidadeStore()
-  const storeCurso = useCursoStore()
 
   const emit = defineEmits(['fecharSairJogo'])
 
-  const { idCurso } = defineProps({
-    idCurso: Number
-  })
-
   const desistirJogo = () => {
     // Redireciona para a página de unidades
-    router.push(`/curso/${storeCurso.curso.id}/unidade/${storeUnidade.unidade.id}`)
+    router.push({ name: 'Unidade' }, { idUnidade: storeUnidade.unidade.id })
   }
 </script>
 

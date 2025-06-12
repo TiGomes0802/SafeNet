@@ -6,6 +6,7 @@
   import { useVidasStore } from '@/stores/vidas'
   import { useAuthStore } from '@/stores/auth'
   import { useUnidadeStore } from '@/stores/unidade'
+  import { useCursoStore } from '@/stores/curso'
   import ReportarPergunta from '@/components/reports/Report.vue'
   import DesistirJogo from '@/components/jogos/DesistirJogo.vue'
   import Loading from '@/components/loading/FrontofficeLaoding.vue'
@@ -16,6 +17,7 @@
   const storeJogo = useJogoStore()
   const storeVidas = useVidasStore()
   const storeAuth = useAuthStore()
+  const storeCurso = useCursoStore()
 
   const idUnidade = route.params.idUnidade
 
@@ -122,6 +124,7 @@
   }, { immediate: true })
 
   onMounted(async () => {
+    console.log(storeCurso.curso)
     if (storeAuth.user.vida <= 0) {
       router.push({ name: 'gameover', params: { idUnidade } })
       return
@@ -208,7 +211,7 @@
             class="bg-gray-300 px-4 py-2 rounded font-semibold w-full md:w-auto">Sair</button>
 
           <div v-if="desistir">
-            <DesistirJogo :idCurso="idCurso" :idUnidade="idUnidade" @fecharSairJogo="desistir = false" />
+            <DesistirJogo @fecharSairJogo="desistir = false" />
           </div>
 
           <div class="flex items-center space-x-1 w-full md:w-auto">
@@ -219,9 +222,6 @@
               </div>
             </div>
           </div>
-
-
-
 
           <button @click="validarResposta" :disabled="respostaSelecionada === null"
             class="bg-green-500 text-white px-4 py-2 rounded font-semibold transition-colors disabled:opacity-50 w-full md:w-auto">
@@ -254,7 +254,7 @@
                 </div>
 
                 <button @click="report = true"
-                  class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full md:w-auto">
+                  class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-800 w-full md:w-auto">
                   Reportar pergunta
                 </button>
 
@@ -265,7 +265,8 @@
                 <!-- Botão à direita -->
                 <div class="flex-shrink-0">
                   <button @click="proximaPergunta"
-                    class="bg-gray-500 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition">
+                  class="text-white px-5 py-2 rounded-lg transition"
+                  :class="respostaCorretaAtual ? 'bg-green-500 hover:bg-green-700' : 'bg-red-500 hover:bg-red-700'">
                     Continuar
                   </button>
                 </div>
