@@ -19,11 +19,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
             $table->string('foto')->nullable();
-            $table->integer('moedas')->default(0);
+            $table->integer('moedas')->default(10);
             $table->integer('streak')->default(0);
             $table->boolean('streakFeita')->default(false);
             $table->integer('xp')->default(0);
-            $table->integer('vida')->default(5);
+            $table->integer('vida')->default(7);
             $table->timestamp('ultima_vida_update')->nullable();
             $table->string('password');
             $table->boolean('blocked')->default(false);
