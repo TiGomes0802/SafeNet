@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useLojaStore } from '@/stores/loja'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 import { useCoinsStore } from '@/stores/coins'
 
@@ -53,7 +53,7 @@ const dynamicPadding = computed(() => {
                     <div v-for="produto in produtos" :key="produto.id"
                         class="backdrop-blur-md bg-white/30 shadow-xl rounded-2xl p-4 flex flex-col items-center text-center transition hover:scale-105 duration-300">
 
-                        <img :src="produto.tipo_produto.imagem" alt="produto"
+                        <img :src="`/icons/${produto.imagem}`" alt="produto"
                             class="w-30 h-30 object-contain mt-5 mb-7" />
 
                         <p class="text-gray-800 font-semibold text-lg mb-2">{{ produto.nome }}</p>
@@ -63,8 +63,13 @@ const dynamicPadding = computed(() => {
                         </div>
 
                         <button @click="coinsStore.comprarProduto(produto.id)"
-                            class="mt-8 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
+                            class="relative group mt-8 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
                             Comprar
+                            <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
+                                bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap 
+                                opacity-0 group-hover:opacity-100 transition-opacity z-50 ">
+                                {{ produto.descricao }}
+                            </span>
                         </button>
 
                     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { useCursoStore } from '@/stores/curso'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 
 const storeCurso = useCursoStore()
 

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useReportStore } from '@/stores/report'
 import { useRouter } from 'vue-router'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/BackofficeLoading.vue'
 
 const storeReport = useReportStore()

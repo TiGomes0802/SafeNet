@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
 const storeAuth = useAuthStore()

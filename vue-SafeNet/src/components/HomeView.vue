@@ -1,28 +1,28 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue'
-  import Sidebar from '@/components/SideBar/Sidebar.vue'
-  import Loading from '@/components/loading/FrontofficeLaoding.vue'
-  import { useAuthStore } from '@/stores/auth'
+import { ref, onMounted, onUnmounted } from 'vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
+import Loading from '@/components/loading/FrontofficeLaoding.vue'
+import { useAuthStore } from '@/stores/auth'
 
-  const storeAuth = useAuthStore()
+const storeAuth = useAuthStore()
 
-  const loading = ref(true)
-  const isSidebarOpen = ref(false)
+const loading = ref(true)
+const isSidebarOpen = ref(false)
 
-  const windowWidth = ref(window.innerWidth)
+const windowWidth = ref(window.innerWidth)
 
-  const updateWidth = () => {
-    windowWidth.value = window.innerWidth
-  }
+const updateWidth = () => {
+  windowWidth.value = window.innerWidth
+}
 
-  onMounted(() => {
-    window.addEventListener('resize', updateWidth)
-    loading.value = false
-  })
+onMounted(() => {
+  window.addEventListener('resize', updateWidth)
+  loading.value = false
+})
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateWidth)
-  })
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWidth)
+})
 </script>
 
 <template>

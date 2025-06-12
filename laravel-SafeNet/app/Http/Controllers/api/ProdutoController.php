@@ -55,6 +55,7 @@ class ProdutoController extends Controller
             'preco' => 'required|numeric|min:0',
             'valor' => 'required|numeric|min:0',
             'idTipoProduto' => 'required|exists:tipoProdutos,id',
+            'imagem' => 'required|string|max:255',
         ]);
 
         $produto = Produto::create([
@@ -62,6 +63,7 @@ class ProdutoController extends Controller
             'preco' => $validated['preco'],
             'valor' => $validated['valor'],
             'idTipoProduto' => $validated['idTipoProduto'],
+            'imagem' => $validated['imagem'],
             'estado' => 0,
         ]);
 

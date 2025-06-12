@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, computed, ref, watch } from 'vue';
 import { useJogoStore } from '@/stores/jogo'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import VerdadeiroFalso from '@/components/tipojogos/VerdadeiroFalso.vue';
 import EscolhaMultipla from '@/components/tipojogos/EscolhaMultipla.vue';
 import Ordernar from '@/components/tipojogos/Ordernar.vue';

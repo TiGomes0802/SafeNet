@@ -1,20 +1,20 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
-    import { useLojaStore } from '@/stores/loja'
-    import Sidebar from '@/components/SideBar/Sidebar.vue'
-    import Loading from '@/components/loading/BackofficeLoading.vue'
+import { ref, onMounted } from 'vue'
+import { useLojaStore } from '@/stores/loja'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
+import Loading from '@/components/loading/BackofficeLoading.vue'
 
-    const lojaStore = useLojaStore()
-    const loading = ref(true);
+const lojaStore = useLojaStore()
+const loading = ref(true);
 
-    onMounted(async () => {
-        await lojaStore.fetchProdutos()
-        loading.value = false
-    })
+onMounted(async () => {
+    await lojaStore.fetchProdutos()
+    loading.value = false
+})
 
-    function alterarEstado(id) {
-        lojaStore.alterarEstadoProduto(id)
-    }
+function alterarEstado(id) {
+    lojaStore.alterarEstadoProduto(id)
+}
 </script>
 
 <template>

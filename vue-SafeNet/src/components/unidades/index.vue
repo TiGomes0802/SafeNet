@@ -1,52 +1,52 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
-    import { useRoute } from 'vue-router'
-    import Sidebar from '@/components/SideBar/Sidebar.vue'
-    import { useCursoStore } from '@/stores/curso'
-    import { useUnidadeStore } from '@/stores/unidade'
-    import draggable from 'vuedraggable'
-    import Loading from '@/components/loading/BackofficeLoading.vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
+import { useCursoStore } from '@/stores/curso'
+import { useUnidadeStore } from '@/stores/unidade'
+import draggable from 'vuedraggable'
+import Loading from '@/components/loading/BackofficeLoading.vue'
 
-    const route = useRoute()
-    const storeCurso = useCursoStore()
-    const storeUnidade = useUnidadeStore()
+const route = useRoute()
+const storeCurso = useCursoStore()
+const storeUnidade = useUnidadeStore()
 
-    const cursoId = route.params.idCurso
-    const ordemAlterada = ref(false)
-    const loading = ref(true);
+const cursoId = route.params.idCurso
+const ordemAlterada = ref(false)
+const loading = ref(true);
 
-    onMounted(async () => {
-        if (storeCurso.cursos.length == 0) {
-            await storeCurso.getCurso(cursoId)
-        } else {
-            for (const curso of storeCurso.cursos) {
-                if (curso.id == cursoId) {
-                    storeCurso.curso = curso
-                    storeUnidade.unidades = curso.unidades
-                    break
-                }
+onMounted(async () => {
+    if (storeCurso.cursos.length == 0) {
+        await storeCurso.getCurso(cursoId)
+    } else {
+        for (const curso of storeCurso.cursos) {
+            if (curso.id == cursoId) {
+                storeCurso.curso = curso
+                storeUnidade.unidades = curso.unidades
+                break
             }
         }
-
-        loading.value = false
-    })
-
-    const guardarNovaOrdem = async () => {
-        const novaOrdem = storeUnidade.unidades.map((u, index) => ({
-            id: u.id,
-            ordem: index + 1
-        }))
-
-        const success = await storeUnidade.updateUnidadeOrder(cursoId, novaOrdem)
-
-        if (success) {
-            ordemAlterada.value = false
-        }
     }
 
-    const onOrderChange = () => {
-        ordemAlterada.value = true
+    loading.value = false
+})
+
+const guardarNovaOrdem = async () => {
+    const novaOrdem = storeUnidade.unidades.map((u, index) => ({
+        id: u.id,
+        ordem: index + 1
+    }))
+
+    const success = await storeUnidade.updateUnidadeOrder(cursoId, novaOrdem)
+
+    if (success) {
+        ordemAlterada.value = false
     }
+}
+
+const onOrderChange = () => {
+    ordemAlterada.value = true
+}
 </script>
 
 <template>

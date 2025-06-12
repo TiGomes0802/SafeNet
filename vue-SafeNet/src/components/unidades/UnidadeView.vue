@@ -1,42 +1,42 @@
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
-  import { useRoute } from 'vue-router'
-  import { usePaginaStore } from '@/stores/pagina'
-  import { useCursoStore } from '@/stores/curso'
-  import { useAuthStore } from '@/stores/auth'
-  import Sidebar from '@/components/SideBar/Sidebar.vue'
-  import Loading from '@/components/loading/FrontofficeLaoding.vue'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { usePaginaStore } from '@/stores/pagina'
+import { useCursoStore } from '@/stores/curso'
+import { useAuthStore } from '@/stores/auth'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
+import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-  const route = useRoute()
-  const storeCurso = useCursoStore()
-  const storePagina = usePaginaStore()
-  const storeAuth = useAuthStore()
+const route = useRoute()
+const storeCurso = useCursoStore()
+const storePagina = usePaginaStore()
+const storeAuth = useAuthStore()
 
-  const idUnidade = route.params.idUnidade
-  const paginaVisivel = computed(() => storePagina.paginas[paginaAtual.value])
-  const loading = ref(true);
+const idUnidade = route.params.idUnidade
+const paginaVisivel = computed(() => storePagina.paginas[paginaAtual.value])
+const loading = ref(true);
 
-  const paginaAtual = ref(0)
+const paginaAtual = ref(0)
 
-  const proximaPagina = () => {
-    if (paginaAtual.value < storePagina.paginas.length - 1) {
-      paginaAtual.value++
-    }
+const proximaPagina = () => {
+  if (paginaAtual.value < storePagina.paginas.length - 1) {
+    paginaAtual.value++
   }
+}
 
-  const paginaAnterior = () => {
-    if (paginaAtual.value > 0) {
-      paginaAtual.value--
-    }
+const paginaAnterior = () => {
+  if (paginaAtual.value > 0) {
+    paginaAtual.value--
   }
+}
 
-  onMounted(async () => {
-    await Promise.all([
-      storeCurso.getCursos(),
-      storePagina.getPaginas(idUnidade)
-    ])
-    loading.value = false
-  })
+onMounted(async () => {
+  await Promise.all([
+    storeCurso.getCursos(),
+    storePagina.getPaginas(idUnidade)
+  ])
+  loading.value = false
+})
 </script>
 
 <template>
@@ -54,9 +54,7 @@
               {{ storeCurso.curso?.nome }} | Unidade {{ idUnidade }}
             </h1>
             <div class="sm:justify-end flex-grow text-right">
-              <RouterLink
-                :to="`/unidade/${idUnidade}/jogos/play`"
-                class="px-4 py-2 text-white rounded"
+              <RouterLink :to="`/unidade/${idUnidade}/jogos/play`" class="px-4 py-2 text-white rounded"
                 :class="storeAuth.user.vida === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'"
                 :disabled="storeAuth.user.vida === 0">
                 Avaliar

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useMissaoStore } from '@/stores/missao'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/BackofficeLoading.vue'
 
 const storeMissao = useMissaoStore()
