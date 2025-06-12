@@ -13,15 +13,14 @@ class TipoProdutoSeeder extends Seeder
     public function run(): void
     {
         $tiposProdutos = [
-            ['tipo' => 'Gelo', 'imagem' => '/icons/gelo.png',],
-            ['tipo' => 'Vidas', 'imagem' => '/icons/vida.png',],
-            ['tipo' => 'Missao', 'imagem' => '/icons/missao.png',],
+            ['tipo' => 'Gelo'],
+            ['tipo' => 'Vidas'],
+            ['tipo' => 'Missao'],
         ];
 
         foreach ($tiposProdutos as $tipoProduto) {
             TipoProduto::create([
                 'tipo' => $tipoProduto['tipo'],
-                'imagem' => $tipoProduto['imagem'],
             ]);
         }
     }
