@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useAmigoStore } from '@/stores/amigo'

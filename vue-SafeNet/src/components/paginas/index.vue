@@ -1,71 +1,71 @@
 <script setup>
-    import { ref, onMounted, watch } from 'vue'
-    import { usePaginaStore } from '@/stores/pagina'
-    import Sidebar from '@/components/SideBar/Sidebar.vue'
-    import CreatePagina from '@/components/paginas/create.vue'
-    import Loading from '@/components/loading/BackofficeLoading.vue'
-    import { QuillEditor } from '@vueup/vue-quill'
-    import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { ref, onMounted, watch } from 'vue'
+import { usePaginaStore } from '@/stores/pagina'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
+import CreatePagina from '@/components/paginas/create.vue'
+import Loading from '@/components/loading/BackofficeLoading.vue'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
-    const paginaStore = usePaginaStore()
+const paginaStore = usePaginaStore()
 
-    const paginas = ref([])
-    const edicao = ref(false)
-    const paginasAnteriores = ref([])
+const paginas = ref([])
+const edicao = ref(false)
+const paginasAnteriores = ref([])
 
-    const props = defineProps(['idUnidade'])
+const props = defineProps(['idUnidade'])
 
-    const loading = ref(true);
+const loading = ref(true);
 
-    const ativarEdicao = () => {
-        edicao.value = true
-    }
+const ativarEdicao = () => {
+    edicao.value = true
+}
 
-    const cancelarEdicao = () => {
-        edicao.value = false
-        paginas.value = paginaStore.paginas
-    }
+const cancelarEdicao = () => {
+    edicao.value = false
+    paginas.value = paginaStore.paginas
+}
 
-    const desativarEdicao = () => {
-        edicao.value = false
-        paginaStore.updatePaginas(paginas.value, props.idUnidade)
-    }
+const desativarEdicao = () => {
+    edicao.value = false
+    paginaStore.updatePaginas(paginas.value, props.idUnidade)
+}
 
-    watch(paginas, (novasPaginas) => {
-        novasPaginas.forEach((pagina, i) => {
-            const ordemAntiga = paginasAnteriores.value[i]?.ordem
-            const ordemNova = pagina.ordem
+watch(paginas, (novasPaginas) => {
+    novasPaginas.forEach((pagina, i) => {
+        const ordemAntiga = paginasAnteriores.value[i]?.ordem
+        const ordemNova = pagina.ordem
 
-            // Verifica se houve mudança na ordem
-            if (ordemAntiga !== ordemNova) {
-                // Encontrar a página com a ordem nova para trocar
-                const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
+        // Verifica se houve mudança na ordem
+        if (ordemAntiga !== ordemNova) {
+            // Encontrar a página com a ordem nova para trocar
+            const paginaEmConflito = paginas.value.find(p => p.ordem === ordemNova && p !== pagina)
 
-                if (paginaEmConflito) {
-                    // Troca as ordens entre páginas
-                    paginaEmConflito.ordem = ordemAntiga
-                }
+            if (paginaEmConflito) {
+                // Troca as ordens entre páginas
+                paginaEmConflito.ordem = ordemAntiga
             }
-        })
-
-        // Atualiza a cópia profunda após as mudanças
-        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
-    }, { deep: true })
-
-
-    watch(
-        () => paginaStore.paginas,
-        (novasPaginas) => {
-            paginas.value = novasPaginas
         }
-    )
+    })
 
-    onMounted(async () => {
-        await paginaStore.getPaginas(props.idUnidade);
-        paginas.value = JSON.parse(JSON.stringify(paginaStore.paginas))
-        paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
-        loading.value = false
-    });
+    // Atualiza a cópia profunda após as mudanças
+    paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
+}, { deep: true })
+
+
+watch(
+    () => paginaStore.paginas,
+    (novasPaginas) => {
+        paginas.value = novasPaginas
+    }
+)
+
+onMounted(async () => {
+    await paginaStore.getPaginas(props.idUnidade);
+    paginas.value = JSON.parse(JSON.stringify(paginaStore.paginas))
+    paginasAnteriores.value = JSON.parse(JSON.stringify(paginas.value))
+    loading.value = false
+});
 </script>
 
 <template>

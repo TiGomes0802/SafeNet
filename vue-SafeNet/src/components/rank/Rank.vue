@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import Sidebar from '@/components/SideBar/Sidebar.vue'
+import Sidebar from '@/components/sideBar/Sidebar.vue'
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
 import { useRankStore } from '@/stores/rank'
 import { useAuthStore } from '@/stores/auth'

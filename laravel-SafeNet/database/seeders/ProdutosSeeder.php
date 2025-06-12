@@ -14,7 +14,7 @@ class ProdutosSeeder extends Seeder
                 'nome' => 'Congelar Streak',
                 'preco' => 20,
                 'valor' => 1,
-                'descricao' => 'Congela o streak atual no dia atual caso não tenha sido concluído.',
+                'descricao' => 'Congela a streak atual no dia atual caso não tenha sido concluída.',
                 'estado' => 1,
                 'idTipoProduto' => 1,
                 'imagem' => 'gelo.png',

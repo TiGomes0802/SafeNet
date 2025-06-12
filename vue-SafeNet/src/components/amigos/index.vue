@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useAmigoStore } from '@/stores/amigo';
 import Loading from '@/components/loading/FrontofficeLaoding.vue'
-import Sidebar from '@/components/SideBar/Sidebar.vue';
+import Sidebar from '@/components/sideBar/Sidebar.vue';
 import defaultAvatar from '@/assets/avatar-default-icon.png'
 
 const storeAmigo = useAmigoStore();
