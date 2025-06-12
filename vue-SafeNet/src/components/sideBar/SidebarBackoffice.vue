@@ -30,7 +30,7 @@ defineProps(['handleLinkClick'])
         <span>Estatísticas</span>
       </router-link>
 
-      <router-link to="/backoffice/missoes" class="flex items-center py-2 px-3 rounded hover:bg-gray-100"
+      <router-link to="/backoffice/missoes" class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100"
         @click="handleLinkClick">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
           viewBox="0 0 24 24">
