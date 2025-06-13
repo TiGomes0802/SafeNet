@@ -13,7 +13,7 @@ class GeradorMissoesUtilizadorService
     public function gerarPara(User $user, int $quantidade = 3, bool $loja = false): void
     {
         info("Enviando missões para o utilizador {$user->username}");
-        $hoje = Carbon::today();
+        $hoje = Carbon::today('Europe/Lisbon');
 
         // Contar missões NÃO concluídas do utilizador
         $missoesNaoConcluidas = UserMissao::where('idUser', $user->id)

@@ -89,7 +89,7 @@ class MissaoController extends Controller
         $user = auth()->user();
 
         $minhasMissoes = $user->userMissao()
-            ->whereDate('data', Carbon::today())
+            ->whereDate('data', Carbon::today('Europe/Lisbon'))
             ->where('concluida', 0)
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');
@@ -209,7 +209,7 @@ class MissaoController extends Controller
     public function progressoMissaoDeAmigos($user)
     {
         $missoes = $user->userMissao()
-            ->whereDate('data', Carbon::today())
+            ->whereDate('data', Carbon::today('Europe/Lisbon'))
             ->where('concluida', 0)
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');

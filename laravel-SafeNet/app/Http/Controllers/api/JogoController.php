@@ -303,7 +303,7 @@ class JogoController extends Controller
         $taxaAcerto = round($numJogosAcertados / count($validatedJogos) * 100, 2);
 
         $minhaMissoesAntesAtualizar = $user->userMissao()
-            ->whereDate('data', Carbon::today())
+            ->whereDate('data', Carbon::today('Europe/Lisbon'))
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');
             })->get();
@@ -320,7 +320,7 @@ class JogoController extends Controller
         $missaoController->progressoMissao($missoes);
 
         $minhaMissoesDepoisAtualizar = $user->userMissao()
-            ->whereDate('data', Carbon::today())
+            ->whereDate('data', Carbon::today('Europe/Lisbon'))
             ->whereHas('missao', function ($query) {
                 $query->where('tipo', 'missao');
             })->get();
