@@ -1,30 +1,30 @@
 # SafeNet
 
-**SafeNet** é uma plataforma web gamificada concebida para tornar a educação em cibersegurança mais interativa, motivadora e eficaz, combinando conteúdos educativos com mecânicas de jogo.
+**SafeNet** is a gamified web platform designed to make cybersecurity education more interactive, motivating, and effective by combining educational content with game mechanics.
 
-## 🎯 Objetivos do Projeto
+## 🎯 Project Goals
 
-- Criar uma experiência de aprendizagem dinâmica e envolvente, onde os utilizadores ganham vidas, pontos de experiência (XP) e posições em rankings, completam missões e recebem moedas virtuais para gastar na loja da plataforma;
-- Permitir que administradores e gestores criem, editem e organizem conteúdos educativos de forma modular, estruturando-os em cursos divididos por unidades com jogos educativos para validação da aprendizagem;
-- Tornar a plataforma adaptável a qualquer área temática, estendendo a sua usabilidade para além da cibersegurança.
+- Create a dynamic and engaging learning experience where users earn lives, experience points (XP), and rankings, complete missions that reward virtual coins to spend in the platform’s store;
+- Allow administrators and managers to create, edit, and manage educational content modularly by organizing it into courses, divided into units, which include different educational games to validate learning;
+- Make the platform adaptable to any subject area, extending its usability beyond cybersecurity.
 
-## 🧱 Estrutura Técnica
+## 🧱 Technical Structure
 
-- **Frontend:** Desenvolvido com Vue.js, possui duas áreas principais:
-  - **Frontoffice**: Interface responsiva e intuitiva para estudantes;
-  - **Backoffice**: Área de gestão para administradores e gestores gerirem cursos, unidades e jogos.
-- **Backend:** Desenvolvido em Laravel (PHP), é responsável por toda a lógica do sistema, incluindo autenticação, autorização, gestão de utilizadores, conteúdos, pontuações e acompanhamento das interações dos utilizadores.
+- **Frontend:** Built with Vue.js, featuring two main areas:
+  - **Frontoffice**: For students, offering responsive and intuitive interfaces;
+  - **Backoffice**: For managers and admins to manage courses, units, and games.
+- **Backend:** Developed in Laravel (PHP), handling all system logic including authentication, authorization, user management, content, scoring, and tracking user interactions.
 
-## 🚀 Funcionalidades Principais
+## 🚀 Key Features
 
-- Sistema de gamificação completo com vidas, XP, rankings globais e por curso, e missões que recompensam com moedas virtuais;
-- Criação modular de conteúdos educativos, com possibilidade de integrar diferentes tipos de jogos para avaliação do conhecimento;
-- Gestão avançada de utilizadores com perfis distintos: estudante, gestor e administrador;
-- Design responsivo, garantindo uma experiência consistente em desktop e dispositivos móveis.
+- Complete gamification system with lives, XP, global and course-specific rankings, and missions that reward virtual coins to spend in the platform’s store;
+- Modular creation of educational content, with the ability to add different types of games to assess knowledge;
+- Advanced user management, with distinct profiles for students, managers, and administrators;
+- Responsive design, ensuring a consistent experience on desktop and mobile devices.
 
-## ⚙️ Desafios e Aprendizagens
+## ⚙️ Challenges and Learning Outcomes
 
-- Desenvolvimento full-stack com uso intensivo de Vue.js e Laravel;
-- Implementação de gamificação e lógica complexa de pontuações, moedas virtuais e progressão;
-- Conceção de uma interface amigável para diferentes perfis de utilizador;
-- Integração eficaz entre design de UX, desenvolvimento web e estruturação de sistemas.
+- Full-stack development using two main technologies (Vue.js and Laravel);
+- Implementation of gamification and complex logic for scoring, virtual coins, and progression;
+- Designing a user-friendly interface for diverse user roles;
+- Opportunity to apply advanced skills and improve UX design, web development, and system integration.
