@@ -103,7 +103,7 @@ const onOrderChange = () => {
                                         Páginas
                                     </router-link>
                                     <router-link :to="`/backoffice/unidade/${element.id}/jogos/`"
-                                        class="bg-gray-300 hover:bg-red-400 text-black font-semibold py-2 px-4 rounded">
+                                        class="bg-gray-300 hover:bg-green-400 text-black font-semibold py-2 px-4 rounded">
                                         Jogos
                                     </router-link>
                                 </td>
