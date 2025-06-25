@@ -22,7 +22,19 @@ defineProps(['handleLinkClick'])
       </nav>
     </div>
 
-    <nav class="space-y-1 mt-8">
+    <nav class="space-y-1 mt-4 mb-2">
+      <!-- Jogos -->
+      <router-link
+        to="/backoffice/estatisticas"
+        class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none"
+        @click.prevent>
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207" />
+        </svg>
+        <span>Jogos</span>
+      </router-link>
+
       <!-- Missões -->
       <router-link to="/missoes" class="flex items-center py-2 px-3 rounded hover:bg-gray-100" @click="handleLinkClick">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -67,6 +79,8 @@ defineProps(['handleLinkClick'])
         </svg>
         <span class="ml-2">Amigos</span>
       </router-link>
+
+      
     </nav>
   </div>
 </template>
