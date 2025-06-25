@@ -16,7 +16,8 @@ class CursosSeeder extends Seeder
         $cursos = [
             ['nome' => 'Engenharia Social', 'estado'=> true],
             ['nome' => 'Malware', 'estado'=> false],
-            ['nome' => 'DEMO', 'estado'=> true],
+            ['nome' => 'Redes Sociais', 'estado'=> false],
+            ['nome' => 'Segurança na Cloud', 'estado'=> false]
         ];
 
         foreach ($cursos as $curso) {
