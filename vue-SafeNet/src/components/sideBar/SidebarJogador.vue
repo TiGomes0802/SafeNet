@@ -22,18 +22,18 @@ defineProps(['handleLinkClick'])
       </nav>
     </div>
 
-    <nav class="space-y-1 mt-4 mb-2">
+    <nav class="space-y-1 mt-4 mb-2 px-3">
       <!-- Jogos -->
       <router-link
         to="/backoffice/estatisticas"
-        class="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none"
+        class="flex items-center py-2 px-3 rounded text-gray-600 bg-gray-100 cursor-not-allowed pointer-events-none"
         @click.prevent>
-        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207" />
+        <svg class="w-6 h-6 text-gray-500 dark:text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+          <path d="M192 64C86 64 0 150 0 256S86 448 192 448l256 0c106 0 192-86 192-192s-86-192-192-192L192 64zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24l0 32 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 0 0 32c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-32-32 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-32z"/>
         </svg>
-        <span>Jogos</span>
+        <span class="ml-2">Desafios</span>
       </router-link>
+
 
       <!-- Missões -->
       <router-link to="/missoes" class="flex items-center py-2 px-3 rounded hover:bg-gray-100" @click="handleLinkClick">
