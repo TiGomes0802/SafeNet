@@ -1,11 +1,18 @@
 <script setup>
-import { useCursoStore } from '@/stores/curso'
-import { useAuthStore } from '@/stores/auth'
+  import { ref } from 'vue'
+  import { useCursoStore } from '@/stores/curso'
+  import { useAuthStore } from '@/stores/auth'
 
-const storeCurso = useCursoStore()
-const storeAuth = useAuthStore()
+  const storeCurso = useCursoStore()
+  const storeAuth = useAuthStore()
 
-defineProps(['handleLinkClick'])
+  const favoritos = ref({})
+
+  function toggleFavorito(id) {
+    favoritos.value[id] = !favoritos.value[id]
+  }
+
+  defineProps(['handleLinkClick'])
 </script>
 
 <template>
@@ -13,12 +20,36 @@ defineProps(['handleLinkClick'])
     <div class="mb-6">
       <h2 class="text-sm font-semibold text-gray-500 mb-2 px-3">Cursos</h2>
       <nav class="space-y-2">
-        <router-link v-for="curso in storeCurso.cursos" :key="curso.id"
-          :to="curso.estado !== 0 ? `/curso/${curso.id}` : ''" class="block py-2 px-6 rounded"
-          :class="curso.estado === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100 text-black'"
-          @click="curso.estado === 0 ? $event.preventDefault() : handleLinkClick">
-          {{ curso.nome }}
-        </router-link>
+        <div v-for="curso in storeCurso.cursos" :key="curso.id"
+          class="flex items-center justify-between py-2 px-6 rounded group"
+          :class="curso.estado === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100 text-black'">
+            <!-- Link -->
+          <router-link
+            :to="curso.estado !== 0 ? `/curso/${curso.id}` : ''"
+            class="flex-1"
+            @click="curso.estado === 0 ? $event.preventDefault() : handleLinkClick"
+          >
+            {{ curso.nome }}
+          </router-link>
+
+          <!-- Estrela -->
+          <svg
+            @click.stop="curso.estado !== 0 && toggleFavorito(curso.id)"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 ml-2 transition-colors duration-200"
+            :class="curso.estado === 0
+              ? 'fill-transparent stroke-gray-300 cursor-not-allowed'
+              : favoritos[curso.id]
+                ? 'fill-yellow-400 stroke-yellow-400 cursor-pointer'
+                : 'fill-transparent stroke-gray-400 hover:stroke-black cursor-pointer'"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11.48 3.5l1.69 4.37 4.64.36-3.53 2.88 1.18 4.58-3.98-2.52-3.98 2.52 1.18-4.58-3.53-2.88 4.64-.36 1.69-4.37z"/>
+          </svg>
+        </div>
       </nav>
     </div>
 
