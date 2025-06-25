@@ -43,6 +43,6 @@ class GerarMissoesDiarias extends Command
             }
         });
         \Log::info('Comando app:gerar-missoes-diarias executado às ' . now());
-        $this->info('Missões diárias geradas para todos os utilizadores do tipo J.');
+        $this->info('Missões diárias geradas para todos os utilizadores do tipo J.' . now());
     }
 }
