@@ -15,7 +15,7 @@
         idUnidade: idUnidade,
         xp: 25,
         pergunta: '',
-        tipoJogo: 2,
+        tipoJogo: 1,
         respostas: ['', '', '', ''],
         respostaCerta: '', 
     });
