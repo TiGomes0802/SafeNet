@@ -39,8 +39,8 @@ const jogoCarregado = computed(() => !!jogoStore.jogo && Object.keys(jogoStore.j
                         :value="jogoStore.jogo.tipoJogo" disabled />
                 </div>
 
-                <VerdadeiroFalso v-if="jogoStore.jogo.idTipoJogo === 1" :modo="'editar'" />
-                <EscolhaMultipla v-if="jogoStore.jogo.idTipoJogo === 2" :modo="'editar'" />
+                <EscolhaMultipla v-if="jogoStore.jogo.idTipoJogo === 1" :modo="'editar'" />
+                <VerdadeiroFalso v-if="jogoStore.jogo.idTipoJogo === 2" :modo="'editar'" />
                 <Ordernar v-if="jogoStore.jogo.idTipoJogo === 3" :modo="'editar'" />
             </div>
             <div v-else class="flex items-center justify-center w-full h-screen">

@@ -46,8 +46,8 @@ watch(
                 </select>
             </div>
 
-            <VerdadeiroFalso v-if="tipoJogo === 1" />
-            <EscolhaMultipla v-if="tipoJogo === 2" />
+            <EscolhaMultipla v-if="tipoJogo === 1" />
+            <VerdadeiroFalso v-if="tipoJogo === 2" />
             <Ordernar v-if="tipoJogo === 3" />
         </div>
     </div>
