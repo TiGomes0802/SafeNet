@@ -44,8 +44,6 @@ export const useJogoStore = defineStore('jogo', () => {
     }
 
     const createJogo = async (jogo) => {
-        console.log("Creating game:", jogo);
-        console.log(jogo);
         try {
             const response = await axios.post("unidade/" + jogo.idUnidade + "/jogo", jogo);
             if (response.status === 201) {
