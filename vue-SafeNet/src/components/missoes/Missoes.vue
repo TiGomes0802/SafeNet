@@ -1,44 +1,44 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useMissaoStore } from '@/stores/missao';
-import Sidebar from '@/components/sideBar/Sidebar.vue';
-import Loading from '@/components/loading/FrontofficeLaoding.vue'
+    import { ref, onMounted, onUnmounted, computed } from 'vue';
+    import { useMissaoStore } from '@/stores/missao';
+    import Sidebar from '@/components/sideBar/Sidebar.vue';
+    import Loading from '@/components/loading/FrontofficeLaoding.vue'
 
-const storeMissao = useMissaoStore();
+    const storeMissao = useMissaoStore();
 
-const loading = ref(true);
-const tempoRestante = ref('');
+    const loading = ref(true);
+    const tempoRestante = ref('');
 
-let intervalo = 0;
+    let intervalo = 0;
 
-function atualizarTempo() {
-    const agora = new Date();
-    const meiaNoite = new Date();
-    meiaNoite.setHours(24, 0, 0, 0);
+    function atualizarTempo() {
+        const agora = new Date();
+        const meiaNoite = new Date();
+        meiaNoite.setHours(24, 0, 0, 0);
 
-    const diff = meiaNoite.getTime() - agora.getTime();
+        const diff = meiaNoite.getTime() - agora.getTime();
 
-    const horas = Math.floor(diff / (1000 * 60 * 60));
-    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+        const horas = Math.floor(diff / (1000 * 60 * 60));
+        const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if (horas >= 1) {
-        tempoRestante.value = `🕑 ${horas.toString().padStart(2)} Horas`;
-    } else {
-        tempoRestante.value = `🕑 ${minutos.toString().padStart(2, '0')} Minutos`;
+        if (horas >= 1) {
+            tempoRestante.value = `🕑 ${horas.toString().padStart(2)} Horas`;
+        } else {
+            tempoRestante.value = `🕑 ${minutos.toString().padStart(2, '0')} Minutos`;
+        }
     }
-}
 
-onMounted(() => {
-    storeMissao.getMinhasmissoes();
-    atualizarTempo();
-    intervalo = setInterval(atualizarTempo, 1000);
-    loading.value = false;
-});
+    onMounted(() => {
+        storeMissao.getMinhasmissoes();
+        atualizarTempo();
+        intervalo = setInterval(atualizarTempo, 1000);
+        loading.value = false;
+    });
 
-onUnmounted(() => {
-    clearInterval(intervalo);
-});
+    onUnmounted(() => {
+        clearInterval(intervalo);
+    });
 </script>
 
 <template>
@@ -47,10 +47,11 @@ onUnmounted(() => {
         <Loading />
     </div>
     <transition name="fade" appear enter-active-class="transition-opacity duration-700" enter-from-class="opacity-0"
-        enter-to-class="opacity-100">
-        <div class="flex h-screen overflow-y-auto">
-            <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
-            <div class="flex flex-col items-center justify-start w-full mx-auto bg-gray-100 overflow-y-scroll">
+      enter-to-class="opacity-100">
+      <div class="flex h-screen">
+        <Sidebar :isOpen="isSidebarOpen" @toggle="isSidebarOpen = !isSidebarOpen" />
+        <div class="flex-1 mx-auto bg-gray-100 overflow-y-scroll">
+            <div class="flex flex-col items-center justify-start w-full mx-auto">
                 <div class="m-5 md:m-10 w-[90%] md:w-[75%]">
                     <div class="flex flex-col items-center justify-between w-full mx-auto mb-10">
                         <div class="flex flex-col sm:flex-row items-center justify-between w-full mb-4">
@@ -109,6 +110,8 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
+            
         </div>
+    </div>
     </transition>
 </template>
