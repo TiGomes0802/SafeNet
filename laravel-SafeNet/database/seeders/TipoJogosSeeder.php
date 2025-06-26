@@ -13,8 +13,8 @@ class TipoJogosSeeder extends Seeder
     public function run(): void
     {
         $tiposDeJogos = [
-            ['tipo' => 'Verdadeiro/Falso'],
             ['tipo' => 'Escolha Múltipla'],
+            ['tipo' => 'Verdadeiro/Falso'],
             ['tipo' => 'Ordenar'],
             //['tipo' => 'Preencher os espaços em branco'],
             //['tipo' => 'Arrastar e Soltar'],

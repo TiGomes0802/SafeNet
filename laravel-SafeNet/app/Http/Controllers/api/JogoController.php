@@ -124,9 +124,9 @@ class JogoController extends Controller
         $respostaController = new RespostaController();
 
         if($validatedData['tipoJogo'] == 1){
-            $respostaController->createRespostaVerdadeiroFalso($respostas);
-        } elseif($validatedData['tipoJogo'] == 2){
             $respostaController->createRespostaMultiplaEscolha($respostas);
+        } elseif($validatedData['tipoJogo'] == 2){
+            $respostaController->createRespostaVerdadeiroFalso($respostas);
         } elseif($validatedData['tipoJogo'] == 3){
             $respostaController->createRespostasOrdernar($respostas);
         } else {

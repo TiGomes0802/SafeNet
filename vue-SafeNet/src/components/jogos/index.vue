@@ -45,10 +45,10 @@ onMounted(async () => {
                                     <p class="text-lg py-2">{{ jogo.pergunta }}</p>
                                     <div class="items-center gap-x-2 mb-3">
                                         <div v-if="jogo.idTipoJogo === 1">
-                                            <VerdadeiroFalso :respostas="jogo.respostas" />
+                                            <EscolhaMultipla :respostas="jogo.respostas" />
                                         </div>
                                         <div v-else-if="jogo.idTipoJogo === 2">
-                                            <EscolhaMultipla :respostas="jogo.respostas" />
+                                            <VerdadeiroFalso :respostas="jogo.respostas" />
                                         </div>
                                         <div v-else-if="jogo.idTipoJogo === 3">
                                             <Ordernar :respostas="jogo.respostas" />
