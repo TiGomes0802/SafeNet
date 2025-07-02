@@ -80,7 +80,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => "A engenharia social se concentra principalmente em qual tipo de vulnerabilidade?",
+              "pergunta" => "A engenharia social concentra-se principalmente em que tipo de vulnerabilidade?",
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -88,7 +88,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => "O que é a engenharia social e como ela funciona para manipular pessoas e obter informações?",
+              "pergunta" => "O que é a engenharia social e como funciona para manipular pessoas e obter informações?",
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 2,
@@ -96,7 +96,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => "Como é possível prevenir ataques de engenharia social e quem está mais vulnerável a eles?",
+              "pergunta" => "Como é possível prevenir ataques de engenharia social e quem está mais vulnerável aos mesmos?",
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 2,
@@ -104,7 +104,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => "Ordena as seguintes formas de ataque de engenharia social do mais genérico para o mais direccionado:",
+              "pergunta" => "Ordena as seguintes formas de ataque de engenharia social do mais genérico para o mais direcionado:",
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 3,
@@ -115,7 +115,7 @@ class JogosSeeder extends Seeder
           # Region Unidade 2 -> 11 Questões
             [
               "xp" => 25,
-              "pergunta" => 'Qual princípio psicológico está relacionado ao desejo de parecer coerente com decisões anteriores?',
+              "pergunta" => 'Que princípio psicológico está relacionado ao desejo de parecer coerente com decisões anteriores?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -123,7 +123,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'Um e-mail diz: "Essa promoção é só para os 10 primeiros!" – qual gatilho foi usado?',
+              "pergunta" => 'Um e-mail diz: "Esta promoção é só para os 10 primeiros!" – que gatilho foi usado?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -147,7 +147,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'Qual gatilho psicológico é usado ao enviar uma mensagem de "última chance" para o destinatário?',
+              "pergunta" => 'Qual é o gatilho psicológico usado ao enviar uma mensagem de "última chance" para o destinatário?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -155,7 +155,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'A técnica de criar um senso de urgência em uma comunicação visa:',
+              "pergunta" => 'A técnica de criar um senso de urgência numa comunicação visa:',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -171,7 +171,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'Qual fator psicológico é mais frequentemente explorado quando um atacante tenta estabelecer uma conexão emocional com a vítima?',
+              "pergunta" => 'Qual é o fator psicológico mais frequentemente explorado quando um atacante tenta estabelecer uma conexão emocional com a vítima?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -179,7 +179,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'Quando um ataque usa uma linguagem de urgência ou ameaça, qual gatilho psicológico está sendo explorado?',
+              "pergunta" => 'Quando um ataque usa uma linguagem de urgência ou ameaça, qual é o gatilho psicológico que está a ser explorado?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -222,7 +222,7 @@ class JogosSeeder extends Seeder
             ],
             [
               "xp" => 25,
-              "pergunta" => 'Um hacker deixa um pendrive “achado” em uma recepção. Qual técnica está sendo usada?',
+              "pergunta" => 'Um hacker deixa uma pen “achada” numa recepção. Que técnica está a ser utilizada?',
               "estado" => true,
               "idGestor" => 6,
               "idTipo" => 1,
@@ -262,7 +262,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Em um ataque de smishing, o atacante utiliza qual meio para enganar a vítima?',
+              'pergunta' => 'Num ataque de smishing, o atacante utiliza que meio para enganar a vítima?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -270,7 +270,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Quando um atacante tenta usar a técnica de deepfake em um ataque de engenharia social, ele está tentando:',
+              'pergunta' => 'Quando um atacante tenta usar a técnica de deepfake num ataque de engenharia social, ele está a tentar:',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -305,7 +305,7 @@ class JogosSeeder extends Seeder
           # Region Unidade 4 -> 12 Questões
             [
               'xp' => 25,
-              'pergunta' => 'Qual setor geralmente é alvo por possuir dados bancários e financeiros?',
+              'pergunta' => 'Que setor é geralmente alvo por possuir dados bancários e financeiros?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -345,7 +345,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Em um cenário corporativo, como a falta de conscientização sobre segurança pode ser um risco?',
+              'pergunta' => 'Num cenário corporativo, como é que a falta de conscientização sobre segurança pode ser um risco?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -353,7 +353,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Em um ambiente corporativo, qual técnica de engenharia social visa enganar os funcionários de uma organização para que executem uma tarefa, como transferir fundos ou fornecer informações confidenciais?',
+              'pergunta' => 'Num ambiente corporativo, qual técnica de engenharia social visa enganar os funcionários de uma organização para que executem uma tarefa, como transferir fundos ou fornecer informações confidenciais?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -369,7 +369,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'O que deve ser feito em uma organização quando se identifica um ataque de engenharia social?',
+              'pergunta' => 'O que deve ser feito numa organização quando se identifica um ataque de engenharia social?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -412,7 +412,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Qual ferramenta ajuda a verificar se seu e-mail foi comprometido?',
+              'pergunta' => 'Qual ferramenta ajuda a verificar se o seu e-mail foi comprometido?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -420,7 +420,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Por que a cultura de segurança é importante em uma empresa?',
+              'pergunta' => 'Porque é que a cultura de segurança é importante numa empresa?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -428,7 +428,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Qual dessas ações não é recomendada para prevenir um ataque de engenharia social?',
+              'pergunta' => 'Qual destas ações não é recomendada para prevenir um ataque de engenharia social?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -436,7 +436,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Qual prática ajuda a prevenir ataques de Business Email Compromise (BEC)?',
+              'pergunta' => 'Que prática ajuda a prevenir ataques de Business Email Compromise (BEC)?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -444,7 +444,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'O que é um exemplo de "autenticação em dois fatores" (2FA)?',
+              'pergunta' => 'O que é um exemplo de "autenticação de dois fatores" (2FA)?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -452,7 +452,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Qual é a principal vantagem de usar autenticação em dois fatores (2FA)?',
+              'pergunta' => 'Qual é a principal vantagem de usar autenticação de dois fatores (2FA)?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 1,
@@ -476,7 +476,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Quais práticas e políticas internas reforçam a segurança e ajudam a prevenir ataques de engenharia social?',
+              'pergunta' => 'Que práticas e políticas internas reforçam a segurança e ajudam a prevenir ataques de engenharia social?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 2,
@@ -484,7 +484,7 @@ class JogosSeeder extends Seeder
             ],
             [
               'xp' => 25,
-              'pergunta' => 'Que ferramentas técnicas e medidas de resposta minimizam o impacto de ataques de engenharia social e protegem os activos da empresa?',
+              'pergunta' => 'Que ferramentas técnicas e medidas de resposta minimizam o impacto de ataques de engenharia social e protegem os ativos da empresa?',
               'estado' => true,
               'idGestor' => 6,
               'idTipo' => 2,

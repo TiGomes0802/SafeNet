@@ -108,7 +108,7 @@ class MissoesSeeder extends Seeder
             [
                 "tipo" => "missao",
                 "estado" => true,
-                "descricao" => "Estuda durante 5 minutos",
+                "descricao" => "Estude durante 5 minutos",
                 "objetivo" => "5",
                 "moedas" => "3",
                 "idTipoMissao" => "2",

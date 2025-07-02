@@ -17,7 +17,7 @@ class RespostasSeeder extends Seeder
             # Region Unidade 1 
                     //Pergunta 1
                         ["resposta" => "O uso de software malicioso", "certa" => 0, "idJogo" => 1],
-                        ["resposta" => "A manipulação de sistemas operacionais", "certa" => 0, "idJogo" => 1],
+                        ["resposta" => "A manipulação de sistemas operativos", "certa" => 0, "idJogo" => 1],
                         ["resposta" => "A exploração do comportamento humano", "certa" => 1, "idJogo" => 1],
                         ["resposta" => "O uso de exploits em servidores", "certa" => 0, "idJogo" => 1],
                     //Pergunta 2
@@ -29,12 +29,12 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "A encriptação de dados sensíveis", "certa" => 0, "idJogo" => 3],
                         ["resposta" => "A tendência humana a confiar e agir por emoção", "certa" => 1, "idJogo" => 3],
                         ["resposta" => "A redundância de servidores", "certa" => 0, "idJogo" => 3],
-                        ["resposta" => "A dificuldade em detectar softwares maliciosos", "certa" => 0, "idJogo" => 3],
+                        ["resposta" => "A dificuldade em detetar softwares maliciosos", "certa" => 0, "idJogo" => 3],
                     //Pergunta 4
                         ["resposta" => "Subverter a infraestrutura de TI da vítima", "certa" => 0, "idJogo" => 4],
                         ["resposta" => "Roubar dados diretamente do banco de dados", "certa" => 0, "idJogo" => 4],
                         ["resposta" => "Manipular a vítima para que ela revele informações confidenciais", "certa" => 1, "idJogo" => 4],
-                        ["resposta" => "Infectar o computador da vítima com malware", "certa" => 0, "idJogo" => 4],
+                        ["resposta" => "Infetar o computador da vítima com malware", "certa" => 0, "idJogo" => 4],
                     //Pergunta 5
                         ["resposta" => "Dados de localização e preferências", "certa" => 0, "idJogo" => 5],
                         ["resposta" => "Dados financeiros e informações pessoais", "certa" => 0, "idJogo" => 5],
@@ -43,13 +43,13 @@ class RespostasSeeder extends Seeder
                     //Pergunta 6
                         ["resposta" => "Invasão física de instalações", "certa" => 0, "idJogo" => 6],
                         ["resposta" => "Envio de um vírus por e-mail", "certa" => 0, "idJogo" => 6],
-                        ["resposta" => "Coleta de informações através de interações sociais em redes", "certa" => 1, "idJogo" => 6],
+                        ["resposta" => "Recolha de informações através de interações sociais em redes", "certa" => 1, "idJogo" => 6],
                         ["resposta" => "Uso de vulnerabilidades de software", "certa" => 0, "idJogo" => 6],
                     //Pergunta 7
                         ["resposta" => "A presença de vulnerabilidades técnicas nos sistemas", "certa" => 0, "idJogo" => 7],
                         ["resposta" => "O uso de softwares de segurança mal configurados", "certa" => 0, "idJogo" => 7],
                         ["resposta" => "A exploração da confiança e emoções humanas", "certa" => 1, "idJogo" => 7],
-                        ["resposta" => "O uso de senhas fracas", "certa" => 0, "idJogo" => 7],
+                        ["resposta" => "O uso de passwords fracas", "certa" => 0, "idJogo" => 7],
                     //Pergunta 8
                         ["resposta" => "Phishing e Malware", "certa" => 0, "idJogo" => 8],
                         ["resposta" => "Pretexting e Phishing", "certa" => 1, "idJogo" => 8],
@@ -58,19 +58,19 @@ class RespostasSeeder extends Seeder
                     //Pergunta 9
                         ["resposta" => "Falhas de segurança no software", "certa" => 0, "idJogo" => 9],
                         ["resposta" => "Erros humanos e psicológicos", "certa" => 1, "idJogo" => 9],
-                        ["resposta" => "Falhas em sistemas operacionais", "certa" => 0, "idJogo" => 9],
+                        ["resposta" => "Falhas em sistemas operativos", "certa" => 0, "idJogo" => 9],
                         ["resposta" => "Exploração de servidores", "certa" => 0, "idJogo" => 9],
                     //Pergunta 10
-                        ["resposta" => "A engenharia social é uma técnica que utiliza falhas em sistemas de computador para invadir redes.", "certa" => 0, "idJogo" => 10],
+                        ["resposta" => "A engenharia social é uma técnica que utiliza falhas em sistemas para invadir redes.", "certa" => 0, "idJogo" => 10],
                         ["resposta" => "Um dos principais objetivos da engenharia social é manipular pessoas para obter informações confidenciais.", "certa" => 1, "idJogo" => 10],
-                        ["resposta" => "A engenharia social se baseia exclusivamente em ataques físicos, como roubo de dispositivos.", "certa" => 0, "idJogo" => 10],
-                        ["resposta" => "Phishing é um exemplo comum de ataque de engenharia social.", "certa" => 1, "idJogo" => 10],
-                        ["resposta" => "Engenheiros sociais costumam se passar por pessoas confiáveis para ganhar a confiança da vítima.", "certa" => 1, "idJogo" => 10],
+                        ["resposta" => "A engenharia social baseia-se exclusivamente em ataques físicos, como roubo de dispositivos.", "certa" => 0, "idJogo" => 10],
+                        ["resposta" => "Phishing é um exemplo comum de um ataque de engenharia social.", "certa" => 1, "idJogo" => 10],
+                        ["resposta" => "Engenheiros sociais costumam fazer-se passar por pessoas de confiança para ganhar a confiança da vítima.", "certa" => 1, "idJogo" => 10],
                         ["resposta" => "A engenharia social explora vulnerabilidades técnicas de softwares e hardwares.", "certa" => 0, "idJogo" => 10],
                         ["resposta" => "A manipulação psicológica é uma ferramenta frequentemente usada em ataques de engenharia social.", "certa" => 1, "idJogo" => 10],
                         ["resposta" => "Engenharia social só ocorre em ambientes digitais, como e-mails ou redes sociais.", "certa" => 0, "idJogo" => 10],
                     //Pergunta 11
-                        ["resposta" => "O treinamento de funcionários pode ajudar a prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 11],
+                        ["resposta" => "A formação de funcionários pode ajudar a prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 11],
                         ["resposta" => "Mesmo utilizadores bem treinados podem ser vítimas de engenharia social, caso não estejam atentos.", "certa" => 1, "idJogo" => 11],
                     //Pergunta 12
                         ["resposta" => "Phishing", "certa" => 0, "idJogo" => 12],
@@ -106,7 +106,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Escassez", "certa" => 1, "idJogo" => 17],
                         ["resposta" => "Autoridade", "certa" => 0, "idJogo" => 17],
                     //Pergunta 6
-                        ["resposta" => "Garantir que a vítima recupere seu acesso de forma segura", "certa" => 0, "idJogo" => 18],
+                        ["resposta" => "Garantir que a vítima recupere o seu acesso de forma segura", "certa" => 0, "idJogo" => 18],
                         ["resposta" => "Levar a vítima a agir rapidamente sem pensar nas consequências", "certa" => 1, "idJogo" => 18],
                         ["resposta" => "Fazer com que a vítima ignore a comunicação", "certa" => 0, "idJogo" => 18],
                         ["resposta" => "Oferecer uma solução detalhada para o problema", "certa" => 0, "idJogo" => 18],
@@ -126,17 +126,17 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Aprovação social", "certa" => 0, "idJogo" => 21],
                         ["resposta" => "Autoridade", "certa" => 0, "idJogo" => 21],
                     //Pergunta 10
-                        ["resposta" => "Funcionários desatentos podem ser a principal porta de entrada para ataques de engenharia social em empresas.", "certa" => 1, "idJogo" => 22],
-                        ["resposta" => "Apenas profissionais da área de TI precisam ser treinados contra ameaças de engenharia social.", "certa" => 0, "idJogo" => 22],
-                        ["resposta" => "Senhas anotadas em papéis na mesa de trabalho são uma prática segura se o escritório for fechado.", "certa" => 0, "idJogo" => 22],
-                        ["resposta" => "Se um e-mail parece vir do diretor da empresa, ele pode ser aberto e respondido sem preocupações.", "certa" => 0, "idJogo" => 22],
+                        ["resposta" => "Os funcionários desatentos podem ser a principal porta de entrada para ataques de engenharia social em empresas.", "certa" => 1, "idJogo" => 22],
+                        ["resposta" => "Apenas os profissionais da área de TI precisam de ser treinados contra ameaças de engenharia social.", "certa" => 0, "idJogo" => 22],
+                        ["resposta" => "Passwords anotadas em papéis na mesa de trabalho são uma prática segura se o escritório for fechado.", "certa" => 0, "idJogo" => 22],
+                        ["resposta" => "Se um e-mail parece vir do diretor da empresa pode ser aberto e respondido sem preocupações.", "certa" => 0, "idJogo" => 22],
                         ["resposta" => "Backups e antivírus são suficientes para proteger uma empresa contra todos os ataques de engenharia social.", "certa" => 0, "idJogo" => 22],
                     //Pergunta 11
                         ["resposta" => "Visitantes não autorizados podem representar uma ameaça à segurança física de uma empresa.", "certa" => 1, "idJogo" => 23],
                         ["resposta" => "A política de segurança da informação deve ser conhecida e seguida por todos os colaboradores.", "certa" => 1, "idJogo" => 23],
-                        ["resposta" => "Engenharia social pode ser usada para obter acesso físico a locais restritos dentro de uma empresa.", "certa" => 1, "idJogo" => 23],
-                        ["resposta" => "A cultura organizacional influencia diretamente a eficácia da segurança contra engenharia social.", "certa" => 1, "idJogo" => 23],
-                        ["resposta" => "Treinamentos regulares de conscientização são uma das melhores formas de prevenção contra engenharia social.", "certa" => 1, "idJogo" => 23],
+                        ["resposta" => "A engenharia social pode ser utilizada para obter acesso físico a locais restritos dentro de uma empresa.", "certa" => 1, "idJogo" => 23],
+                        ["resposta" => "A cultura organizacional influencia diretamente a eficácia da segurança contra a engenharia social.", "certa" => 1, "idJogo" => 23],
+                        ["resposta" => "Formações regulares de conscientização são uma das melhores formas de prevenção contra engenharia social.", "certa" => 1, "idJogo" => 23],
             # endregion
 
             # Region Unidade 3
@@ -215,7 +215,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Um amigo da vítima", "certa" => 0, "idJogo" => 37],
                         ["resposta" => "Um fornecedor externo", "certa" => 0, "idJogo" => 37],
                     //Pergunta 3
-                        ["resposta" => "Deixar senhas em papéis à vista", "certa" => 0, "idJogo" => 38],
+                        ["resposta" => "Deixar passwords em papéis à vista", "certa" => 0, "idJogo" => 38],
                         ["resposta" => "Validar ordens sensíveis por mais de um canal", "certa" => 1, "idJogo" => 38],
                         ["resposta" => "Aceitar qualquer ligação de fora da empresa", "certa" => 0, "idJogo" => 38],
                         ["resposta" => "Ignorar e-mails estranhos sem reportar", "certa" => 0, "idJogo" => 38],
@@ -252,7 +252,7 @@ class RespostasSeeder extends Seeder
                     //Pergunta 10
                         ["resposta" => "Funcionários desatentos podem ser a principal porta de entrada para ataques de engenharia social em empresas.", "certa" => 1, "idJogo" => 45],
                         ["resposta" => "Apenas profissionais da área de TI precisam ser treinados contra ameaças de engenharia social.", "certa" => 0, "idJogo" => 45],
-                        ["resposta" => "Senhas anotadas em papéis na mesa de trabalho são uma prática segura se o escritório for fechado.", "certa" => 0, "idJogo" => 45],
+                        ["resposta" => "Passwords anotadas em papéis na mesa de trabalho são uma prática segura se o escritório for fechado.", "certa" => 0, "idJogo" => 45],
                         ["resposta" => "Se um e-mail parece vir do diretor da empresa, ele pode ser aberto e respondido sem preocupações.", "certa" => 0, "idJogo" => 45],
                         ["resposta" => "Backups e antivírus são suficientes para proteger uma empresa contra todos os ataques de engenharia social.", "certa" => 0, "idJogo" => 45],
                     //Pergunta 11
@@ -260,7 +260,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "A política de segurança da informação deve ser conhecida e seguida por todos os colaboradores.", "certa" => 1, "idJogo" => 46],
                         ["resposta" => "Engenharia social pode ser usada para obter acesso físico a locais restritos dentro de uma empresa.", "certa" => 1, "idJogo" => 46],
                         ["resposta" => "A cultura organizacional influencia diretamente a eficácia da segurança contra engenharia social.", "certa" => 1, "idJogo" => 46],
-                        ["resposta" => "Treinamentos regulares de conscientização são uma das melhores formas de prevenção contra engenharia social.", "certa" => 1, "idJogo" => 46],   
+                        ["resposta" => "Formações regulares de conscientização são uma das melhores formas de prevenção contra engenharia social.", "certa" => 1, "idJogo" => 46],   
                     //Pergunta 12
                         ["resposta" => "O atacante recolhe informações sobre a empresa e as potenciais vítimas.", "certa" => 0, "idJogo" => 47],
                         ["resposta" => "O atacante contacta a vítima, utilizando uma identidade falsa ou uma situação fabricada.", "certa" => 1, "idJogo" => 47],
@@ -286,7 +286,7 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Para reduzir o uso de tecnologia", "certa" => 0, "idJogo" => 50],
                     //Pergunta 4
                         ["resposta" => "Verificar a identidade de qualquer pessoa que solicite informações sensíveis", "certa" => 0, "idJogo" => 51],
-                        ["resposta" => "Usar senhas fortes e diferentes para cada serviço", "certa" => 0, "idJogo" => 51],
+                        ["resposta" => "Usar passwords fortes e diferentes para cada serviço", "certa" => 0, "idJogo" => 51],
                         ["resposta" => "Compartilhar dados pessoais para criar empatia em interações online", "certa" => 1, "idJogo" => 51],
                         ["resposta" => "Reportar imediatamente qualquer tentativa de ataque", "certa" => 0, "idJogo" => 51],
                     //Pergunta 5
@@ -295,15 +295,15 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "Validar ordens de pagamento e solicitações financeiras diretamente com a pessoa envolvida", "certa" => 1, "idJogo" => 52],
                         ["resposta" => "Enviar e-mails criptografados para todos os fornecedores", "certa" => 0, "idJogo" => 52],
                     //Pergunta 6
-                        ["resposta" => "Criar senhas complexas e guardá-las em um cofre de dados", "certa" => 0, "idJogo" => 53],
+                        ["resposta" => "Criar passwords complexas e guardá-las em um cofre de dados", "certa" => 0, "idJogo" => 53],
                         ["resposta" => "Usar uma senha junto com um código enviado para o celular do utilizador", "certa" => 1, "idJogo" => 53],
                         ["resposta" => "Pedir a confirmação de um endereço de e-mail para login", "certa" => 0, "idJogo" => 53],
                         ["resposta" => "Redefinir a senha a cada 24 horas para evitar ataques", "certa" => 0, "idJogo" => 53],
                     //Pergunta 7
-                        ["resposta" => "Aumenta a complexidade das senhas", "certa" => 0, "idJogo" => 54],
+                        ["resposta" => "Aumenta a complexidade das passwords", "certa" => 0, "idJogo" => 54],
                         ["resposta" => "Adiciona uma camada extra de segurança, dificultando o acesso de atacantes", "certa" => 1, "idJogo" => 54],
-                        ["resposta" => "Elimina a necessidade de criar senhas fortes", "certa" => 0, "idJogo" => 54],
-                        ["resposta" => "Facilita o uso de senhas em todos os dispositivos", "certa" => 0, "idJogo" => 54],
+                        ["resposta" => "Elimina a necessidade de criar passwords fortes", "certa" => 0, "idJogo" => 54],
+                        ["resposta" => "Facilita o uso de passwords em todos os dispositivos", "certa" => 0, "idJogo" => 54],
                     //Pergunta 8
                         ["resposta" => "Ignorar e-mails de desconhecidos, sem verificações adicionais", "certa" => 0, "idJogo" => 55],
                         ["resposta" => "Verificar sempre a autenticidade do remetente e a URL do link", "certa" => 1, "idJogo" => 55],
@@ -312,7 +312,7 @@ class RespostasSeeder extends Seeder
                     //Pergunta 9
                         ["resposta" => "Permitir que os funcionários escolham suas próprias ferramentas de segurança", "certa" => 0, "idJogo" => 56],
                         ["resposta" => "Garantir que os funcionários apenas usem dispositivos móveis pessoais", "certa" => 0, "idJogo" => 56],
-                        ["resposta" => "Treinamentos contínuos, medidas de prevenção e uma cultura de segurança", "certa" => 1, "idJogo" => 56],
+                        ["resposta" => "Formações contínuas, medidas de prevenção e uma cultura de segurança", "certa" => 1, "idJogo" => 56],
                         ["resposta" => "Acesso irrestrito aos sistemas corporativos para todos os funcionários", "certa" => 0, "idJogo" => 56],
                     //Pergunta 10
                         ["resposta" => "Conscientização dos colaboradores é uma das formas mais eficazes de prevenir ataques de engenharia social.", "certa" => 1, "idJogo" => 57],
@@ -324,10 +324,10 @@ class RespostasSeeder extends Seeder
                         ["resposta" => "O uso de autenticação de dois fatores (2FA) dificulta o acesso indevido a contas corporativas.", "certa" => 1, "idJogo" => 58],
                         ["resposta" => "Somente empresas grandes precisam se preocupar com engenharia social.", "certa" => 0, "idJogo" => 58],
                         ["resposta" => "Manter sigilo sobre informações internas da empresa nas redes sociais é uma prática de defesa importante.", "certa" => 1, "idJogo" => 58],
-                        ["resposta" => "Treinamentos sobre segurança devem ser oferecidos apenas uma vez, durante a integração dos novos funcionários.", "certa" => 0, "idJogo" => 58],
+                        ["resposta" => "Formações sobre segurança devem ser oferecidas apenas uma vez, durante a integração dos novos funcionários.", "certa" => 0, "idJogo" => 58],
                         ["resposta" => "Uma resposta rápida a incidentes pode minimizar os danos causados por um ataque de engenharia social.", "certa" => 1, "idJogo" => 58],
                     //Pergunta 12
-                        ["resposta" => "Treinamento contínuo dos funcionários", "certa" => 0, "idJogo" => 59],
+                        ["resposta" => "Formação contínua dos funcionários", "certa" => 0, "idJogo" => 59],
                         ["resposta" => "Implementação de políticas e procedimentos de segurança", "certa" => 1, "idJogo" => 59],
                         ["resposta" => "Validação rigorosa de solicitações de informações sensíveis", "certa" => 2, "idJogo" => 59],
                         ["resposta" => "Utilização de ferramentas de segurança como filtros de e-mail e antivírus", "certa" => 3, "idJogo" => 59],
